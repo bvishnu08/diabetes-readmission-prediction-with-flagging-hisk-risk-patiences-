@@ -33,6 +33,8 @@ knitr::opts_chunk$set(python.reticulate = FALSE)
 library(ggplot2)
 library(knitr)
 library(DT)
+library(readr)
+library(dplyr)
 ```
 
 <style>
@@ -107,6 +109,59 @@ print(f"Patients: {df.shape[0]:,}")      # Number of patient records
 - **Features:** 50+ variables (age, medications, diagnoses, lab results, etc.)
 - **Target:** Will patient be readmitted within 30 days? (Yes/No)
 
+---
+
+## Raw Data: Before Cleaning {.smaller}
+
+**Goal:** Show what the raw dataset looks like **before** we clean it.
+
+```{r raw-data-view, echo=FALSE}
+raw <- readr::read_csv("data/raw/diabetic_data.csv", show_col_types = FALSE)
+
+# Show first 10 rows as an interactive table (this is your "before" picture)
+DT::datatable(head(raw, 10),
+             options = list(pageLength = 5, scrollX = TRUE),
+             caption = "Raw data sample (before cleaning)")
+```
+
+---
+
+## Cleaned Data & Train/Test Split {.smaller}
+
+**Goal:** Show how the data looks **after cleaning** and how we split into **train** and **test** sets.
+
+```{r cleaned-data-view, echo=FALSE}
+# Read processed train and test data created by the Python pipeline
+train <- readr::read_csv("data/processed/train_processed.csv", show_col_types = FALSE)
+test  <- readr::read_csv("data/processed/test_processed.csv",  show_col_types = FALSE)
+
+# Show a small sample from the cleaned training data
+DT::datatable(head(train, 10),
+             options = list(pageLength = 5, scrollX = TRUE),
+             caption = "Cleaned training data sample (after preprocessing)")
+
+# If the target column exists, show class balance in train vs test
+if ("readmitted_binary" %in% names(train)) {
+  train_counts <- train %>%
+    dplyr::count(readmitted_binary, name = "n") %>%
+    dplyr::mutate(set = "Train")
+  test_counts <- test %>%
+    dplyr::count(readmitted_binary, name = "n") %>%
+    dplyr::mutate(set = "Test")
+  
+  counts <- dplyr::bind_rows(train_counts, test_counts)
+  
+  ggplot2::ggplot(counts, ggplot2::aes(x = factor(readmitted_binary), y = n, fill = set)) +
+    ggplot2::geom_col(position = "dodge") +
+    ggplot2::labs(x = "Readmitted within 30 days (0 = No, 1 = Yes)",
+                  y = "Number of patients",
+                  title = "Train vs Test class balance",
+                  fill = "Dataset") +
+    ggplot2::theme_minimal(base_size = 14)
+}
+```
+
+---
 
 ## Challenge 1: Class Imbalance {.smaller}
 
