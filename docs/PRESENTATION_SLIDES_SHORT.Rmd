@@ -116,7 +116,7 @@ print(f"Patients: {df.shape[0]:,}")      # Number of patient records
 **Goal:** Show what the raw dataset looks like **before** we clean it.
 
 ```{r raw-data-view, echo=FALSE}
-raw <- readr::read_csv("data/raw/diabetic_data.csv", show_col_types = FALSE)
+raw <- readr::read_csv("../data/raw/diabetic_data.csv", show_col_types = FALSE)
 
 # Show first 10 rows as an interactive table (this is your "before" picture)
 DT::datatable(head(raw, 10),
@@ -132,8 +132,8 @@ DT::datatable(head(raw, 10),
 
 ```{r cleaned-data-view, echo=FALSE}
 # Read processed train and test data created by the Python pipeline
-train <- readr::read_csv("data/processed/train_processed.csv", show_col_types = FALSE)
-test  <- readr::read_csv("data/processed/test_processed.csv",  show_col_types = FALSE)
+train <- readr::read_csv("../data/processed/train_processed.csv", show_col_types = FALSE)
+test  <- readr::read_csv("../data/processed/test_processed.csv",  show_col_types = FALSE)
 
 # Show a small sample from the cleaned training data
 DT::datatable(head(train, 10),
