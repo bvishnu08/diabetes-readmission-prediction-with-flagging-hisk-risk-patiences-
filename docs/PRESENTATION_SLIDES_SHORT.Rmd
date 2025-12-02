@@ -26,6 +26,9 @@ knitr::opts_chunk$set(
   comment = "#>"        # Comment prefix
 )
 
+# Disable reticulate for Python chunks (we're just showing code, not executing)
+knitr::opts_chunk$set(python.reticulate = FALSE)
+
 # Load libraries for tables and visualizations
 library(ggplot2)
 library(knitr)
