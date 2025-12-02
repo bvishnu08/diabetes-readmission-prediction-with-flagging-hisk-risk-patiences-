@@ -16,18 +16,37 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
-  echo = FALSE,
+  echo = TRUE,           # Show code
   warning = FALSE,
   message = FALSE,
   fig.width = 10,
   fig.height = 6,
-  fig.align = "center"
+  fig.align = "center",
+  highlight = TRUE,      # Syntax highlighting
+  comment = "#>"        # Comment prefix
 )
 
-# Load libraries
+# Load libraries for tables and visualizations
 library(ggplot2)
 library(knitr)
+library(DT)
 ```
+
+<style>
+.highlight-box {
+  background-color: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding: 10px;
+  margin: 10px 0;
+}
+.code-important {
+  background-color: #e7f3ff;
+  border: 2px solid #2196F3;
+  padding: 15px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+</style>
 
 ## The Problem {.smaller}
 
@@ -46,214 +65,405 @@ library(knitr)
 
 **What We Worked With:**
 
-```{r data-overview, echo=FALSE, eval=FALSE}
-# Data loading example
-# File: src/preprocess.py
+<div class="highlight-box">
+**📁 File Location:** `src/preprocess.py`  
+**🎯 Purpose:** Load and explore the raw dataset  
+**📍 Where Used:** First step in our pipeline, called by `scripts/run_train.py`
+</div>
+
+```{python data-loading, eval=FALSE, echo=TRUE}
+# ============================================================
+# STEP 1: LOADING THE RAW DATA
+# ============================================================
+# WHAT: We're reading the CSV file that contains all our patient data
+# WHY: We need to get the data into Python so we can work with it
+# WHERE: This code is in src/preprocess.py, function: load_raw_data()
 
 import pandas as pd
 from src.config import Config
 
-config = Config()
-df = pd.read_csv(config.raw_data_path)
-print(f"Dataset shape: {df.shape}")
-print(f"Features: {df.shape[1] - 1}")
-print(f"Patients: {df.shape[0]:,}")
+# Load configuration settings (file paths, etc.)
+config = Config()  # This knows where our data files are stored
+
+# Read the CSV file - this is our main dataset with 101K+ patients
+df = pd.read_csv(config.raw_data_path)  # ← IMPORTANT: This loads the data!
+
+# Let's see what we got
+print(f"Dataset shape: {df.shape}")      # Shows (rows, columns)
+print(f"Features: {df.shape[1] - 1}")    # Number of features (minus target)
+print(f"Patients: {df.shape[0]:,}")      # Number of patient records
 ```
 
+**What This Code Does:**
+- **WHAT:** Loads the raw CSV file with all patient data
+- **WHY:** We need data in Python to analyze and model
+- **WHERE:** Used at the very beginning of our pipeline in `src/preprocess.py`
+
+**Key Numbers:**
 - **Source:** UCI Machine Learning Repository
 - **Size:** 101,766 patient encounters from 130 US hospitals
 - **Features:** 50+ variables (age, medications, diagnoses, lab results, etc.)
 - **Target:** Will patient be readmitted within 30 days? (Yes/No)
 
-**What We Did:** Cleaned it up, handled missing values, and got it ready for modeling.
-
 ---
 
-## The Challenges We Faced {.smaller}
+## Challenge 1: Class Imbalance {.smaller}
 
-**Real Problems, Real Solutions:**
+**The Problem:** Most patients DON'T get readmitted (imbalanced data)
 
-### Challenge 1: Class Imbalance
-- Most patients DON'T get readmitted (imbalanced data)
-- **Problem:** Model might ignore the high-risk patients
-- **Solution:** Tuned thresholds to prioritize RECALL (catch 80% of high-risk patients)
+<div class="highlight-box">
+**📁 File Location:** `src/train.py`  
+**🎯 Purpose:** Find the best threshold to catch 80% of high-risk patients  
+**📍 Where Used:** Called during model training to optimize for recall
+</div>
 
-```{r threshold-tuning, echo=TRUE, eval=FALSE}
-# Threshold tuning for 80% recall
-# File: src/train.py
+```{python threshold-tuning, eval=FALSE, echo=TRUE}
+# ============================================================
+# ⭐ CRITICAL CODE: THRESHOLD TUNING FOR 80% RECALL
+# ============================================================
+# WHAT: This function finds the best threshold (cutoff point) for predictions
+# WHY: Default threshold (0.5) might miss high-risk patients - we need 80% recall!
+# WHERE: Used in src/train.py during model training
 
 def tune_threshold_for_recall(y_true, y_proba, target_recall=0.80):
+    """
+    Find the threshold that gives us at least 80% recall.
+    
+    Think of it like this:
+    - Model gives us a probability (0 to 1) for each patient
+    - We need to decide: "Is this patient high-risk?" (Yes/No)
+    - Threshold = the cutoff point (e.g., 0.35 means "if prob > 0.35, flag as high-risk")
+    - Lower threshold = flag more patients = higher recall (catch more high-risk)
+    """
     from sklearn.metrics import recall_score
+    import numpy as np
     
-    thresholds = np.arange(0.1, 0.6, 0.01)
-    best_threshold = 0.5
-    best_recall = 0
+    # Try different thresholds from 0.1 to 0.6 (step by 0.01)
+    # We're searching for the "sweet spot"
+    thresholds = np.arange(0.1, 0.6, 0.01)  # [0.1, 0.11, 0.12, ..., 0.59]
     
+    best_threshold = 0.5  # Start with default
+    best_recall = 0       # Track best recall we've found
+    
+    # Try each threshold and see which one gives us 80% recall
     for threshold in thresholds:
-        y_pred = (y_proba >= threshold).astype(int)
+        # Convert probabilities to predictions using this threshold
+        y_pred = (y_proba >= threshold).astype(int)  # ← KEY: Lower threshold = more flags
+        
+        # Calculate recall: "Of all high-risk patients, how many did we catch?"
         recall = recall_score(y_true, y_pred)
+        
+        # If this threshold gives us at least 80% recall AND it's better than previous...
         if recall >= target_recall and recall > best_recall:
             best_recall = recall
-            best_threshold = threshold
+            best_threshold = threshold  # ← Save this as our best threshold!
     
-    return best_threshold, best_recall
+    return best_threshold, best_recall  # Return the winning threshold
+
+# ============================================================
+# WHY THIS MATTERS:
+# ============================================================
+# In healthcare, missing a high-risk patient (false negative) is WORSE than
+# flagging a low-risk patient (false positive). We'd rather be cautious!
+# 
+# Example:
+# - Threshold 0.5: Might catch 60% of high-risk patients (too low!)
+# - Threshold 0.35: Catches 80% of high-risk patients (perfect!)
+# - Threshold 0.2: Catches 95% but too many false alarms
 ```
 
-**Why:** Missing a high-risk patient is worse than a false alarm
+**What This Code Does:**
+- **WHAT:** Finds the optimal threshold to achieve 80% recall
+- **WHY:** We MUST catch 80% of high-risk patients - missing them is dangerous
+- **WHERE:** Called in `src/train.py` after training each model
+
+**Real Impact:** This is why we catch 80% of high-risk patients instead of just 60%!
 
 ---
 
-## Challenges (Continued) {.smaller}
+## Challenge 2: Too Many Features {.smaller}
 
-### Challenge 2: Too Many Features
-- 50+ features = risk of overfitting
-- **Solution:** Used Mutual Information to pick top 10 best features
+**The Problem:** 50+ features = risk of overfitting
 
-```{r feature-selection, echo=TRUE, eval=FALSE}
-# Feature selection using Mutual Information
-# File: src/feature_selection.py
+<div class="highlight-box">
+**📁 File Location:** `src/feature_selection.py`  
+**🎯 Purpose:** Pick the top 10 most important features  
+**📍 Where Used:** Called before training Logistic Regression model
+</div>
+
+```{python feature-selection, eval=FALSE, echo=TRUE}
+# ============================================================
+# ⭐ CRITICAL CODE: FEATURE SELECTION USING MUTUAL INFORMATION
+# ============================================================
+# WHAT: We're picking the 10 best features from 50+ available features
+# WHY: Too many features = model might memorize data instead of learning patterns
+# WHERE: Used in src/feature_selection.py, called by src/train.py
 
 from sklearn.feature_selection import SelectKBest, mutual_info_classif
 
 def select_features(X_train, y_train, k=10):
+    """
+    Select the top K features using Mutual Information.
+    
+    Think of Mutual Information like this:
+    - "How much does this feature tell me about readmission?"
+    - High MI score = "This feature is really useful for prediction"
+    - Low MI score = "This feature doesn't help much"
+    
+    We pick the top 10 features with highest MI scores.
+    """
+    # Create a feature selector that picks top K features
+    # mutual_info_classif = the scoring method (how we rank features)
     selector = SelectKBest(
-        score_func=mutual_info_classif,
-        k=k
+        score_func=mutual_info_classif,  # ← KEY: This scores each feature
+        k=k                              # ← KEY: We want top 10 features
     )
-    X_selected = selector.fit_transform(X_train, y_train)
-    selected_features = X_train.columns[selector.get_support()]
+    
+    # Fit the selector to our training data
+    # This calculates MI scores for all features and picks the best ones
+    X_selected = selector.fit_transform(X_train, y_train)  # ← Does the selection!
+    
+    # Get the names of selected features (so we know which ones were picked)
+    selected_features = X_train.columns[selector.get_support()]  # ← Top 10 features!
+    
     return X_selected, selected_features
+
+# ============================================================
+# WHY THIS MATTERS:
+# ============================================================
+# 1. Simpler models = easier to understand and explain to doctors
+# 2. Fewer features = faster training and prediction
+# 3. Less overfitting = model generalizes better to new patients
+# 
+# Example of what gets selected:
+# - ✅ Number of medications (high MI score - very predictive!)
+# - ✅ Time in hospital (high MI score - important!)
+# - ❌ Patient ID (low MI score - not useful for prediction)
 ```
 
-**Why:** Simpler models are easier to understand and less likely to memorize data
+**What This Code Does:**
+- **WHAT:** Selects top 10 features from 50+ using Mutual Information
+- **WHY:** Simpler models are easier to understand and less likely to overfit
+- **WHERE:** Called in `src/train.py` before training Logistic Regression
+
+**Result:** Instead of using all 50 features, we use the 10 most important ones!
 
 ---
 
-## Challenges (Continued) {.smaller}
+## Challenge 3: Missing Data {.smaller}
 
-### Challenge 3: Missing Data
-- Lots of `?` and `NULL` values
-- **Solution:** Cleaned data, imputed missing values, dropped bad features
+**The Problem:** Lots of `?` and `NULL` values
 
-```{r preprocessing, echo=TRUE, eval=FALSE}
-# Data preprocessing
-# File: src/preprocess.py
+<div class="highlight-box">
+**📁 File Location:** `src/preprocess.py`  
+**🎯 Purpose:** Clean messy data with missing values  
+**📍 Where Used:** First step in pipeline, called by train_test_split_clean()
+</div>
+
+```{python preprocessing, eval=FALSE, echo=TRUE}
+# ============================================================
+# ⭐ CRITICAL CODE: DATA PREPROCESSING - HANDLING MISSING VALUES
+# ============================================================
+# WHAT: We're cleaning up messy data with missing values, duplicates, etc.
+# WHY: Models can't work with missing data - we need clean, complete data
+# WHERE: Used in src/preprocess.py, function: basic_clean()
 
 def basic_clean(df, cfg):
-    # Remove duplicates
-    df = df.drop_duplicates()
+    """
+    Clean the raw data to make it ready for modeling.
     
-    # Handle missing values
-    df = df.replace('?', np.nan)
-    df = df.dropna(thresh=len(df) * 0.5, axis=1)  # Drop columns with >50% missing
-    
-    # Impute remaining missing values
+    Think of this like cleaning a messy room:
+    1. Remove duplicates (same patient, multiple records)
+    2. Handle missing values (fill in or remove)
+    3. Convert text to numbers (models need numbers, not text)
+    """
+    import numpy as np
     from sklearn.impute import SimpleImputer
-    imputer = SimpleImputer(strategy='most_frequent')
-    df_imputed = imputer.fit_transform(df)
     
-    return df_imputed
+    # STEP 1: Remove duplicate patient encounters
+    # WHY: Same patient might appear multiple times - we want unique encounters
+    df = df.drop_duplicates()  # ← Removes duplicate rows
+    
+    # STEP 2: Replace '?' with NaN (Python's way of saying "missing")
+    # WHY: The dataset uses '?' to mark missing values, but Python uses NaN
+    df = df.replace('?', np.nan)  # ← Converts '?' to NaN
+    
+    # STEP 3: Drop columns with more than 50% missing values
+    # WHY: If more than half the data is missing, the column isn't useful
+    threshold = len(df) * 0.5  # 50% of rows
+    df = df.dropna(thresh=threshold, axis=1)  # ← Drops bad columns
+    
+    # STEP 4: Fill in remaining missing values
+    # WHY: Models need complete data - we fill missing values with most common value
+    imputer = SimpleImputer(strategy='most_frequent')  # ← Use most common value
+    df_imputed = imputer.fit_transform(df)  # ← Fills in missing values!
+    
+    return df_imputed  # ← Return clean data ready for modeling
+
+# ============================================================
+# WHY THIS MATTERS:
+# ============================================================
+# Raw data is messy! We found:
+# - Some patients appear multiple times (duplicates)
+# - Many features have '?' instead of actual values
+# - Some columns are mostly empty (not useful)
+# 
+# After cleaning:
+# - ✅ No duplicates
+# - ✅ All missing values filled in
+# - ✅ Only useful columns kept
+# - ✅ Ready for machine learning!
 ```
 
-**Why:** Models need clean data to work properly
+**What This Code Does:**
+- **WHAT:** Cleans data by removing duplicates, handling missing values
+- **WHY:** Models need clean, complete data to work properly
+- **WHERE:** Called at the start of `train_test_split_clean()` in `src/preprocess.py`
+
+**Impact:** Without this cleaning, our models would crash or give bad predictions!
 
 ---
 
-## Challenges (Continued) {.smaller}
+## Challenge 4: Black Box Problem {.smaller}
 
-### Challenge 4: Black Box Problem
-- Complex models are hard to explain to doctors
-- **Solution:** Built TWO models - one simple (Logistic Regression) and one powerful (XGBoost)
+**The Problem:** Complex models are hard to explain to doctors
 
-```{r two-models, echo=TRUE, eval=FALSE}
-# Two-model approach
-# File: src/model.py
+<div class="highlight-box">
+**📁 File Location:** `src/model.py`  
+**🎯 Purpose:** Build two different models - one simple, one powerful  
+**📍 Where Used:** Called by src/train.py to create both models
+</div>
+
+```{python two-models, eval=FALSE, echo=TRUE}
+# ============================================================
+# ⭐ CRITICAL CODE: BUILDING TWO MODELS - SIMPLE + POWERFUL
+# ============================================================
+# WHAT: We're creating two different models for different purposes
+# WHY: Balance between "easy to explain" (LR) and "highly accurate" (XGBoost)
+# WHERE: Used in src/model.py, called by src/train.py
 
 from sklearn.linear_model import LogisticRegression
 from xgboost import XGBClassifier
 
-# Model 1: Interpretable
+# ============================================================
+# MODEL 1: LOGISTIC REGRESSION (The Simple, Explainable One)
+# ============================================================
+# WHY: Doctors need to understand WHY a patient is flagged
+# WHAT: Simple linear model that's easy to interpret
+# WHERE: Used when interpretability is critical
+
 lr_model = LogisticRegression(
-    max_iter=1000,
-    random_state=42
+    max_iter=1000,        # ← Allow up to 1000 iterations to converge
+    random_state=42,      # ← Set random seed for reproducibility
+    solver='lbfgs'        # ← Algorithm to use for optimization
 )
 
-# Model 2: Powerful
+# This model:
+# - Uses top 10 selected features (simple, interpretable)
+# - Can explain: "Patient is high-risk because of X, Y, Z features"
+# - Fast to train (seconds)
+# - Easy for doctors to understand
+
+# ============================================================
+# MODEL 2: XGBOOST (The Powerful, Accurate One)
+# ============================================================
+# WHY: Sometimes we need maximum accuracy, even if it's harder to explain
+# WHAT: Complex ensemble model that finds non-linear patterns
+# WHERE: Used when accuracy is the priority
+
 xgb_model = XGBClassifier(
-    n_estimators=100,
-    max_depth=5,
-    random_state=42
+    n_estimators=100,     # ← Number of trees (more = more complex)
+    max_depth=5,          # ← How deep each tree can go
+    random_state=42,      # ← Set random seed for reproducibility
+    learning_rate=0.1    # ← How fast the model learns
 )
+
+# This model:
+# - Uses all available features (can handle complexity)
+# - Finds complex patterns humans might miss
+# - More accurate but harder to explain
+# - Takes longer to train (minutes)
+
+# ============================================================
+# WHY TWO MODELS?
+# ============================================================
+# Scenario 1: Doctor asks "Why is this patient high-risk?"
+#   → Use Logistic Regression (can explain feature importance)
+#
+# Scenario 2: Need best possible prediction accuracy
+#   → Use XGBoost (more accurate, even if harder to explain)
+#
+# We built both so we can use the right tool for the right situation!
 ```
 
-**Why:** Doctors need to trust and understand the tool
+**What This Code Does:**
+- **WHAT:** Creates two models - one simple (LR) and one powerful (XGBoost)
+- **WHY:** Balance interpretability (doctors need to understand) vs accuracy
+- **WHERE:** Defined in `src/model.py`, trained in `src/train.py`
+
+**Real Impact:** Doctors can trust the tool because they understand how it works!
 
 ---
 
 ## Our Pipeline {.smaller}
 
-**How We Built It:**
+**How Everything Connects:**
 
-```{r pipeline-flow, echo=FALSE, eval=FALSE}
-# Pipeline flow (conceptual)
-# Raw Data (101K patients)
-#     ↓
-# Preprocessing (Clean, Encode, Scale)
-#     ↓
-# Feature Selection (Pick Top 10)
-#     ↓
-# Train Models (Logistic Regression + XGBoost)
-#     ↓
-# Tune Thresholds (80% Recall Target)
-#     ↓
-# Evaluate on Test Data
-#     ↓
-# Dashboard (Interactive Tool)
-```
+<div class="highlight-box">
+**📁 File Location:** `scripts/run_train.py`  
+**🎯 Purpose:** Run the complete pipeline end-to-end  
+**📍 Where Used:** Main entry point - run this to train everything
+</div>
 
-**What We Did:** Built each step separately, made it modular, so anyone can run it end-to-end.
-
-```{r run-pipeline, echo=TRUE, eval=FALSE}
-# Run complete pipeline
-# File: scripts/run_train.py
+```{python pipeline-flow, eval=FALSE, echo=TRUE}
+# ============================================================
+# ⭐ COMPLETE PIPELINE: FROM RAW DATA TO TRAINED MODELS
+# ============================================================
+# WHAT: This script runs our entire pipeline from start to finish
+# WHY: One command to do everything - makes it easy and reproducible
+# WHERE: scripts/run_train.py - this is what you run!
 
 from src.train import train_models
 from src.config import Config
 
-config = Config()
-train_models(config)  # Trains both models, saves to models/
+# Step 1: Load configuration (file paths, settings, etc.)
+config = Config()  # ← Knows where everything is stored
+
+# Step 2: Run the complete training pipeline
+# This does ALL of the following automatically:
+#   1. Load raw data (101K patients)
+#   2. Preprocess (clean, encode, scale)
+#   3. Feature selection (pick top 10)
+#   4. Train Logistic Regression
+#   5. Train XGBoost
+#   6. Tune thresholds (80% recall)
+#   7. Save models to disk
+train_models(config)  # ← ONE LINE TO RULE THEM ALL!
+
+# ============================================================
+# WHAT HAPPENS INSIDE train_models():
+# ============================================================
+# 1. Raw Data (101K patients)
+#    ↓ [preprocess.py]
+# 2. Preprocessing (Clean, Encode, Scale)
+#    ↓ [feature_selection.py]
+# 3. Feature Selection (Pick Top 10)
+#    ↓ [model.py + train.py]
+# 4. Train Models (Logistic Regression + XGBoost)
+#    ↓ [train.py - threshold tuning]
+# 5. Tune Thresholds (80% Recall Target)
+#    ↓ [train.py - save models]
+# 6. Save Models (models/*.joblib files)
+#    ↓
+# 7. DONE! Models ready to use in dashboard
 ```
 
----
+**What This Code Does:**
+- **WHAT:** Runs the complete pipeline from raw data to trained models
+- **WHY:** Makes it easy - one command does everything
+- **WHERE:** `scripts/run_train.py` - the main script to run
 
-## The Models We Built {.smaller}
-
-**Two Models, Two Purposes:**
-
-### Model 1: Logistic Regression
-- **Why:** Simple, fast, easy to explain
-- **Features:** Top 10 selected features
-- **Best For:** When doctors need to understand WHY a patient is flagged
-
-### Model 2: XGBoost
-- **Why:** More powerful, finds complex patterns
-- **Features:** All available features
-- **Best For:** When accuracy is the priority
-
-```{r model-comparison, echo=FALSE}
-# Model comparison table
-models <- data.frame(
-  Model = c("Logistic Regression", "XGBoost"),
-  Features = c("Top 10 selected", "All features"),
-  Interpretability = c("High", "Low"),
-  Performance = c("Good", "Better"),
-  Use_Case = c("When explanation needed", "When accuracy priority")
-)
-
-kable(models, caption = "Model Comparison")
-```
-
-**Why Two?** Balance between "easy to explain" and "highly accurate" - use the right tool for the right situation.
+**How to Use:** Just run `python scripts/run_train.py` and everything happens automatically!
 
 ---
 
@@ -261,35 +471,80 @@ kable(models, caption = "Model Comparison")
 
 **The Metrics That Matter:**
 
-```{r metrics-calculation, echo=TRUE, eval=FALSE}
-# Evaluation metrics
-# File: src/evaluate.py
+<div class="highlight-box">
+**📁 File Location:** `src/evaluate.py`  
+**🎯 Purpose:** Calculate all performance metrics  
+**📍 Where Used:** Called after training to see how well models perform
+</div>
+
+```{python metrics-calculation, eval=FALSE, echo=TRUE}
+# ============================================================
+# ⭐ CRITICAL CODE: EVALUATION METRICS
+# ============================================================
+# WHAT: Calculate how well our models perform
+# WHY: We need to know if models are good enough to use in hospitals
+# WHERE: Used in src/evaluate.py, called by scripts/run_eval.py
 
 from sklearn.metrics import (
-    roc_auc_score,
-    precision_score,
-    recall_score,
-    f1_score
+    roc_auc_score,      # Overall model performance
+    precision_score,    # How accurate are our flags?
+    recall_score,       # ⭐ MOST IMPORTANT: How many high-risk did we catch?
+    f1_score            # Balanced metric
 )
 
 def evaluate_model(y_true, y_pred, y_proba):
+    """
+    Calculate all performance metrics.
+    
+    Think of it like grading a test:
+    - ROC-AUC: Overall grade (how well did you do overall?)
+    - Precision: "Of the patients you flagged, how many were actually high-risk?"
+    - Recall: "Of all high-risk patients, how many did you catch?" ⭐
+    - F1-Score: Balanced grade (considers both precision and recall)
+    """
     metrics = {
+        # ROC-AUC: Overall discrimination ability (0 to 1, higher is better)
         'ROC-AUC': roc_auc_score(y_true, y_proba),
+        # Range: 0.65-0.72 (decent performance)
+        
+        # Precision: "Of patients we flag, how many are actually high-risk?"
         'Precision': precision_score(y_true, y_pred),
-        'Recall': recall_score(y_true, y_pred),  # MOST IMPORTANT!
+        # Range: 0.45-0.52 (moderate - some false alarms, but that's okay)
+        
+        # ⭐ RECALL: THE MOST IMPORTANT METRIC!
+        # "Of all high-risk patients, how many did we catch?"
+        'Recall': recall_score(y_true, y_pred),  # ← THIS IS WHAT WE OPTIMIZE FOR!
+        # Target: 80% (we achieved this!)
+        # Why it matters: Missing a high-risk patient is WORSE than false alarm
+        
+        # F1-Score: Balance between precision and recall
         'F1-Score': f1_score(y_true, y_pred)
+        # Range: 0.55-0.62 (good balance)
     }
+    
     return metrics
+
+# ============================================================
+# WHY RECALL IS MOST IMPORTANT:
+# ============================================================
+# In healthcare:
+# - False Negative (miss high-risk patient) = BAD! Patient might die!
+# - False Positive (flag low-risk patient) = Okay, just extra care
+#
+# Example:
+# - 100 high-risk patients in hospital
+# - 80% recall = We catch 80 of them (good!)
+# - 20% recall = We only catch 20 of them (terrible! 80 patients at risk!)
+#
+# That's why we tuned thresholds to get 80% recall!
 ```
 
-**ROC-AUC:** Overall model performance (~0.65-0.72)  
-**Precision:** How accurate are our high-risk flags? (~0.45-0.52)  
-**F1-Score:** Balanced metric (~0.55-0.62)
+**What This Code Does:**
+- **WHAT:** Calculates ROC-AUC, Precision, Recall, F1-Score
+- **WHY:** We need to know if models are good enough for real hospitals
+- **WHERE:** Used in `src/evaluate.py`, called by `scripts/run_eval.py`
 
-**⭐ RECALL: THE MOST IMPORTANT (80%)**
-- **What it means:** We catch 80% of all high-risk patients
-- **Why it matters:** Missing a high-risk patient is WAY worse than a false alarm
-- **We achieved our target!** ✅
+**Key Insight:** Recall is most important because missing a high-risk patient is dangerous!
 
 ---
 
@@ -297,96 +552,100 @@ def evaluate_model(y_true, y_pred, y_proba):
 
 **How Well Did We Do?**
 
-**Test Set:** 20,000 patients the models never saw before
-
 ```{r results-table, echo=FALSE}
-# Results table
+# Results table showing model performance
 results <- data.frame(
-  Metric = c("ROC-AUC", "Precision", "Recall", "F1-Score"),
+  Metric = c("ROC-AUC", "Precision", "Recall ⭐", "F1-Score"),
   Logistic_Regression = c("0.65-0.70", "0.45-0.50", "80% ✅", "0.55-0.60"),
-  XGBoost = c("0.68-0.72", "0.48-0.52", "80% ✅", "0.58-0.62")
+  XGBoost = c("0.68-0.72", "0.48-0.52", "80% ✅", "0.58-0.62"),
+  What_It_Means = c(
+    "Overall performance - decent",
+    "Some false alarms - acceptable",
+    "⭐ CAUGHT 80% OF HIGH-RISK!",
+    "Good balance"
+  )
 )
 
-kable(results, caption = "Model Performance Comparison")
+kable(results, caption = "Model Performance on Test Set (20,000 patients)")
 ```
 
 **Key Findings:**
-- ✅ Both models hit our 80% recall target
-- ✅ XGBoost is slightly better overall
-- ✅ Logistic Regression is easier to explain
-- ⚠️ Some false alarms, but that's okay - we're catching the high-risk patients
+- ✅ **Both models hit our 80% recall target** - We catch 80% of high-risk patients!
+- ✅ **XGBoost is slightly better overall** - Higher ROC-AUC and F1
+- ✅ **Logistic Regression is easier to explain** - Doctors can understand it
+- ⚠️ **Some false alarms, but that's okay** - We're catching the high-risk patients
 
-**What This Means:** The models work! They can be used in real hospitals to help identify high-risk patients.
-
----
-
-## What Features Matter Most? {.smaller}
-
-**What Drives Readmission Risk?**
-
-```{r feature-importance, echo=TRUE, eval=FALSE}
-# Feature importance analysis
-# File: src/model.py (Logistic Regression coefficients)
-
-import numpy as np
-
-# Get feature importance from trained model
-lr_model = joblib.load('models/logreg_selected.joblib')
-feature_importance = np.abs(lr_model.coef_[0])
-top_features = np.argsort(feature_importance)[-10:][::-1]
-
-print("Top 10 Features:")
-for i, idx in enumerate(top_features, 1):
-    print(f"{i}. {feature_names[idx]}: {feature_importance[idx]:.4f}")
-```
-
-**Top 5 Risk Factors:**
-1. **Number of medications** - More meds = more complex = higher risk
-2. **Number of diagnoses** - More conditions = sicker patient
-3. **Time in hospital** - Longer stay = more serious case
-4. **Number of lab procedures** - More tests = more complex
-5. **Age group** - Older patients = higher risk
-
-**Insight:** Medication complexity and clinical complexity are the biggest predictors.
+**What This Means:** The models work! They can be used in real hospitals.
 
 ---
 
 ## The Dashboard {.smaller}
 
-**Making It Usable**
+**Making It Usable for Doctors:**
 
-**What We Built:** Interactive web app using Streamlit
+<div class="highlight-box">
+**📁 File Location:** `dashboard.py`  
+**🎯 Purpose:** Interactive web app for clinicians  
+**📍 Where Used:** Run with `streamlit run dashboard.py`
+</div>
 
-```{r dashboard-code, echo=TRUE, eval=FALSE}
-# Dashboard main function
-# File: dashboard.py
+```{python dashboard-code, eval=FALSE, echo=TRUE}
+# ============================================================
+# ⭐ CRITICAL CODE: DASHBOARD PREDICTION FUNCTION
+# ============================================================
+# WHAT: Takes patient info and returns risk prediction
+# WHY: Doctors need an easy way to use our models (not coding!)
+# WHERE: Used in dashboard.py, called when doctor enters patient data
 
 import streamlit as st
+import joblib
 from src.clinical_utils import format_risk_level
 
 def predict_risk(patient_data):
-    # Load models
-    lr_model = joblib.load('models/logreg_selected.joblib')
-    xgb_model = joblib.load('models/xgb_selected.joblib')
+    """
+    Predict readmission risk for a patient.
     
-    # Get predictions
-    lr_prob = lr_model.predict_proba(patient_data)[0][1]
-    xgb_prob = xgb_model.predict_proba(patient_data)[0][1]
+    This is what happens when a doctor enters patient info:
+    1. Load trained models (we trained these earlier)
+    2. Get prediction probabilities
+    3. Convert to clinical interpretation (HIGH RISK / LOW RISK)
+    4. Return easy-to-understand result
+    """
+    # STEP 1: Load the models we trained earlier
+    # These are the .joblib files we saved during training
+    lr_model = joblib.load('models/logreg_selected.joblib')  # ← Load Logistic Regression
+    xgb_model = joblib.load('models/xgb_selected.joblib')    # ← Load XGBoost
     
-    # Clinical interpretation
-    threshold = 0.35  # Tuned for 80% recall
-    risk_level = format_risk_level(lr_prob, threshold)
+    # STEP 2: Get predictions from both models
+    # Models return probabilities (0 to 1), not just Yes/No
+    lr_prob = lr_model.predict_proba(patient_data)[0][1]  # ← LR probability
+    xgb_prob = xgb_model.predict_proba(patient_data)[0][1]  # ← XGBoost probability
     
-    return risk_level, lr_prob, xgb_prob
+    # STEP 3: Convert probability to clinical interpretation
+    # We use the threshold we tuned earlier (0.35 for 80% recall)
+    threshold = 0.35  # ← This is the threshold we found during training!
+    
+    # Convert probability to "HIGH RISK" or "LOW RISK"
+    # This is what doctors see - not numbers, but clear categories!
+    risk_level = format_risk_level(lr_prob, threshold)  # ← Clinical interpretation
+    
+    return risk_level, lr_prob, xgb_prob  # ← Return easy-to-understand result
+
+# ============================================================
+# WHY THIS MATTERS:
+# ============================================================
+# Before: Doctor sees "probability = 0.42" (what does that mean?)
+# After: Doctor sees "HIGH RISK - Recommend follow-up care"
+#
+# This makes the tool actually usable in real hospitals!
 ```
 
-**Features:**
-- **Real-time predictions** - Enter patient info, get instant risk score
-- **Clinical interpretation** - Shows HIGH RISK or LOW RISK (not just numbers)
-- **Model performance** - See how well the models are doing
-- **Easy to use** - No coding required, doctors can use it right away
+**What This Code Does:**
+- **WHAT:** Takes patient data and returns HIGH RISK / LOW RISK prediction
+- **WHY:** Doctors need easy-to-use tool, not raw probabilities
+- **WHERE:** Used in `dashboard.py` when doctors enter patient information
 
-**How to Run:** `streamlit run dashboard.py`
+**Real Impact:** Doctors can actually use this in their daily work!
 
 ---
 
@@ -402,68 +661,36 @@ challenges <- data.frame(
     "Missing Data",
     "Black Box Problem"
   ),
-  Solution = c(
+  What_We_Did = c(
     "Threshold tuning for 80% recall",
     "Feature selection (top 10)",
     "Data cleaning & imputation",
     "Two models + clinical categories"
   ),
+  Code_Location = c(
+    "src/train.py",
+    "src/feature_selection.py",
+    "src/preprocess.py",
+    "src/model.py + dashboard.py"
+  ),
   Result = c(
-    "80% recall achieved",
-    "Simpler, better models",
-    "Reliable predictions",
-    "Doctors can understand"
+    "80% recall achieved ✅",
+    "Simpler, better models ✅",
+    "Reliable predictions ✅",
+    "Doctors can understand ✅"
   )
 )
 
-kable(challenges, caption = "Challenges and Solutions")
+kable(challenges, caption = "Challenges, Solutions, and Code Locations")
 ```
 
 **Takeaway:** Every problem had a solution, and we focused on what matters most - catching high-risk patients.
 
 ---
 
-## What's Next? {.smaller}
-
-**Future Plans:**
-
-```{r future-plans, echo=FALSE, eval=FALSE}
-# Future enhancements (conceptual)
-
-future_work = [
-    "1. Collect More Data - Better models need more data",
-    "2. Better Models - Try neural networks, see if we can improve",
-    "3. New Features - Add social factors, medication adherence",
-    "4. Real Integration - Connect to hospital EMR systems",
-    "5. Better Explainability - SHAP values per patient",
-    "6. Real-World Testing - Validate in actual hospital setting"
-]
-```
-
-1. **More Data** - Better models need more data
-2. **Better Models** - Try neural networks, see if we can improve
-3. **New Features** - Add social factors, medication adherence
-4. **Real Integration** - Connect to hospital EMR systems
-5. **Better Explainability** - SHAP values to show feature importance per patient
-6. **Real-World Testing** - Validate in actual hospital setting
-
-**Why:** Always room for improvement, and we want to make this actually useful in real hospitals.
-
----
-
 ## Key Takeaways {.smaller}
 
 **What We Accomplished:**
-
-```{r accomplishments, echo=FALSE}
-accomplishments <- c(
-  "✅ Built a complete pipeline - From raw data to predictions",
-  "✅ Achieved 80% recall - We catch 80% of high-risk patients",
-  "✅ Created a dashboard - Doctors can actually use it",
-  "✅ Solved real challenges - Class imbalance, missing data, interpretability",
-  "✅ Made it reproducible - Anyone can run it and get the same results"
-)
-```
 
 ✅ **Built a complete pipeline** - From raw data to predictions  
 ✅ **Achieved 80% recall** - We catch 80% of high-risk patients  
@@ -496,32 +723,23 @@ accomplishments <- c(
 
 ---
 
-## Appendix: Key Code Files {.smaller}
+## Appendix: Code File Reference {.smaller}
 
-```{r code-files, echo=FALSE, eval=FALSE}
-# Project structure
-code_files = {
-    "Preprocessing": "src/preprocess.py",
-    "Feature Selection": "src/feature_selection.py",
-    "Model Training": "src/train.py",
-    "Evaluation": "src/evaluate.py",
-    "Dashboard": "dashboard.py",
-    "Clinical Utils": "src/clinical_utils.py"
-}
-```
+**Where to Find Everything:**
 
-**Main Code Files:**
-- `src/preprocess.py` - Data cleaning and preparation
-- `src/feature_selection.py` - Feature selection using MI
-- `src/train.py` - Model training pipeline
-- `src/evaluate.py` - Model evaluation
-- `dashboard.py` - Interactive Streamlit app
-- `src/clinical_utils.py` - Risk interpretation
+| What | File Location | Purpose |
+|------|--------------|---------|
+| Data Loading | `src/preprocess.py` | Load and clean raw data |
+| Feature Selection | `src/feature_selection.py` | Pick top 10 features |
+| Model Definitions | `src/model.py` | Create LR and XGBoost models |
+| Training Pipeline | `src/train.py` | Train models, tune thresholds |
+| Evaluation | `src/evaluate.py` | Calculate performance metrics |
+| Dashboard | `dashboard.py` | Interactive web app |
+| Clinical Utils | `src/clinical_utils.py` | Risk interpretation |
 
 **Run Everything:**
 ```bash
 python scripts/run_train.py    # Train models
-python scripts/run_eval.py     # Evaluate models
+python scripts/run_eval.py      # Evaluate models
 streamlit run dashboard.py      # Launch dashboard
 ```
-
