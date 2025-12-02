@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.ipynb_checkpoints/
+.pytest_cache/
+.env
+.venv
+venv/
+models/*.tmp
+
+# OS
+.DS_Store
+
+# Data (keep raw but ignore large intermediates)
+data/processed/*
+!data/processed/.gitkeep
+

@@ -1,0 +1,57 @@
+{
+  "logreg": {
+    "threshold": 0.44999999999999996,
+    "features": [
+      "acarbose",
+      "glimepiride",
+      "nateglinide",
+      "glyburide-metformin",
+      "diabetesMed",
+      "race",
+      "max_glu_serum",
+      "metformin",
+      "glyburide",
+      "chlorpropamide",
+      "miglitol",
+      "number_inpatient",
+      "repaglinide",
+      "change",
+      "glipizide",
+      "A1Cresult",
+      "discharge_disposition_id",
+      "pioglitazone",
+      "rosiglitazone",
+      "gender"
+    ]
+  },
+  "xgb": {
+    "threshold": 0.1,
+    "features": [
+      "glimepiride",
+      "acarbose",
+      "nateglinide",
+      "miglitol",
+      "diabetesMed",
+      "glyburide-metformin",
+      "race",
+      "max_glu_serum",
+      "change",
+      "metformin",
+      "repaglinide",
+      "pioglitazone",
+      "chlorpropamide",
+      "number_inpatient",
+      "glyburide",
+      "rosiglitazone",
+      "A1Cresult",
+      "glipizide",
+      "number_diagnoses",
+      "gender",
+      "discharge_disposition_id",
+      "insulin",
+      "admission_source_id",
+      "time_in_hospital",
+      "age"
+    ]
+  }
+}
