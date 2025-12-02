@@ -434,7 +434,7 @@ Model Training → Evaluation → Dashboard → Clinical Decision Support
 - Improves patient outcomes
 - Optimizes healthcare resources
 
-**Repository:** https://github.com/bvishnu08/diabetes-readmission-prediction-with-flagging-hisk-risk-patiences-
+**Repository:** https://github.com/bvishnu08/diabetes-readmission-prediction-with-flagging-high-risk-patients-
 
 ---
 
