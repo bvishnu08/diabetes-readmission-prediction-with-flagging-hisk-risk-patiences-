@@ -173,7 +173,7 @@ class Config:
         "metformin-rosiglitazone",       # Combination pill
         "metformin-pioglitazone",        # Combination pill
     )
-    
+
     # ===================================================================
     # HOW DO WE SPLIT THE DATA?
     # ===================================================================
