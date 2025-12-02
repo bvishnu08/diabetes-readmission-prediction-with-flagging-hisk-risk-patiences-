@@ -62,7 +62,6 @@ library(DT)
 
 **Bottom Line:** We built a tool that flags high-risk patients so hospitals can help them before it's too late.
 
----
 
 ## The Data {.smaller}
 
@@ -108,7 +107,6 @@ print(f"Patients: {df.shape[0]:,}")      # Number of patient records
 - **Features:** 50+ variables (age, medications, diagnoses, lab results, etc.)
 - **Target:** Will patient be readmitted within 30 days? (Yes/No)
 
----
 
 ## Challenge 1: Class Imbalance {.smaller}
 
@@ -182,7 +180,6 @@ def tune_threshold_for_recall(y_true, y_proba, target_recall=0.80):
 
 **Real Impact:** This is why we catch 80% of high-risk patients instead of just 60%!
 
----
 
 ## Challenge 2: Too Many Features {.smaller}
 
@@ -251,7 +248,6 @@ def select_features(X_train, y_train, k=10):
 
 **Result:** Instead of using all 50 features, we use the 10 most important ones!
 
----
 
 ## Challenge 3: Missing Data {.smaller}
 
@@ -325,7 +321,6 @@ def basic_clean(df, cfg):
 
 **Impact:** Without this cleaning, our models would crash or give bad predictions!
 
----
 
 ## Challenge 4: Black Box Problem {.smaller}
 
@@ -406,7 +401,6 @@ xgb_model = XGBClassifier(
 
 **Real Impact:** Doctors can trust the tool because they understand how it works!
 
----
 
 ## Our Pipeline {.smaller}
 
@@ -468,7 +462,6 @@ train_models(config)  # ← ONE LINE TO RULE THEM ALL!
 
 **How to Use:** Just run `python scripts/run_train.py` and everything happens automatically!
 
----
 
 ## How We Measured Success {.smaller}
 
@@ -549,7 +542,6 @@ def evaluate_model(y_true, y_pred, y_proba):
 
 **Key Insight:** Recall is most important because missing a high-risk patient is dangerous!
 
----
 
 ## The Results {.smaller}
 
@@ -580,7 +572,6 @@ kable(results, caption = "Model Performance on Test Set (20,000 patients)")
 
 **What This Means:** The models work! They can be used in real hospitals.
 
----
 
 ## The Dashboard {.smaller}
 
@@ -650,7 +641,6 @@ def predict_risk(patient_data):
 
 **Real Impact:** Doctors can actually use this in their daily work!
 
----
 
 ## Challenges & Solutions Summary {.smaller}
 
@@ -689,7 +679,6 @@ kable(challenges, caption = "Challenges, Solutions, and Code Locations")
 
 **Takeaway:** Every problem had a solution, and we focused on what matters most - catching high-risk patients.
 
----
 
 ## Key Takeaways {.smaller}
 
@@ -709,7 +698,6 @@ kable(challenges, caption = "Challenges, Solutions, and Code Locations")
 
 **Bottom Line:** We built something that actually works and can help real patients.
 
----
 
 ## Conclusion & Q&A {.smaller}
 
@@ -724,7 +712,6 @@ kable(challenges, caption = "Challenges, Solutions, and Code Locations")
 
 **Questions?**
 
----
 
 ## Appendix: Code File Reference {.smaller}
 
