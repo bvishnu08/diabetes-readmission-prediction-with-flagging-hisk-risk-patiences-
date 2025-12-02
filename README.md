@@ -50,12 +50,17 @@ and the dashboard perfectly in sync.
 ```
 .
 ├── README.md
-├── CODE_EXPLANATION.md
-├── PIPELINE_DIFFERENCES.md
 ├── requirements.txt
 ├── dashboard.py
+├── docs/
+│   ├── RUN_BOOK.md
+│   ├── COMPLETE_PROJECT_CODE.md
+│   ├── CODE_EXPLANATION.md
+│   └── PIPELINE_DIFFERENCES.md
 ├── data/
-│   ├── raw/diabetic_data.csv
+│   ├── raw/
+│   │   ├── diabetic_data.csv
+│   │   └── IDS_mapping.csv
 │   └── processed/{train,test}_processed.csv
 ├── models/
 │   ├── logreg_selected.joblib
@@ -65,6 +70,8 @@ and the dashboard perfectly in sync.
 │   ├── 01_eda.ipynb
 │   ├── 02_modeling.ipynb
 │   └── 03_implementation_details.ipynb
+├── reports/
+│   └── P2 Final_submission report.pdf
 ├── scripts/
 │   ├── run_train.py
 │   ├── run_eval.py
@@ -246,17 +253,22 @@ streamlit run dashboard.py
 ```
 .
 ├── README.md                    # This file
-├── CODE_EXPLANATION.md          # Deep dive into codebase
-├── PIPELINE_DIFFERENCES.md      # Notebook vs. production notes
 ├── requirements.txt             # Python dependencies
 ├── dashboard.py                 # Streamlit dashboard
 │
+├── docs/                        # Documentation
+│   ├── RUN_BOOK.md             # Step-by-step execution guide
+│   ├── COMPLETE_PROJECT_CODE.md # All project code in one file
+│   ├── CODE_EXPLANATION.md     # Deep dive into codebase
+│   └── PIPELINE_DIFFERENCES.md # Notebook vs. production notes
+│
 ├── data/
 │   ├── raw/
-│   │   └── diabetic_data.csv   # Raw UCI dataset
+│   │   ├── diabetic_data.csv   # Raw UCI dataset
+│   │   └── IDS_mapping.csv     # Feature ID mappings
 │   └── processed/
 │       ├── train_processed.csv # Processed training data
-│       └── test_processed.csv  # Processed test data
+│       └── test_processed.csv # Processed test data
 │
 ├── models/
 │   ├── logreg_selected.joblib  # Logistic Regression model
@@ -268,7 +280,8 @@ streamlit run dashboard.py
 │   ├── 02_modeling.ipynb
 │   └── 03_implementation_details.ipynb
 │
-├── reports/                    # Generated metrics/plots
+├── reports/                    # Project reports and submissions
+│   └── P2 Final_submission report.pdf
 │
 ├── scripts/                    # CLI entrypoints
 │   ├── run_train.py           # Train both models

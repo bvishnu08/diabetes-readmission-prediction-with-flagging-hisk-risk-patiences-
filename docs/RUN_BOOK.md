@@ -15,7 +15,7 @@ I put this run book together so my professor can follow the exact sequence I use
 | 5 | `scripts/run_eval.py` | Reads processed data + models + thresholds, prints results | Slides/report + dashboard sanity |
 | 6 | `dashboard.py` / `scripts/run_dashboard.py` | Streamlit UI tied to the same artifacts | Live demo |
 | 7 | `notebooks/03_implementation_details.ipynb` (+ HTML) | Narrative version of the workflow | Submission artifact |
-| 8 | Docs (`README.md`, `RUN_BOOK.md`, `COMPLETE_PROJECT_CODE.md`) | Explain the system front-to-back | Submission packet |
+| 8 | Docs (`README.md`, `docs/RUN_BOOK.md`, `docs/COMPLETE_PROJECT_CODE.md`) | Explain the system front-to-back | Submission packet |
 
 Follow the steps below in order and every file will line up with the outputs your professor expects.
 
@@ -99,7 +99,7 @@ To satisfy all the requested file types, I gather these:
 - `scripts/run_train.py`, `scripts/run_eval.py`, `scripts/run_dashboard.py`
 - Entire `src/` directory (zip if needed)
 - `requirements.txt`
-- Optional supporting docs: `COMPLETE_PROJECT_CODE.md`, `CODE_EXPLANATION.md`, `PIPELINE_DIFFERENCES.md`, `RUN_BOOK.md`
+- Optional supporting docs: `docs/COMPLETE_PROJECT_CODE.md`, `docs/CODE_EXPLANATION.md`, `docs/PIPELINE_DIFFERENCES.md`, `docs/RUN_BOOK.md`
 
 ---
 
