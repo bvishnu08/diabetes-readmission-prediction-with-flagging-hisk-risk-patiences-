@@ -57,3 +57,7 @@ logs/
 .RData
 .Ruserdata
 
+# Rendered outputs (generated files)
+*.html
+!notebooks/*.html
+
