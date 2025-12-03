@@ -1,6 +1,10 @@
 # Complete Setup Guide for Professor
 
-This guide provides step-by-step instructions to set up and run the Diabetes Readmission Prediction project on any local system using only the terminal/command prompt (no VS Code required).
+This guide provides step-by-step instructions to set up and run the Diabetes Readmission Prediction project on any local system. You can use either:
+- **Terminal/Command Prompt** (recommended)
+- **Spyder IDE** (alternative method)
+
+Both methods are fully documented below.
 
 ---
 
@@ -167,6 +171,87 @@ jupyter lab notebooks/03_implementation_details.ipynb
 ```bash
 jupyter notebook notebooks/03_implementation_details.ipynb
 ```
+
+---
+
+## **Alternative: Running in Spyder IDE**
+
+If you prefer using Spyder IDE instead of the terminal, follow these steps:
+
+### **Step 1: Complete Steps 1-5 Above First**
+
+You still need to create the virtual environment and install packages using the terminal (Steps 1-5 above).
+
+### **Step 2: Configure Spyder to Use Your Virtual Environment**
+
+1. Open Spyder
+2. Go to: **Tools → Preferences → Python Interpreter**
+3. Select: **Use the following Python interpreter**
+4. Browse and select your virtual environment's Python:
+   - **Mac/Linux:** `/path/to/265_final/.venv/bin/python`
+   - **Windows:** `C:\path\to\265_final\.venv\Scripts\python.exe`
+5. Click **Apply** and **OK**
+6. **Restart Spyder** for changes to take effect
+
+### **Step 3: Verify Spyder is Using Correct Environment**
+
+In Spyder's IPython console, run:
+```python
+import sys
+print(sys.executable)
+```
+
+You should see the path to `.venv/bin/python` (or `.venv\Scripts\python.exe` on Windows).
+
+### **Step 4: Run Training Script in Spyder**
+
+**Option A: Run from Editor**
+1. Open `scripts/run_train.py` in Spyder editor
+2. Click **Run** (green play button) or press `F5`
+3. Make sure "Run in current Python or IPython console" is selected
+
+**Option B: Run from IPython Console**
+```python
+%run scripts/run_train.py
+```
+
+### **Step 5: Run Evaluation Script in Spyder**
+
+**Option A: Run from Editor**
+1. Open `scripts/run_eval.py` in Spyder editor
+2. Click **Run** (F5)
+
+**Option B: Run from IPython Console**
+```python
+%run scripts/run_eval.py
+```
+
+### **Step 6: Run Dashboard (Must Use Terminal)**
+
+The dashboard needs to run in terminal (Spyder's console may not work well for Streamlit):
+
+1. Open terminal/command prompt
+2. Activate virtual environment:
+   ```bash
+   source .venv/bin/activate    # Mac/Linux
+   # OR
+   .venv\Scripts\activate      # Windows
+   ```
+3. Run dashboard:
+   ```bash
+   streamlit run dashboard.py
+   ```
+
+### **Spyder Troubleshooting**
+
+**Problem:** `ModuleNotFoundError` in Spyder  
+**Solution:** Spyder is not using the virtual environment. Re-check Step 2 above and restart Spyder.
+
+**Problem:** Script runs but can't find files  
+**Solution:** In Spyder, set working directory: **Run → Configuration per file → Working directory → The directory of the file being run**
+
+**Problem:** Dashboard won't start from Spyder console  
+**Solution:** Run dashboard from terminal/command prompt instead (Step 6 above).
 
 ---
 
