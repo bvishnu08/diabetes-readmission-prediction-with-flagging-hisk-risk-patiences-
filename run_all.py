@@ -10,12 +10,12 @@ import subprocess
 import os
 from pathlib import Path
 
-def run_command(cmd, shell=False):
+def run_command(cmd, shell=False, env=None):
     """Run a command and return success status"""
     try:
         if isinstance(cmd, str):
             cmd = cmd.split()
-        result = subprocess.run(cmd, shell=shell, check=True, capture_output=True, text=True)
+        result = subprocess.run(cmd, shell=shell, check=True, capture_output=True, text=True, env=env)
         return True, result.stdout
     except subprocess.CalledProcessError as e:
         return False, e.stderr
@@ -98,7 +98,7 @@ def run_training():
     env = os.environ.copy()
     env["OMP_NUM_THREADS"] = "1"
     
-    success, output = run_command([str(venv_python), "scripts/run_train.py"], shell=False)
+    success, output = run_command([str(venv_python), "scripts/run_train.py"], shell=False, env=env)
     if not success:
         print()
         print(f"❌ Training failed! Error: {output}")
@@ -123,7 +123,7 @@ def run_evaluation():
     env = os.environ.copy()
     env["OMP_NUM_THREADS"] = "1"
     
-    success, output = run_command([str(venv_python), "scripts/run_eval.py"], shell=False)
+    success, output = run_command([str(venv_python), "scripts/run_eval.py"], shell=False, env=env)
     if not success:
         print()
         print(f"❌ Evaluation failed! Error: {output}")
