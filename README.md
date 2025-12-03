@@ -1,5 +1,7 @@
 # Diabetes 30-Day Readmission Prediction
 
+> **🚀 NEW USERS: Start here!** → **[SETUP_GUIDE.md](SETUP_GUIDE.md)** - Complete step-by-step setup instructions for running this project on any local system (terminal-based, no VS Code required).
+
 This MSBA-265 project predicts whether a diabetic inpatient will be
 readmitted within 30 days of discharge. The repo is organized so it can be
 explained live (P2) and submitted as a polished artifact (P3):
