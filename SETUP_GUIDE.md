@@ -1,10 +1,74 @@
 # Complete Setup Guide for Professor
 
-This guide provides step-by-step instructions to set up and run the Diabetes Readmission Prediction project on any local system. You can use either:
-- **Terminal/Command Prompt** (recommended)
-- **Spyder IDE** (alternative method)
+This guide provides step-by-step instructions to set up and run the Diabetes Readmission Prediction project on any local system.
 
-Both methods are fully documented below.
+> **🚀 QUICK START (EASIEST):** Want to run everything with one command? Use the automated scripts:
+> - **Mac/Linux:** `./run_all.sh` or `python run_all.py`
+> - **Windows:** `run_all.bat` or `python run_all.py`
+> 
+> These scripts automatically: create virtual environment, install packages, train models, and evaluate them - all in one go!
+
+---
+
+## **Three Ways to Run This Project:**
+
+1. **One-Command Scripts** (Easiest - Recommended) ⭐
+   - `run_all.sh` (Mac/Linux) or `run_all.bat` (Windows) or `run_all.py` (All platforms)
+   - Does everything automatically in one command
+
+2. **Manual Step-by-Step** (Terminal/Command Prompt)
+   - Follow the detailed steps below
+   - More control over each step
+
+3. **Spyder IDE** (Alternative method)
+   - For users who prefer Spyder IDE
+   - See "Alternative: Running in Spyder IDE" section below
+
+---
+
+## **Method 1: One-Command Scripts (EASIEST)**
+
+### **For Mac/Linux:**
+```bash
+# Navigate to project folder
+cd /path/to/265_final
+
+# Run the automated script
+./run_all.sh
+```
+
+### **For Windows:**
+```cmd
+REM Navigate to project folder
+cd C:\path\to\265_final
+
+REM Run the automated script
+run_all.bat
+```
+
+### **For Any Platform (Python script):**
+```bash
+# Navigate to project folder
+cd /path/to/265_final
+
+# Run the Python script (works on Mac, Linux, and Windows)
+python run_all.py
+```
+
+**That's it!** The script will:
+- ✅ Create virtual environment (if needed)
+- ✅ Install all required packages
+- ✅ Train both models
+- ✅ Evaluate the models
+- ✅ Show you the results
+
+**Total time: 5-10 minutes (mostly waiting for training)**
+
+---
+
+## **Method 2: Manual Step-by-Step**
+
+If you prefer to run each step manually, follow these instructions:
 
 ---
 
