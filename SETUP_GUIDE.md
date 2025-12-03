@@ -2,11 +2,13 @@
 
 This guide provides step-by-step instructions to set up and run the Diabetes Readmission Prediction project on any local system.
 
-> **🚀 QUICK START (EASIEST):** Want to run everything with one command? Use the automated scripts:
-> - **Mac/Linux:** `./run_all.sh` or `python run_all.py`
-> - **Windows:** `run_all.bat` or `python run_all.py`
+> **🚀 EASIEST WAY (ONE COMMAND):** Download from GitHub and run everything automatically!
+> - **Mac/Linux:** `./download_and_run.sh` or `python download_and_run.py`
+> - **Windows:** `download_and_run.bat` or `python download_and_run.py`
 > 
-> These scripts automatically: create virtual environment, install packages, train models, and evaluate them - all in one go!
+> These scripts automatically: **download repository from GitHub**, create virtual environment, install packages, train models, and evaluate them - **all in one command!**
+> 
+> **If you already have the repository:** Use `run_all.sh` (Mac/Linux), `run_all.bat` (Windows), or `run_all.py` (all platforms)
 
 ---
 
