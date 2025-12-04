@@ -16,6 +16,7 @@ build/
 venv/
 env/
 ENV/
+test_venv/
 
 # Models (keep trained models, ignore temp files)
 models/*.tmp
