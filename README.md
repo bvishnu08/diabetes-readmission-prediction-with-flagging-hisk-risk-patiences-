@@ -100,20 +100,109 @@ and the dashboard perfectly in sync.
 
 ## How to run
 
+### 🚀 **EASIEST WAY: One Command (Recommended)**
+
+After cloning/downloading the repository:
+
 ```bash
+python run_all.py
+```
+
+This single command will:
+- ✅ Create virtual environment
+- ✅ Install all packages
+- ✅ Train both models
+- ✅ Evaluate models
+- ✅ Show results
+
+**Total time: 5-10 minutes**
+
+---
+
+### 📥 **Step 1: Get the Repository**
+
+**Option A: Git Clone**
+```bash
+git clone https://github.com/bvishnu08/diabetes-readmission-prediction-with-flagging-hisk-risk-patiences-.git
+cd diabetes-readmission-prediction-with-flagging-hisk-risk-patiences-
+```
+
+**Option B: Download ZIP** (No Git needed)
+1. Go to: https://github.com/bvishnu08/diabetes-readmission-prediction-with-flagging-hisk-risk-patiences-
+2. Click "Code" → "Download ZIP"
+3. Extract to a **SHORT path** (e.g., `C:\Projects\` on Windows)
+4. Rename folder to something short (e.g., `diabetes-project`)
+5. Open terminal in that folder
+
+---
+
+### 🎯 **Step 2: Run Everything**
+
+**Method 1: Automated Script (Easiest)**
+```bash
+python run_all.py
+```
+
+**Method 2: Step-by-Step (Manual)**
+```bash
+# 1. Create virtual environment
 python -m venv .venv
-source .venv/bin/activate          # Windows: .venv\Scripts\activate
+
+# 2. Activate virtual environment
+source .venv/bin/activate          # Mac/Linux
+# OR
+.venv\Scripts\activate             # Windows
+
+# 3. Install packages
 pip install -r requirements.txt
 
-# Train Logistic Regression + XGBoost and store thresholds
+# 4. Train models
 python scripts/run_train.py
 
-# Evaluate on the held-out test split
+# 5. Evaluate models
 python scripts/run_eval.py
 
-# Optional dashboard (Streamlit)
+# 6. Launch dashboard (optional)
 streamlit run dashboard.py
 ```
+
+---
+
+### 📊 **Step 3: View Results**
+
+**In Terminal:**
+- Model metrics will be displayed after evaluation
+
+**Interactive Dashboard:**
+```bash
+streamlit run dashboard.py
+# Then open: http://localhost:8501
+```
+
+**Jupyter Notebooks:**
+```bash
+jupyter lab notebooks/03_implementation_details.ipynb
+```
+
+---
+
+### ⚠️ **Windows Users - Important**
+
+If you get "Filename too long" error:
+- Use **ZIP download** instead of Git clone
+- Extract to a **SHORT path** (e.g., `C:\Projects\`)
+- See `docs/WINDOWS_PATH_LENGTH_FIX.md` for details
+
+---
+
+### 📖 **Detailed Guides**
+
+- **Complete Setup:** `SETUP_GUIDE.md` - Full step-by-step instructions
+- **Quick Start:** `docs/QUICK_START.md` - Quick reference
+- **Clone Guide:** `HOW_TO_CLONE_AND_RUN.md` - Simple clone instructions
+- **Windows Fixes:** `docs/WINDOWS_PATH_LENGTH_FIX.md` - Windows troubleshooting
+
+---
 
 Artifacts land in `models/` (joblib pipelines + thresholds) and
 `data/processed/` (train/test CSVs) so notebooks, evaluation, and Streamlit all
