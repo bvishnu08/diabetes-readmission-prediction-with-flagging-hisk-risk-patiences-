@@ -2,7 +2,56 @@
 
 This guide provides step-by-step instructions to set up and run the Diabetes Readmission Prediction project on any local system.
 
-> **🚀 EASIEST WAY (ONE COMMAND):** Download from GitHub and run everything automatically!
+---
+
+## 📧 **Quick Start Message for Professors**
+
+**Copy and paste this message to share with your professor:**
+
+---
+
+Hi Professor,
+
+Here is my MSBA-265 project repository:
+
+**GitHub Link:** https://github.com/bvishnu08/diabetes-readmission-prediction-with-flagging-hisk-risk-patiences-
+
+**TO RUN EVERYTHING (3 Simple Steps):**
+
+1. **Download the repository:**
+   - Go to the GitHub link above
+   - Click green "Code" button → "Download ZIP"
+   - Extract the ZIP file
+
+2. **Open terminal/command prompt in the extracted folder**
+
+3. **Run this ONE command:**
+   ```bash
+   python download_and_run.py
+   ```
+
+**That's it!** The script will automatically:
+- ✅ Create virtual environment
+- ✅ Install all packages
+- ✅ Train both models (Logistic Regression + XGBoost)
+- ✅ Evaluate models
+- ✅ Show results
+
+**Total time: 5-10 minutes**
+
+**All documentation is included in the repository:**
+- `README.md` - Project overview
+- `SETUP_GUIDE.md` - Detailed setup instructions (this file)
+- `QUICK_START.md` - Quick reference guide
+- `docs/RUN_BOOK.md` - Step-by-step execution guide
+
+Thank you!
+
+---
+
+## 🚀 **EASIEST WAY (ONE COMMAND)**
+
+> **Download from GitHub and run everything automatically!**
 > - **Mac/Linux:** `./download_and_run.sh` or `python download_and_run.py`
 > - **Windows:** `download_and_run.bat` or `python download_and_run.py`
 > 
@@ -30,30 +79,49 @@ This guide provides step-by-step instructions to set up and run the Diabetes Rea
 
 ## **Method 1: One-Command Scripts (EASIEST)**
 
-### **For Mac/Linux:**
+### **Option A: Download from GitHub + Run (Recommended for First Time)**
+
+This script downloads the repository from GitHub and runs everything automatically:
+
+**For Mac/Linux:**
+```bash
+# Download and run in one command
+./download_and_run.sh
+# OR
+python download_and_run.py
+```
+
+**For Windows:**
+```cmd
+REM Download and run in one command
+download_and_run.bat
+REM OR
+python download_and_run.py
+```
+
+### **Option B: Run If You Already Have the Repository**
+
+If you've already downloaded/cloned the repository:
+
+**For Mac/Linux:**
 ```bash
 # Navigate to project folder
-cd /path/to/265_final
+cd /path/to/diabetes-readmission-prediction-with-flagging-hisk-risk-patiences-
 
 # Run the automated script
 ./run_all.sh
+# OR
+python run_all.py
 ```
 
-### **For Windows:**
+**For Windows:**
 ```cmd
 REM Navigate to project folder
-cd C:\path\to\265_final
+cd C:\path\to\diabetes-readmission-prediction-with-flagging-hisk-risk-patiences-
 
 REM Run the automated script
 run_all.bat
-```
-
-### **For Any Platform (Python script):**
-```bash
-# Navigate to project folder
-cd /path/to/265_final
-
-# Run the Python script (works on Mac, Linux, and Windows)
+REM OR
 python run_all.py
 ```
 
