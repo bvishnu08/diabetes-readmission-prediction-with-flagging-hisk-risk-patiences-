@@ -36,7 +36,7 @@
 - [x] `notebooks/01_eda.ipynb` - Exploratory Data Analysis
 - [x] `notebooks/02_modeling.ipynb` - Modeling experiments
 - [x] `notebooks/03_implementation_details.ipynb` - Implementation narrative
-- [x] `notebooks/03_implementation_details.html` - Exported HTML version
+- [ ] `notebooks/03_implementation_details.html` - Optional: Can be generated from notebook
 
 **Submission Format:**
 - Submit both `.ipynb` (for review) and `.html` (for easy viewing)

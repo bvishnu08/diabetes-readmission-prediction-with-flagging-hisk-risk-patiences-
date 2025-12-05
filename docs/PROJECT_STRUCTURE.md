@@ -40,8 +40,7 @@
 ├── 📂 notebooks/                   # Jupyter notebooks
 │   ├── 01_eda.ipynb                # Exploratory Data Analysis
 │   ├── 02_modeling.ipynb           # Modeling experiments
-│   ├── 03_implementation_details.ipynb  # Implementation narrative
-│   └── 03_implementation_details.html   # Exported HTML
+│   └── 03_implementation_details.ipynb  # Implementation narrative
 │
 ├── 📂 docs/                        # Documentation
 │   ├── README.md                   # Documentation guide
