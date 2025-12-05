@@ -31,7 +31,6 @@ Here is my MSBA-265 project repository:
    ```bash
    python run_all.py
    ```
-   (Or `python download_and_run.py` if you prefer)
 
 **That's it!** The script will automatically:
 - ✅ Create virtual environment
@@ -52,272 +51,434 @@ Thank you!
 
 ---
 
-## 🚀 **EASIEST WAY (ONE COMMAND)**
-
-> **Download from GitHub and run everything automatically!**
-> - **Mac/Linux:** `./download_and_run.sh` or `python download_and_run.py`
-> - **Windows:** `download_and_run.bat` or `python download_and_run.py`
-> 
-> These scripts automatically: **download repository from GitHub**, create virtual environment, install packages, train models, and evaluate them - **all in one command!**
-> 
-> **If you already have the repository:** Use `run_all.sh` (Mac/Linux), `run_all.bat` (Windows), or `run_all.py` (all platforms)
+# 📚 **COMPLETE STEP-BY-STEP GUIDE**
 
 ---
 
-## **Three Ways to Run This Project:**
+## **STEP 1: Understanding the Files** 📁
 
-1. **One-Command Scripts** (Easiest - Recommended) ⭐
-   - `run_all.sh` (Mac/Linux) or `run_all.bat` (Windows) or `run_all.py` (All platforms)
-   - Does everything automatically in one command
+### **1.1 Project Structure Overview**
 
-2. **Manual Step-by-Step** (Terminal/Command Prompt)
-   - Follow the detailed steps below
-   - More control over each step
+```
+diabetes-project/
+├── README.md                    # Main project overview
+├── SETUP_GUIDE.md              # This file - setup instructions
+├── COMPLETE_RUN_GUIDE.md       # Complete run instructions
+├── HOW_TO_CLONE_AND_RUN.md    # Simple clone guide
+├── requirements.txt            # Python package dependencies
+├── dashboard.py                # Interactive Streamlit dashboard
+│
+├── run_all.py                  # ⭐ ONE-COMMAND RUNNER (Use this!)
+├── download_and_run.py         # Download from GitHub + run
+│
+├── docs/                       # All documentation
+│   ├── QUICK_START.md
+│   ├── RUN_BOOK.md
+│   ├── PROJECT_STRUCTURE.md
+│   ├── WINDOWS_PATH_LENGTH_FIX.md
+│   └── ... (more guides)
+│
+├── src/                        # Source code (core project)
+│   ├── config.py              # Configuration settings
+│   ├── preprocess.py          # Data cleaning & splitting
+│   ├── feature_selection.py   # Feature selection
+│   ├── model.py               # Model definitions
+│   ├── train.py               # Training logic
+│   └── evaluate.py            # Evaluation logic
+│
+├── scripts/                    # Easy-to-run scripts
+│   ├── run_train.py           # Train models
+│   ├── run_eval.py            # Evaluate models
+│   └── run_dashboard.py      # Launch dashboard
+│
+├── data/
+│   ├── raw/
+│   │   ├── diabetic_data.csv  # ⭐ Original dataset (MUST EXIST)
+│   │   └── IDS_mapping.csv    # Feature ID mappings
+│   └── processed/              # Created after training
+│       ├── train_processed.csv
+│       └── test_processed.csv
+│
+├── models/                     # Created after training
+│   ├── logreg_selected.joblib # ⭐ Logistic Regression model
+│   ├── xgb_selected.joblib    # ⭐ XGBoost model
+│   └── thresholds.json        # ⭐ Thresholds & features
+│
+├── notebooks/                  # Jupyter notebooks
+│   ├── 01_eda.ipynb           # Exploratory Data Analysis
+│   ├── 02_modeling.ipynb     # Modeling experiments
+│   └── 03_implementation_details.ipynb  # Main implementation
+│
+└── reports/                    # Project reports
+    └── P2 Final_submission report.pdf
+```
 
-3. **Spyder IDE** (Alternative method)
-   - For users who prefer Spyder IDE
-   - See "Alternative: Running in Spyder IDE" section below
+### **1.2 Key Files Explained**
+
+| File | Purpose | When to Use |
+|------|---------|-------------|
+| `run_all.py` | ⭐ **EASIEST** - Runs everything automatically | Use this first! |
+| `download_and_run.py` | Downloads from GitHub + runs everything | First time setup |
+| `scripts/run_train.py` | Trains both models | After setup, to retrain |
+| `scripts/run_eval.py` | Evaluates models and shows metrics | After training |
+| `dashboard.py` | Interactive web dashboard | To visualize results |
+| `test_models.py` | Verifies models work correctly | To check everything |
+| `requirements.txt` | Lists all Python packages needed | Auto-installed by scripts |
+
+### **1.3 What Gets Created After Running**
+
+**After running `python run_all.py`, these files are created:**
+
+- ✅ `models/logreg_selected.joblib` - Trained Logistic Regression
+- ✅ `models/xgb_selected.joblib` - Trained XGBoost
+- ✅ `models/thresholds.json` - Thresholds and selected features
+- ✅ `data/processed/train_processed.csv` - Processed training data
+- ✅ `data/processed/test_processed.csv` - Processed test data
+- ✅ `.venv/` - Virtual environment (Python packages)
 
 ---
 
-## **Method 1: One-Command Scripts (EASIEST)**
+## **STEP 2: How to Run** 🚀
 
-### **Option A: Download from GitHub + Run (Recommended for First Time)**
+### **2.1 Method 1: One Command (EASIEST - Recommended)** ⭐
 
-This script downloads the repository from GitHub and runs everything automatically:
+**If you already have the repository:**
 
-**For Mac/Linux:**
 ```bash
-# Download and run in one command
+python run_all.py
+```
+
+**That's it!** This single command:
+- Creates virtual environment
+- Installs all packages
+- Trains both models
+- Evaluates models
+- Shows results
+
+**Time: 5-10 minutes**
+
+---
+
+### **2.2 Method 2: Download from GitHub + Run**
+
+**For first-time setup:**
+
+**Windows:**
+```cmd
+python download_and_run.py
+```
+
+**Mac/Linux:**
+```bash
+python download_and_run.py
+# OR
 ./download_and_run.sh
-# OR
-python download_and_run.py
 ```
 
-**For Windows:**
-```cmd
-REM Download and run in one command
-download_and_run.bat
-REM OR
-python download_and_run.py
-```
-
-### **Option B: Run If You Already Have the Repository**
-
-If you've already downloaded/cloned the repository:
-
-**For Mac/Linux:**
-```bash
-# Navigate to project folder
-cd /path/to/diabetes-readmission-prediction-with-flagging-hisk-risk-patiences-
-
-# Run the automated script
-./run_all.sh
-# OR
-python run_all.py
-```
-
-**For Windows:**
-```cmd
-REM Navigate to project folder
-cd C:\path\to\diabetes-readmission-prediction-with-flagging-hisk-risk-patiences-
-
-REM Run the automated script
-run_all.bat
-REM OR
-python run_all.py
-```
-
-**That's it!** The script will:
-- ✅ Create virtual environment (if needed)
-- ✅ Install all required packages
-- ✅ Train both models
-- ✅ Evaluate the models
-- ✅ Show you the results
-
-**Total time: 5-10 minutes (mostly waiting for training)**
+This will:
+1. Download repository from GitHub
+2. Set up everything
+3. Run training and evaluation
 
 ---
 
-## **Method 2: Manual Step-by-Step**
+### **2.3 Method 3: Manual Step-by-Step**
 
-If you prefer to run each step manually, follow these instructions:
+If you prefer more control:
 
----
-
-## **Step 1: Navigate to Project Folder**
-
-Open terminal/command prompt and go to where the project is saved:
-
+#### **Step 2.3.1: Navigate to Project Folder**
 ```bash
-cd /path/to/265_final
+cd /path/to/diabetes-project
 ```
 
-*(Replace `/path/to/265_final` with the actual location where the project folder is)*
-
----
-
-## **Step 2: Create Virtual Environment**
-
-This creates an isolated Python environment so the project doesn't interfere with other Python projects:
-
-**On Mac/Linux:**
-```bash
-python3 -m venv .venv
-```
-
-**On Windows:**
+#### **Step 2.3.2: Create Virtual Environment**
 ```bash
 python -m venv .venv
 ```
 
-*(If `python3` doesn't work, try `python`)*
-
----
-
-## **Step 3: Activate Virtual Environment**
-
-This "turns on" the virtual environment:
-
-**On Mac/Linux:**
+#### **Step 2.3.3: Activate Virtual Environment**
 ```bash
+# Mac/Linux
 source .venv/bin/activate
-```
 
-**On Windows:**
-```bash
+# Windows
 .venv\Scripts\activate
 ```
 
-**You'll know it worked when you see `(.venv)` at the start of your terminal prompt!**
+**You'll see `(.venv)` in your prompt when activated.**
 
----
-
-## **Step 4: Upgrade pip (Package Installer)**
-
+#### **Step 2.3.4: Install Packages**
 ```bash
 pip install --upgrade pip
-```
-
----
-
-## **Step 5: Install All Required Packages**
-
-This installs all the libraries the project needs:
-
-```bash
 pip install -r requirements.txt
 ```
 
-**This will take a few minutes. Wait until it finishes!**
-
----
-
-## **Step 6: Verify Data Files Exist**
-
-Check that the raw data file is present:
-
-**On Mac/Linux:**
-```bash
-ls data/raw/diabetic_data.csv
-```
-
-**On Windows:**
-```bash
-dir data\raw\diabetic_data.csv
-```
-
-**If you see the file listed, you're good! If you get an error, the data file is missing.**
-
----
-
-## **Step 7: Run Training (This Creates Everything)**
-
-This is the main command that does everything:
-- Cleans the data
-- Trains both models (Logistic Regression + XGBoost)
-- Saves all the models and processed data
-
+#### **Step 2.3.5: Train Models**
 ```bash
 python scripts/run_train.py
 ```
 
-**This will take 2-5 minutes. You'll see progress messages like:**
-- `[preprocess] Saved train to...`
-- `[train] Training Logistic Regression...`
-- `[train] Training XGBoost...`
-- `✅ Saved models to models/...`
-
-**If you get an error about "OMP" or "SHM2", run this instead:**
-```bash
-OMP_NUM_THREADS=1 python scripts/run_train.py
-```
-
-*(On Windows, set the environment variable first: `set OMP_NUM_THREADS=1` then run the script)*
-
----
-
-## **Step 8: Run Evaluation (Test the Models)**
-
-This tests how good the models are:
-
+#### **Step 2.3.6: Evaluate Models**
 ```bash
 python scripts/run_eval.py
 ```
 
-**You'll see a detailed report comparing both models with metrics like:**
-- Accuracy
-- Recall (how many readmissions we catch)
-- Precision (how many are false alarms)
-- F1-Score
-- ROC-AUC
+---
 
-**If you get an "OMP" error, use:**
+## **STEP 3: How to Execute (Run Specific Tasks)** ⚙️
+
+### **3.1 Execute Training Only**
+
 ```bash
-OMP_NUM_THREADS=1 python scripts/run_eval.py
+# Activate virtual environment first
+source .venv/bin/activate    # Mac/Linux
+# OR
+.venv\Scripts\activate        # Windows
+
+# Run training
+python scripts/run_train.py
+```
+
+**What it does:**
+- Cleans and preprocesses data
+- Selects best features
+- Trains Logistic Regression (20 features)
+- Trains XGBoost (25 features)
+- Tunes thresholds
+- Saves models to `models/` folder
+
+**Time: 2-5 minutes**
+
+---
+
+### **3.2 Execute Evaluation Only**
+
+```bash
+# Activate virtual environment first
+source .venv/bin/activate    # Mac/Linux
+# OR
+.venv\Scripts\activate        # Windows
+
+# Run evaluation
+python scripts/run_eval.py
+```
+
+**What it does:**
+- Loads trained models
+- Tests on held-out test set
+- Calculates metrics (Recall, Precision, F1, ROC-AUC)
+- Shows confusion matrices
+- Provides clinical interpretation
+- Recommends best model
+
+**Time: 1-2 minutes**
+
+---
+
+### **3.3 Execute Dashboard**
+
+```bash
+# Activate virtual environment first
+source .venv/bin/activate    # Mac/Linux
+# OR
+.venv\Scripts\activate        # Windows
+
+# Run dashboard
+streamlit run dashboard.py
+# OR
+python scripts/run_dashboard.py
+```
+
+**What it does:**
+- Starts local web server
+- Opens browser automatically
+- Shows interactive visualizations
+- Displays model metrics
+- Provides prediction playground
+
+**Access:** http://localhost:8501
+
+**To stop:** Press `Ctrl+C` in terminal
+
+---
+
+### **3.4 Execute Verification Script**
+
+```bash
+# Activate virtual environment first
+source .venv/bin/activate    # Mac/Linux
+# OR
+.venv\Scripts\activate        # Windows
+
+# Run verification
+python test_models.py
+```
+
+**What it does:**
+- Checks all files exist
+- Verifies models can be loaded
+- Displays thresholds
+- Shows file sizes
+- Confirms everything works
+
+---
+
+## **STEP 4: How to Study (Explore the Project)** 📖
+
+### **4.1 Study the Code Structure**
+
+**Start with these files in order:**
+
+1. **`src/config.py`** - Configuration and settings
+   - Feature lists
+   - File paths
+   - Model parameters
+
+2. **`src/preprocess.py`** - Data preprocessing
+   - Data cleaning
+   - Train/test splitting
+   - Feature engineering
+
+3. **`src/model.py`** - Model definitions
+   - Pipeline structure
+   - Preprocessing steps
+   - Model architectures
+
+4. **`src/train.py`** - Training logic
+   - Feature selection
+   - Model training
+   - Threshold tuning
+
+5. **`src/evaluate.py`** - Evaluation logic
+   - Metric calculations
+   - Clinical interpretation
+   - Model comparison
+
+---
+
+### **4.2 Study with Jupyter Notebooks**
+
+**Open notebooks in order:**
+
+#### **Notebook 1: Exploratory Data Analysis**
+```bash
+jupyter lab notebooks/01_eda.ipynb
+```
+**What to study:**
+- Data overview
+- Feature distributions
+- Missing values
+- Basic statistics
+
+#### **Notebook 2: Modeling Experiments**
+```bash
+jupyter lab notebooks/02_modeling.ipynb
+```
+**What to study:**
+- Model experiments
+- Hyperparameter testing
+- Initial results
+
+#### **Notebook 3: Implementation Details** ⭐
+```bash
+jupyter lab notebooks/03_implementation_details.ipynb
+```
+**What to study:**
+- Complete pipeline walkthrough
+- Feature importance
+- Model comparisons
+- Visualizations
+- Code explanations
+
+**This is the main notebook - most comprehensive!**
+
+---
+
+### **4.3 Study the Documentation**
+
+**Read in this order:**
+
+1. **`README.md`** - Project overview and quick start
+2. **`SETUP_GUIDE.md`** - This file - complete setup guide
+3. **`docs/RUN_BOOK.md`** - Detailed execution guide
+4. **`docs/CODE_EXPLANATION.md`** - Deep dive into code
+5. **`docs/PROJECT_STRUCTURE.md`** - Repository structure map
+
+---
+
+### **4.4 Study the Results**
+
+**After running evaluation, study:**
+
+1. **Terminal Output:**
+   - Model metrics
+   - Confusion matrices
+   - Clinical interpretations
+
+2. **Dashboard:**
+   - Interactive charts
+   - ROC curves
+   - Feature importance plots
+
+3. **Generated Files:**
+   - `models/thresholds.json` - See thresholds and features
+   - `data/processed/*.csv` - See processed data
+
+---
+
+## **STEP 5: How to Check (Verify Everything Works)** ✅
+
+### **5.1 Check Files Exist**
+
+**Verify all required files are present:**
+
+```bash
+# Check data file (MUST EXIST)
+ls data/raw/diabetic_data.csv    # Mac/Linux
+dir data\raw\diabetic_data.csv   # Windows
+
+# Check models (created after training)
+ls models/*.joblib models/*.json    # Mac/Linux
+dir models\*.joblib models\*.json   # Windows
+```
+
+**Required files:**
+- ✅ `data/raw/diabetic_data.csv` - Must exist before running
+- ✅ `models/logreg_selected.joblib` - Created after training
+- ✅ `models/xgb_selected.joblib` - Created after training
+- ✅ `models/thresholds.json` - Created after training
+
+---
+
+### **5.2 Check Models Work**
+
+**Run verification script:**
+
+```bash
+python test_models.py
+```
+
+**Expected output:**
+```
+✅ All files exist
+✅ Thresholds loaded successfully
+✅ Logistic Regression model loads successfully
+✅ XGBoost model loads successfully
+✅ All checks passed!
 ```
 
 ---
 
-## **Step 9: Verify Generated Files and Models**
+### **5.3 Check Model Files Manually**
 
-After training completes, verify that all files were created successfully:
+#### **View Thresholds (JSON - Readable):**
 
-### **Check Generated Files**
-
-**On Mac/Linux:**
-```bash
-# Check models
-ls -lh models/*.joblib models/*.json
-
-# Check processed data
-ls -lh data/processed/*.csv
-```
-
-**On Windows:**
-```bash
-# Check models
-dir models\*.joblib models\*.json
-
-# Check processed data
-dir data\processed\*.csv
-```
-
-**You should see:**
-- `models/logreg_selected.joblib` - Logistic Regression model
-- `models/xgb_selected.joblib` - XGBoost model
-- `models/thresholds.json` - Thresholds and feature lists
-- `data/processed/train_processed.csv` - Processed training data
-- `data/processed/test_processed.csv` - Processed test data
-
-### **View Thresholds File (JSON - Readable)**
-
-**On Mac/Linux:**
+**Mac/Linux:**
 ```bash
 cat models/thresholds.json
 ```
 
-**On Windows:**
+**Windows:**
 ```cmd
 type models\thresholds.json
 ```
@@ -327,325 +488,189 @@ type models\thresholds.json
 notepad models\thresholds.json
 ```
 
-This shows the thresholds and selected features for each model.
-
-### **Verify Models Can Be Loaded**
-
-Create a test script to verify models work:
-
-**Create file `test_models.py`:**
-```python
-import joblib
-import json
-import os
-
-print("=== VERIFYING MODEL FILES ===\n")
-
-# Check if files exist
-files_to_check = [
-    'models/logreg_selected.joblib',
-    'models/xgb_selected.joblib',
-    'models/thresholds.json',
-    'data/processed/train_processed.csv',
-    'data/processed/test_processed.csv'
-]
-
-print("1. Checking file existence:")
-for file in files_to_check:
-    if os.path.exists(file):
-        size = os.path.getsize(file) / 1024  # KB
-        print(f"   ✅ {file} ({size:.1f} KB)")
-    else:
-        print(f"   ❌ {file} - NOT FOUND")
-
-# Load and display thresholds
-print("\n2. Loading thresholds:")
-try:
-    with open('models/thresholds.json', 'r') as f:
-        thresholds = json.load(f)
-    print("   ✅ Thresholds loaded successfully")
-    print(f"   - LR threshold: {thresholds['logreg']['threshold']}")
-    print(f"   - XGB threshold: {thresholds['xgb']['threshold']}")
-    print(f"   - LR features: {len(thresholds['logreg']['selected_features'])} features")
-    print(f"   - XGB features: {len(thresholds['xgb']['selected_features'])} features")
-except Exception as e:
-    print(f"   ❌ Error loading thresholds: {e}")
-
-# Test loading models
-print("\n3. Testing model loading:")
-try:
-    lr_model = joblib.load('models/logreg_selected.joblib')
-    print("   ✅ Logistic Regression model loads successfully")
-except Exception as e:
-    print(f"   ❌ Error loading LR model: {e}")
-
-try:
-    xgb_model = joblib.load('models/xgb_selected.joblib')
-    print("   ✅ XGBoost model loads successfully")
-except Exception as e:
-    print(f"   ❌ Error loading XGB model: {e}")
-
-print("\n✅ All checks complete!")
-```
-
-**Run the verification:**
-```bash
-python test_models.py
-```
-
-**Expected output:**
-- ✅ All files exist
-- ✅ Thresholds load successfully
-- ✅ Both models load successfully
+**You'll see:**
+- Threshold values for each model
+- Selected features for each model
+- Model configurations
 
 ---
 
-## **Step 10: Launch Dashboard (Optional - Interactive Web App)**
+#### **Load Models in Python:**
 
-This opens a web browser with an interactive dashboard:
+```bash
+python
+```
+
+Then:
+```python
+import joblib
+import json
+
+# Load thresholds
+with open('models/thresholds.json', 'r') as f:
+    thresholds = json.load(f)
+print("Thresholds:", thresholds)
+
+# Load Logistic Regression
+lr_model = joblib.load('models/logreg_selected.joblib')
+print("LR model loaded:", type(lr_model))
+
+# Load XGBoost
+xgb_model = joblib.load('models/xgb_selected.joblib')
+print("XGB model loaded:", type(xgb_model))
+```
+
+---
+
+### **5.4 Check Evaluation Results**
+
+**Run evaluation to see results:**
+
+```bash
+python scripts/run_eval.py
+```
+
+**Check for:**
+- ✅ Model metrics displayed
+- ✅ Confusion matrices shown
+- ✅ Clinical interpretations provided
+- ✅ Model recommendation given
+- ✅ No errors in output
+
+---
+
+### **5.5 Check Dashboard Works**
+
+**Launch dashboard:**
 
 ```bash
 streamlit run dashboard.py
 ```
 
-**This will:**
-- Start a local web server
-- Open your browser automatically
-- Show the dashboard at `http://localhost:8501`
-
-**In the dashboard you can:**
-- View model performance metrics
-- See ROC curves and confusion matrices
-- Explore feature importance
-- Make predictions with the trained models
-
-**To stop the dashboard:** Press `Ctrl+C` in the terminal
+**Check:**
+- ✅ Browser opens automatically
+- ✅ Dashboard loads at http://localhost:8501
+- ✅ Metrics displayed
+- ✅ Charts visible
+- ✅ No errors
 
 ---
 
-## **Step 11: Run Jupyter Notebook (Optional - For Exploration)**
+### **5.6 Complete Verification Checklist**
 
-If you want to see the implementation notebook:
+**After running the project, verify:**
 
+- [ ] Virtual environment created (`.venv` folder exists)
+- [ ] Packages installed (no import errors)
+- [ ] Data file exists (`data/raw/diabetic_data.csv`)
+- [ ] Models trained (`models/*.joblib` files exist)
+- [ ] Thresholds saved (`models/thresholds.json` exists)
+- [ ] Processed data created (`data/processed/*.csv` files exist)
+- [ ] Evaluation completed (metrics displayed)
+- [ ] Models can be loaded (test_models.py passes)
+- [ ] Dashboard runs (if tested)
+
+**Quick test command:**
 ```bash
-jupyter lab notebooks/03_implementation_details.ipynb
+python test_models.py && python scripts/run_eval.py
 ```
 
-**Or if you prefer classic Jupyter:**
+If both succeed, everything works! ✅
+
+---
+
+## **STEP 6: Troubleshooting** 🆘
+
+### **Problem: "Python not found"**
+**Solution:**
+- Install Python 3.8+ from python.org
+- Make sure Python is in your PATH
+- Try `python3` instead of `python` (Mac/Linux)
+
+### **Problem: "Filename too long" (Windows)**
+**Solution:**
+- Use ZIP download instead of Git clone
+- Extract to SHORT path (e.g., `C:\Projects\`)
+- Rename folder to something SHORT
+- See: `docs/WINDOWS_PATH_LENGTH_FIX.md`
+
+### **Problem: "ModuleNotFoundError"**
+**Solution:**
+- Activate virtual environment: `source .venv/bin/activate`
+- Install packages: `pip install -r requirements.txt`
+- Check you're in the project folder
+
+### **Problem: "OMP Error" or "SHM2 Error"**
+**Solution:**
 ```bash
-jupyter notebook notebooks/03_implementation_details.ipynb
+# Mac/Linux
+OMP_NUM_THREADS=1 python scripts/run_train.py
+
+# Windows
+set OMP_NUM_THREADS=1
+python scripts/run_train.py
 ```
+
+### **Problem: "FileNotFoundError: data/raw/diabetic_data.csv"**
+**Solution:**
+- Make sure you're in the project root folder
+- Check the file exists: `ls data/raw/diabetic_data.csv`
+- Verify you downloaded the complete repository
 
 ---
 
-## **Alternative: Running in Spyder IDE**
-
-If you prefer using Spyder IDE instead of the terminal, follow these steps:
-
-### **Step 1: Complete Steps 1-5 Above First**
-
-You still need to create the virtual environment and install packages using the terminal (Steps 1-5 above).
-
-### **Step 2: Configure Spyder to Use Your Virtual Environment**
-
-1. Open Spyder
-2. Go to: **Tools → Preferences → Python Interpreter**
-3. Select: **Use the following Python interpreter**
-4. Browse and select your virtual environment's Python:
-   - **Mac/Linux:** `/path/to/265_final/.venv/bin/python`
-   - **Windows:** `C:\path\to\265_final\.venv\Scripts\python.exe`
-5. Click **Apply** and **OK**
-6. **Restart Spyder** for changes to take effect
-
-### **Step 3: Verify Spyder is Using Correct Environment**
-
-In Spyder's IPython console, run:
-```python
-import sys
-print(sys.executable)
-```
-
-You should see the path to `.venv/bin/python` (or `.venv\Scripts\python.exe` on Windows).
-
-### **Step 4: Run Training Script in Spyder**
-
-**Option A: Run from Editor**
-1. Open `scripts/run_train.py` in Spyder editor
-2. Click **Run** (green play button) or press `F5`
-3. Make sure "Run in current Python or IPython console" is selected
-
-**Option B: Run from IPython Console**
-```python
-%run scripts/run_train.py
-```
-
-### **Step 5: Run Evaluation Script in Spyder**
-
-**Option A: Run from Editor**
-1. Open `scripts/run_eval.py` in Spyder editor
-2. Click **Run** (F5)
-
-**Option B: Run from IPython Console**
-```python
-%run scripts/run_eval.py
-```
-
-### **Step 6: Run Dashboard (Must Use Terminal)**
-
-The dashboard needs to run in terminal (Spyder's console may not work well for Streamlit):
-
-1. Open terminal/command prompt
-2. Activate virtual environment:
-   ```bash
-   source .venv/bin/activate    # Mac/Linux
-   # OR
-   .venv\Scripts\activate      # Windows
-   ```
-3. Run dashboard:
-   ```bash
-   streamlit run dashboard.py
-   ```
-
-### **Spyder Troubleshooting**
-
-**Problem:** `ModuleNotFoundError` in Spyder  
-**Solution:** Spyder is not using the virtual environment. Re-check Step 2 above and restart Spyder.
-
-**Problem:** Script runs but can't find files  
-**Solution:** In Spyder, set working directory: **Run → Configuration per file → Working directory → The directory of the file being run**
-
-**Problem:** Dashboard won't start from Spyder console  
-**Solution:** Run dashboard from terminal/command prompt instead (Step 6 above).
-
----
-
-## **Quick Reference: All Commands in Order**
+## **Quick Reference: All Commands**
 
 ```bash
 # 1. Navigate to project
 cd /path/to/diabetes-project
 
+# 2. ONE COMMAND TO RUN EVERYTHING
+python run_all.py
+
+# OR step by step:
+
 # 2. Create virtual environment
-python3 -m venv .venv
+python -m venv .venv
 
 # 3. Activate it
 source .venv/bin/activate    # Mac/Linux
-# OR
 .venv\Scripts\activate       # Windows
 
 # 4. Install packages
-pip install --upgrade pip
 pip install -r requirements.txt
 
-# 5. Train models (REQUIRED - do this first!)
+# 5. Train models
 python scripts/run_train.py
 
-# 6. Verify generated files
-python test_models.py        # Or check manually
+# 6. Verify models
+python test_models.py
 
 # 7. Evaluate models
 python scripts/run_eval.py
 
-# 8. Launch dashboard (optional)
+# 8. Launch dashboard
 streamlit run dashboard.py
 ```
 
 ---
 
-## **End-to-End Verification Checklist**
-
-After running the project, verify everything works:
-
-### ✅ **File Verification**
-- [ ] `models/logreg_selected.joblib` exists
-- [ ] `models/xgb_selected.joblib` exists
-- [ ] `models/thresholds.json` exists and is readable
-- [ ] `data/processed/train_processed.csv` exists
-- [ ] `data/processed/test_processed.csv` exists
-
-### ✅ **Model Verification**
-- [ ] Models can be loaded with `joblib.load()`
-- [ ] Thresholds file loads correctly
-- [ ] Evaluation script runs without errors
-- [ ] Model metrics are displayed
-
-### ✅ **Functionality Verification**
-- [ ] Training completes successfully
-- [ ] Evaluation shows model metrics
-- [ ] Dashboard launches (if tested)
-- [ ] All imports work correctly
-
-### ✅ **Quick Test Command**
-Run this to verify everything:
-```bash
-python test_models.py && python scripts/run_eval.py
-```
-
-If both commands succeed, everything is working! ✅
-
----
-
-## **Troubleshooting**
-
-### **Problem:** `python3: command not found`  
-**Solution:** Try `python` instead of `python3`
-
-### **Problem:** `pip: command not found`  
-**Solution:** Make sure virtual environment is activated (you should see `(.venv)` in prompt)
-
-### **Problem:** `OMP: Error #179: Can't open SHM2`  
-**Solution:** Run with `OMP_NUM_THREADS=1` before the command:
-```bash
-OMP_NUM_THREADS=1 python scripts/run_train.py
-```
-
-### **Problem:** `FileNotFoundError: Raw data not found`  
-**Solution:** Make sure `data/raw/diabetic_data.csv` exists in the project folder
-
-### **Problem:** `ModuleNotFoundError`  
-**Solution:** Make sure you activated the virtual environment and ran `pip install -r requirements.txt`
-
----
-
 ## **What Each File Does**
 
-- **`requirements.txt`** - Lists all Python packages needed
-- **`scripts/run_train.py`** - Trains both models (run this first!)
-- **`scripts/run_eval.py`** - Tests the models and shows results
-- **`dashboard.py`** - Interactive web dashboard
-- **`src/` folder** - All the actual code (preprocessing, models, etc.)
-- **`data/raw/`** - Original data file
-- **`data/processed/`** - Cleaned data (created after training)
-- **`models/`** - Saved trained models (created after training)
+| File | Purpose |
+|------|---------|
+| `run_all.py` | ⭐ Runs everything automatically |
+| `scripts/run_train.py` | Trains both models |
+| `scripts/run_eval.py` | Evaluates models and shows results |
+| `scripts/run_dashboard.py` | Launches interactive dashboard |
+| `test_models.py` | Verifies models work correctly |
+| `dashboard.py` | Streamlit dashboard application |
+| `src/config.py` | Configuration and settings |
+| `src/preprocess.py` | Data cleaning and splitting |
+| `src/train.py` | Model training logic |
+| `src/evaluate.py` | Model evaluation logic |
+| `requirements.txt` | Python package dependencies |
 
 ---
 
-## **Project Structure Overview**
-
-```
-265_final/
-├── SETUP_GUIDE.md          ← You are here! (Start here)
-├── README.md               ← Project overview
-├── requirements.txt        ← Python dependencies
-├── dashboard.py            ← Streamlit dashboard
-├── scripts/                ← Easy-to-run scripts
-│   ├── run_train.py       ← Train models (run first!)
-│   ├── run_eval.py        ← Evaluate models
-│   └── run_dashboard.py   ← Launch dashboard
-├── src/                    ← Core project code
-│   ├── config.py
-│   ├── preprocess.py
-│   ├── model.py
-│   ├── train.py
-│   └── evaluate.py
-├── data/
-│   ├── raw/               ← Original data (must exist)
-│   └── processed/         ← Cleaned data (created after training)
-├── models/                 ← Trained models (created after training)
-└── notebooks/              ← Jupyter notebooks for exploration
-```
-
----
-
-**Everything is ready to run. Just follow these steps in order!**
-
+**Everything is ready to run. Just follow these steps in order!** 🎉
