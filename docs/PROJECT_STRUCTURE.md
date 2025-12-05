@@ -35,8 +35,6 @@
 ├── 📂 models/                      # Trained models
 │   ├── logreg_selected.joblib      # Logistic Regression model
 │   ├── xgb_selected.joblib         # XGBoost model
-│   ├── rf_selected.joblib          # Random Forest model
-│   ├── logreg_10feat.joblib        # 10-feature LR model
 │   └── thresholds.json             # Optimized thresholds
 │
 ├── 📂 notebooks/                   # Jupyter notebooks

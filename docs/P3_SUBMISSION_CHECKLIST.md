@@ -70,8 +70,6 @@
 ### Models Folder (`models/`):
 - [x] `models/logreg_selected.joblib` - Logistic Regression model
 - [x] `models/xgb_selected.joblib` - XGBoost model
-- [x] `models/rf_selected.joblib` - Random Forest model (if used)
-- [x] `models/logreg_10feat.joblib` - 10-feature Logistic Regression
 - [x] `models/thresholds.json` - Optimized thresholds and feature list
 
 **Note:** Check with professor if model files need to be submitted or if they're too large.
