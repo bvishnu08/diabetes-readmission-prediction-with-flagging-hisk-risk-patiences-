@@ -42,7 +42,7 @@ Here is my MSBA-265 project repository:
 **All documentation is included in the repository:**
 - `README.md` - Project overview
 - `SETUP_GUIDE.md` - Detailed setup instructions (this file)
-- `QUICK_START.md` - Quick reference guide
+- `docs/QUICK_START.md` - Quick reference guide
 - `docs/RUN_BOOK.md` - Step-by-step execution guide
 
 Thank you!

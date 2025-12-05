@@ -1,71 +1,69 @@
-# Documentation Guide
+# Documentation Directory
 
-## 📊 Presentation Files
+This directory contains all project documentation, guides, and reference materials.
 
-**Main File:** `PRESENTATION_SLIDES_SHORT.Rmd`
-- Use this for your presentation
-- R Markdown with code chunks and detailed explanations
-- 14 slides, conversational tone
-- Render in R/RStudio to create slides
+## 📚 **Quick Reference Guides**
 
-**How to use:**
-```r
-rmarkdown::render("docs/PRESENTATION_SLIDES_SHORT.Rmd")
+- **[QUICK_START.md](QUICK_START.md)** - One-command download and run guide
+- **[RUN_BOOK.md](RUN_BOOK.md)** - Step-by-step execution guide with explanations
+- **[PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)** - Complete repository structure map
+
+## 📋 **Submission & Checklists**
+
+- **[P3_SUBMISSION_CHECKLIST.md](P3_SUBMISSION_CHECKLIST.md)** - Detailed P3 submission checklist
+- **[P3_SUBMISSION_SUMMARY.md](P3_SUBMISSION_SUMMARY.md)** - Quick P3 submission reference
+
+## 📖 **Code Documentation**
+
+- **[CODE_EXPLANATION.md](CODE_EXPLANATION.md)** - Deep dive into codebase architecture
+- **[COMPLETE_PROJECT_CODE.md](COMPLETE_PROJECT_CODE.md)** - All project code in one file
+- **[PIPELINE_DIFFERENCES.md](PIPELINE_DIFFERENCES.md)** - Notebook vs. production pipeline notes
+
+## 🎯 **Presentations**
+
+- **[PRESENTATION_SLIDES_SHORT.Rmd](PRESENTATION_SLIDES_SHORT.Rmd)** - R Markdown presentation with code chunks
+- **[archive/](archive/)** - Older presentation versions (archived)
+
+## 🔧 **Troubleshooting & Verification**
+
+- **[GITHUB_ACCESS_FIX.md](GITHUB_ACCESS_FIX.md)** - GitHub repository access troubleshooting
+- **[GITHUB_VERIFICATION_CHECKLIST.md](GITHUB_VERIFICATION_CHECKLIST.md)** - GitHub repository verification checklist
+- **[FINAL_CHECK_REPORT.md](FINAL_CHECK_REPORT.md)** - Final project verification report
+- **[TEST_SCRIPTS.md](TEST_SCRIPTS.md)** - Test scripts verification report
+
+---
+
+## 📁 **Documentation Organization**
+
+```
+docs/
+├── README.md (this file)
+│
+├── Quick Reference
+│   ├── QUICK_START.md
+│   ├── RUN_BOOK.md
+│   └── PROJECT_STRUCTURE.md
+│
+├── Submission
+│   ├── P3_SUBMISSION_CHECKLIST.md
+│   └── P3_SUBMISSION_SUMMARY.md
+│
+├── Code Documentation
+│   ├── CODE_EXPLANATION.md
+│   ├── COMPLETE_PROJECT_CODE.md
+│   └── PIPELINE_DIFFERENCES.md
+│
+├── Presentations
+│   ├── PRESENTATION_SLIDES_SHORT.Rmd
+│   └── archive/
+│
+└── Troubleshooting
+    ├── GITHUB_ACCESS_FIX.md
+    ├── GITHUB_VERIFICATION_CHECKLIST.md
+    ├── FINAL_CHECK_REPORT.md
+    └── TEST_SCRIPTS.md
 ```
 
 ---
 
-## 📚 Other Documentation
-
-### Essential Files:
-
-1. **`RUN_BOOK.md`** - Step-by-step execution guide
-   - How to run the entire project
-   - Setup instructions
-   - Execution order
-
-2. **`COMPLETE_PROJECT_CODE.md`** - All project code in one document
-   - Complete source code
-   - Organized by module
-   - For submission/reference
-
-3. **`CODE_EXPLANATION.md`** - Detailed code explanations
-   - What each file does
-   - Why we made certain decisions
-   - Code walkthrough
-
-4. **`PIPELINE_DIFFERENCES.md`** - Notebook vs production differences
-   - Explains differences between notebooks and production code
-   - Why we have both
-
-5. **`P3_SUBMISSION_CHECKLIST.md`** - P3 submission checklist
-   - Complete list of files to submit
-   - File organization guide
-
----
-
-## 📁 Archive Folder
-
-Old/redundant files moved to `docs/archive/`:
-- `PRESENTATION_SLIDES.md` (full 20-slide version)
-- `PRESENTATION_SLIDES_SHORT.md` (markdown version)
-- `PRESENTATION_FILES_README.md` (old guide)
-
-**Note:** These are kept for reference but not needed for daily use.
-
----
-
-## 🎯 Quick Reference
-
-| Need | File |
-|------|------|
-| **Give presentation** | `PRESENTATION_SLIDES_SHORT.Rmd` |
-| **Run the project** | `RUN_BOOK.md` |
-| **See all code** | `COMPLETE_PROJECT_CODE.md` |
-| **Understand code** | `CODE_EXPLANATION.md` |
-| **P3 submission** | `P3_SUBMISSION_CHECKLIST.md` |
-
----
-
-**Bottom Line:** Use `PRESENTATION_SLIDES_SHORT.Rmd` for your presentation! 🎤
-
+**For setup instructions, see the main [SETUP_GUIDE.md](../SETUP_GUIDE.md) in the project root.**

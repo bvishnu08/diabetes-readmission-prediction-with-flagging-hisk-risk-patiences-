@@ -62,9 +62,14 @@ and the dashboard perfectly in sync.
 ├── dashboard.py
 ├── docs/
 │   ├── RUN_BOOK.md
+│   ├── QUICK_START.md
+│   ├── PROJECT_STRUCTURE.md
 │   ├── COMPLETE_PROJECT_CODE.md
 │   ├── CODE_EXPLANATION.md
-│   └── PIPELINE_DIFFERENCES.md
+│   ├── PIPELINE_DIFFERENCES.md
+│   ├── P3_SUBMISSION_CHECKLIST.md
+│   ├── P3_SUBMISSION_SUMMARY.md
+│   └── archive/ (older presentation files)
 ├── data/
 │   ├── raw/
 │   │   ├── diabetic_data.csv
