@@ -279,7 +279,128 @@ OMP_NUM_THREADS=1 python scripts/run_eval.py
 
 ---
 
-## **Step 9: Launch Dashboard (Optional - Interactive Web App)**
+## **Step 9: Verify Generated Files and Models**
+
+After training completes, verify that all files were created successfully:
+
+### **Check Generated Files**
+
+**On Mac/Linux:**
+```bash
+# Check models
+ls -lh models/*.joblib models/*.json
+
+# Check processed data
+ls -lh data/processed/*.csv
+```
+
+**On Windows:**
+```bash
+# Check models
+dir models\*.joblib models\*.json
+
+# Check processed data
+dir data\processed\*.csv
+```
+
+**You should see:**
+- `models/logreg_selected.joblib` - Logistic Regression model
+- `models/xgb_selected.joblib` - XGBoost model
+- `models/thresholds.json` - Thresholds and feature lists
+- `data/processed/train_processed.csv` - Processed training data
+- `data/processed/test_processed.csv` - Processed test data
+
+### **View Thresholds File (JSON - Readable)**
+
+**On Mac/Linux:**
+```bash
+cat models/thresholds.json
+```
+
+**On Windows:**
+```cmd
+type models\thresholds.json
+```
+
+**Or open in Notepad:**
+```cmd
+notepad models\thresholds.json
+```
+
+This shows the thresholds and selected features for each model.
+
+### **Verify Models Can Be Loaded**
+
+Create a test script to verify models work:
+
+**Create file `test_models.py`:**
+```python
+import joblib
+import json
+import os
+
+print("=== VERIFYING MODEL FILES ===\n")
+
+# Check if files exist
+files_to_check = [
+    'models/logreg_selected.joblib',
+    'models/xgb_selected.joblib',
+    'models/thresholds.json',
+    'data/processed/train_processed.csv',
+    'data/processed/test_processed.csv'
+]
+
+print("1. Checking file existence:")
+for file in files_to_check:
+    if os.path.exists(file):
+        size = os.path.getsize(file) / 1024  # KB
+        print(f"   ✅ {file} ({size:.1f} KB)")
+    else:
+        print(f"   ❌ {file} - NOT FOUND")
+
+# Load and display thresholds
+print("\n2. Loading thresholds:")
+try:
+    with open('models/thresholds.json', 'r') as f:
+        thresholds = json.load(f)
+    print("   ✅ Thresholds loaded successfully")
+    print(f"   - LR threshold: {thresholds['logreg']['threshold']}")
+    print(f"   - XGB threshold: {thresholds['xgb']['threshold']}")
+    print(f"   - LR features: {len(thresholds['logreg']['selected_features'])} features")
+    print(f"   - XGB features: {len(thresholds['xgb']['selected_features'])} features")
+except Exception as e:
+    print(f"   ❌ Error loading thresholds: {e}")
+
+# Test loading models
+print("\n3. Testing model loading:")
+try:
+    lr_model = joblib.load('models/logreg_selected.joblib')
+    print("   ✅ Logistic Regression model loads successfully")
+except Exception as e:
+    print(f"   ❌ Error loading LR model: {e}")
+
+try:
+    xgb_model = joblib.load('models/xgb_selected.joblib')
+    print("   ✅ XGBoost model loads successfully")
+except Exception as e:
+    print(f"   ❌ Error loading XGB model: {e}")
+
+print("\n✅ All checks complete!")
+```
+
+**Run the verification:**
+```bash
+python test_models.py
+```
+
+**Expected output:**
+- ✅ All files exist
+- ✅ Thresholds load successfully
+- ✅ Both models load successfully
+
+---
+
+## **Step 10: Launch Dashboard (Optional - Interactive Web App)**
 
 This opens a web browser with an interactive dashboard:
 
@@ -292,11 +413,17 @@ streamlit run dashboard.py
 - Open your browser automatically
 - Show the dashboard at `http://localhost:8501`
 
+**In the dashboard you can:**
+- View model performance metrics
+- See ROC curves and confusion matrices
+- Explore feature importance
+- Make predictions with the trained models
+
 **To stop the dashboard:** Press `Ctrl+C` in the terminal
 
 ---
 
-## **Step 10: Run Jupyter Notebook (Optional - For Exploration)**
+## **Step 11: Run Jupyter Notebook (Optional - For Exploration)**
 
 If you want to see the implementation notebook:
 
@@ -396,7 +523,7 @@ The dashboard needs to run in terminal (Spyder's console may not work well for S
 
 ```bash
 # 1. Navigate to project
-cd /path/to/265_final
+cd /path/to/diabetes-project
 
 # 2. Create virtual environment
 python3 -m venv .venv
@@ -413,12 +540,48 @@ pip install -r requirements.txt
 # 5. Train models (REQUIRED - do this first!)
 python scripts/run_train.py
 
-# 6. Evaluate models
+# 6. Verify generated files
+python test_models.py        # Or check manually
+
+# 7. Evaluate models
 python scripts/run_eval.py
 
-# 7. Launch dashboard (optional)
+# 8. Launch dashboard (optional)
 streamlit run dashboard.py
 ```
+
+---
+
+## **End-to-End Verification Checklist**
+
+After running the project, verify everything works:
+
+### ✅ **File Verification**
+- [ ] `models/logreg_selected.joblib` exists
+- [ ] `models/xgb_selected.joblib` exists
+- [ ] `models/thresholds.json` exists and is readable
+- [ ] `data/processed/train_processed.csv` exists
+- [ ] `data/processed/test_processed.csv` exists
+
+### ✅ **Model Verification**
+- [ ] Models can be loaded with `joblib.load()`
+- [ ] Thresholds file loads correctly
+- [ ] Evaluation script runs without errors
+- [ ] Model metrics are displayed
+
+### ✅ **Functionality Verification**
+- [ ] Training completes successfully
+- [ ] Evaluation shows model metrics
+- [ ] Dashboard launches (if tested)
+- [ ] All imports work correctly
+
+### ✅ **Quick Test Command**
+Run this to verify everything:
+```bash
+python test_models.py && python scripts/run_eval.py
+```
+
+If both commands succeed, everything is working! ✅
 
 ---
 
