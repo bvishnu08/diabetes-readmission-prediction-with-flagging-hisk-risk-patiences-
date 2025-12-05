@@ -321,6 +321,169 @@ streamlit run dashboard.py
 
 ---
 
+## ✅ What to Do After Running `python run_all.py`
+
+After you run `python run_all.py` and see "✅ ALL STEPS COMPLETED SUCCESSFULLY!", here's exactly what to do next:
+
+### **Step 1: Check the Results in Terminal (Already Done!)**
+
+✅ **You already saw the results!** When `run_all.py` finished, it automatically ran the evaluation and printed the results in your terminal. Look for output like this:
+
+```
+MODEL EVALUATION – 30-Day Readmission Prediction
+================================================
+
+Logistic Regression (20 features):
+  Threshold: 0.45
+  Accuracy: 0.65
+  Recall: 0.70
+  Precision: 0.15
+  F1-Score: 0.24
+  ROC-AUC: 0.64
+
+XGBoost (25 features):
+  Threshold: 0.10
+  Accuracy: 0.68
+  Recall: 0.71
+  Precision: 0.17
+  F1-Score: 0.27
+  ROC-AUC: 0.68
+
+RECOMMENDATION: Use XGBoost for deployment
+```
+
+**What this means:**
+- Both models are trained and working
+- XGBoost is recommended (better performance)
+- Models catch ~70% of readmissions (good recall)
+
+---
+
+### **Step 2: Verify Everything Was Created (Optional but Recommended)**
+
+Make sure all files were created correctly:
+
+```bash
+python test_models.py
+```
+
+**What this does:**
+- Checks that all model files exist
+- Verifies models can be loaded (not corrupted)
+- Shows file sizes and feature counts
+
+**Expected output:**
+```
+✅ models/logreg_selected.joblib (Size: 45.2 KB)
+✅ models/xgb_selected.joblib (Size: 123.5 KB)
+✅ models/thresholds.json (Size: 2.1 KB)
+✅ data/processed/train_processed.csv (Size: 1250.3 KB)
+✅ data/processed/test_processed.csv (Size: 312.8 KB)
+✅ ALL CHECKS PASSED!
+```
+
+**If you see errors:** The models might not have trained correctly. Re-run `python run_all.py`.
+
+---
+
+### **Step 3: View Results Again (If You Want to See Them Again)**
+
+If you want to see the evaluation results again (or if you missed them):
+
+```bash
+# First, activate the virtual environment (if not already activated)
+# Windows:
+.venv\Scripts\activate
+
+# Mac/Linux:
+source .venv/bin/activate
+
+# Then run evaluation:
+python scripts/run_eval.py
+```
+
+This will print the same results you saw when `run_all.py` finished.
+
+---
+
+### **Step 4: Launch the Interactive Dashboard (Recommended!)**
+
+See your results visually with charts and graphs:
+
+**For Windows:**
+```bash
+# Step 1: Activate virtual environment
+.venv\Scripts\activate
+
+# Step 2: Run the dashboard
+streamlit run dashboard.py
+```
+
+**For Mac/Linux:**
+```bash
+# Step 1: Activate virtual environment
+source .venv/bin/activate
+
+# Step 2: Run the dashboard
+streamlit run dashboard.py
+```
+
+**What happens:**
+- A web browser will open automatically
+- Go to: http://localhost:8501
+- You'll see:
+  - Model performance charts
+  - ROC curves
+  - Confusion matrices
+  - Feature importance plots
+  - Prediction playground (try making predictions!)
+
+**To stop the dashboard:** Press `Ctrl+C` in the terminal.
+
+---
+
+### **Step 5: Explore the Code (Optional - For Learning)**
+
+If you want to understand how everything works:
+
+```bash
+# Make sure virtual environment is activated
+.venv\Scripts\activate      # Windows
+# OR
+source .venv/bin/activate    # Mac/Linux
+
+# Install Jupyter if not already installed
+pip install jupyter
+
+# Launch Jupyter
+jupyter lab notebooks/03_implementation_details.ipynb
+```
+
+This opens an interactive notebook where you can:
+- See the code step-by-step
+- Run cells individually
+- See data visualizations
+- Understand the implementation
+
+---
+
+### **Quick Summary: What You Should Do**
+
+**Minimum (to verify it worked):**
+1. ✅ Check terminal output (already done - you saw the results!)
+2. ✅ Run `python test_models.py` to verify files
+
+**Recommended (to see everything):**
+1. ✅ Check terminal output
+2. ✅ Run `python test_models.py`
+3. ✅ Launch dashboard: `streamlit run dashboard.py` (after activating venv)
+
+**Optional (for deep dive):**
+1. ✅ All of the above
+2. ✅ Open Jupyter notebook to explore code
+
+---
+
 ## 📊 How to Check Results
 
 After running the project, here are three ways to see your results:
