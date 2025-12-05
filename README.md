@@ -866,6 +866,8 @@ pip install jupyter
 jupyter lab notebooks/03_implementation_details.ipynb
 ```
 
+**Windows long-path note:** If `pip install jupyter` fails with a long-path error, move the project to a short path (e.g., `C:\proj\diabetes`) or enable long paths (Admin PowerShell, reboot). You don’t need Jupyter to view the terminal results—`python run_all.py` already shows all metrics and the confusion matrix.
+
 **What you'll see:**
 - Interactive code cells you can run
 - Data visualizations

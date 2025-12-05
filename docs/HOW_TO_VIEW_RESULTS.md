@@ -8,31 +8,86 @@ After running `python run_all.py` and seeing "✅ ALL STEPS COMPLETED SUCCESSFUL
 
 ### **What You Already Saw**
 
-When `run_all.py` finished, it automatically printed the evaluation results in your terminal. **Scroll up** in your terminal window to see them!
+When `run_all.py` finished, it automatically printed **ALL the results** in your terminal window, including:
+- ✅ **Confusion Matrix** for both models
+- ✅ **All Scores** (Accuracy, Recall, Precision, F1-Score, ROC-AUC)
+- ✅ **Classification Report** (detailed breakdown)
+- ✅ **Clinical Interpretation** (what results mean for patients)
+- ✅ **Model Recommendation** (which model to use)
+
+**Scroll up** in your terminal window to see them!
 
 **Look for this section:**
 ```
+======================================================================
 MODEL EVALUATION – 30-Day Readmission Prediction
-================================================
+======================================================================
 
-Logistic Regression (20 features):
-  Threshold: 0.45
-  Accuracy: 0.65
-  Recall: 0.70
-  Precision: 0.15
-  F1-Score: 0.24
-  ROC-AUC: 0.64
+======================================================================
+LOGISTIC REGRESSION (TOP 20 FEATURES) (features: 20)
+======================================================================
+Threshold      : 0.450
+ROC-AUC        : 0.640
+Accuracy       : 0.650
+Recall (class1): 0.700
+Precision      : 0.150
+F1-score       : 0.240
 
-XGBoost (25 features):
-  Threshold: 0.10
-  Accuracy: 0.68
-  Recall: 0.71
-  Precision: 0.17
-  F1-Score: 0.27
-  ROC-AUC: 0.68
+Confusion matrix [ [TN FP] ; [FN TP] ]:
+[[12345  2345]
+ [ 1234  3456]]
 
-RECOMMENDATION: Use XGBoost for deployment
+Classification report:
+              precision    recall  f1-score   support
+           0       0.XXX      0.XXX      0.XXX      XXXX
+           1       0.XXX      0.XXX      0.XXX      XXXX
+    accuracy                           0.XXX      XXXX
+
+CLINICAL INTERPRETATION – SAFE DISCHARGE VIEW
+----------------------------------------------------------------------
+Patients flagged HIGH RISK : XXXX (XX.X% of test set)
+Patients flagged LOW RISK  : XXXX (XX.X% of test set)
+
+======================================================================
+XGBOOST (TOP 25 FEATURES) (features: 25)
+======================================================================
+Threshold      : 0.100
+ROC-AUC        : 0.680
+Accuracy       : 0.680
+Recall (class1): 0.710
+Precision      : 0.170
+F1-score       : 0.270
+
+Confusion matrix [ [TN FP] ; [FN TP] ]:
+[[12345  2345]
+ [ 1234  3456]]
+
+Classification report:
+              precision    recall  f1-score   support
+           0       0.XXX      0.XXX      0.XXX      XXXX
+           1       0.XXX      0.XXX      0.XXX      XXXX
+    accuracy                           0.XXX      XXXX
+
+CLINICAL INTERPRETATION – SAFE DISCHARGE VIEW
+----------------------------------------------------------------------
+Patients flagged HIGH RISK : XXXX (XX.X% of test set)
+Patients flagged LOW RISK  : XXXX (XX.X% of test set)
+
+======================================================================
+RECOMMENDATION
+======================================================================
+Recommended deployment model: XGBoost (top 25 features)
+- Higher F1-score (0.XXX vs 0.XXX)
+- ROC-AUC: 0.XXX
 ```
+
+**What the Confusion Matrix means:**
+- **TN (True Negative):** Predicted no readmission, actually no readmission ✅
+- **FP (False Positive):** Predicted readmission, actually no readmission (false alarm)
+- **FN (False Negative):** Predicted no readmission, actually readmission (missed case) ⚠️
+- **TP (True Positive):** Predicted readmission, actually readmission ✅
+
+**Format:** `[[TN FP] ; [FN TP]]`
 
 ---
 
@@ -275,6 +330,28 @@ Once the notebook opens:
 ```bash
 pip install jupyter jupyterlab
 ```
+
+### **Windows path length error when installing Jupyter**
+**Symptom:** `ERROR: Could not install packages due to an OSError: [Errno 2] No such file or directory ... enable long paths`
+
+**Solution (pick one):**
+- **Move the project to a short path** (e.g., `C:\proj\diabetes`) and run:
+  ```pwsh
+  .venv\Scripts\activate
+  pip install jupyter jupyterlab
+  ```
+- **Enable long paths** (Admin PowerShell, then reboot):
+  ```pwsh
+  New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" `
+    -Name "LongPathsEnabled" -Value 1 -PropertyType DWORD -Force
+  ```
+  Then:
+  ```pwsh
+  .venv\Scripts\activate
+  pip install jupyter jupyterlab
+  ```
+
+**Note:** You don’t need Jupyter to see the terminal results—`python run_all.py` already shows all metrics and the confusion matrix.
 
 ### **Browser didn't open automatically**
 **Solution:** That's okay! Just open your browser manually and go to:
