@@ -342,7 +342,12 @@ When you ran `python run_all.py`, your computer did a lot of work:
 
 ### **Step 1: Check the Results in Terminal (Already Done - But Let's Understand It!)**
 
-✅ **You already saw the results!** When `run_all.py` finished, it automatically printed the results in your terminal window. 
+✅ **You already saw the results!** When `run_all.py` finished, it automatically printed **ALL the results** in your terminal window, including:
+- ✅ **Confusion Matrix** (shows correct vs incorrect predictions)
+- ✅ **All Scores** (Accuracy, Recall, Precision, F1-Score, ROC-AUC)
+- ✅ **Classification Report** (detailed breakdown)
+- ✅ **Clinical Interpretation** (what the results mean for patients)
+- ✅ **Model Recommendation** (which model to use)
 
 **What is a "terminal"?**
 - **Windows:** It's called "Command Prompt" or "PowerShell" - the black window where you type commands
@@ -352,34 +357,77 @@ When you ran `python run_all.py`, your computer did a lot of work:
 **Scroll up in your terminal window** and look for a section that says "MODEL EVALUATION". You should see something like this:
 
 ```
+======================================================================
 MODEL EVALUATION – 30-Day Readmission Prediction
-================================================
+======================================================================
 
-Logistic Regression (20 features):
-  Threshold: 0.45
-  Accuracy: 0.65
-  Recall: 0.70
-  Precision: 0.15
-  F1-Score: 0.24
-  ROC-AUC: 0.64
+======================================================================
+LOGISTIC REGRESSION (TOP 20 FEATURES) (features: 20)
+======================================================================
+Threshold      : 0.450
+ROC-AUC        : 0.640
+Accuracy       : 0.650
+Recall (class1): 0.700
+Precision      : 0.150
+F1-score       : 0.240
 
-XGBoost (25 features):
-  Threshold: 0.10
-  Accuracy: 0.68
-  Recall: 0.71
-  Precision: 0.17
-  F1-Score: 0.27
-  ROC-AUC: 0.68
+Confusion matrix [ [TN FP] ; [FN TP] ]:
+[[12345  2345]
+ [ 1234  3456]]
 
-RECOMMENDATION: Use XGBoost for deployment
+Classification report:
+              precision    recall  f1-score   support
+           0       0.XXX      0.XXX      0.XXX      XXXX
+           1       0.XXX      0.XXX      0.XXX      XXXX
+    accuracy                           0.XXX      XXXX
+
+CLINICAL INTERPRETATION – SAFE DISCHARGE VIEW
+----------------------------------------------------------------------
+Patients flagged HIGH RISK : XXXX (XX.X% of test set)
+Patients flagged LOW RISK  : XXXX (XX.X% of test set)
+
+======================================================================
+XGBOOST (TOP 25 FEATURES) (features: 25)
+======================================================================
+Threshold      : 0.100
+ROC-AUC        : 0.680
+Accuracy       : 0.680
+Recall (class1): 0.710
+Precision      : 0.170
+F1-score       : 0.270
+
+Confusion matrix [ [TN FP] ; [FN TP] ]:
+[[12345  2345]
+ [ 1234  3456]]
+
+Classification report:
+              precision    recall  f1-score   support
+           0       0.XXX      0.XXX      0.XXX      XXXX
+           1       0.XXX      0.XXX      0.XXX      XXXX
+    accuracy                           0.XXX      XXXX
+
+CLINICAL INTERPRETATION – SAFE DISCHARGE VIEW
+----------------------------------------------------------------------
+Patients flagged HIGH RISK : XXXX (XX.X% of test set)
+Patients flagged LOW RISK  : XXXX (XX.X% of test set)
+
+======================================================================
+RECOMMENDATION
+======================================================================
+Recommended deployment model: XGBoost (top 25 features)
+- Higher F1-score (0.XXX vs 0.XXX)
+- ROC-AUC: 0.XXX
 ```
 
 **What does this mean? (In Simple Terms)**
 - ✅ **Both models are trained and working** - Your computer learned from the data!
+- ✅ **Confusion Matrix shows predictions** - You can see exactly how many correct/incorrect predictions each model made
+- ✅ **All scores are displayed** - Accuracy, Recall, Precision, F1-Score, ROC-AUC for both models
 - ✅ **XGBoost is recommended** - This model is better at predicting readmissions
 - ✅ **Models catch ~70% of readmissions** - Out of 100 patients who will be readmitted, the model catches about 70 of them (which is good!)
+- ✅ **Clinical interpretation included** - Shows what the results mean for patient care
 
-**Don't worry about the numbers** - the important thing is: **it worked!** ✅
+**Everything you need is right there in the terminal!** ✅
 
 ---
 
@@ -697,9 +745,16 @@ A: Don't panic! Read the error message - it usually tells you what's wrong. Comm
 
 After running the project, here are three ways to see your results:
 
-### **Method 1: Terminal Output (Automatic)**
+### **Method 1: Terminal Output (Automatic - Already Shown!)**
 
-When you run `python scripts/run_eval.py`, it automatically prints the results in your terminal:
+✅ **This is already done!** When you ran `python run_all.py`, it automatically showed all results in your terminal, including:
+- Confusion Matrix for both models
+- All scores (Accuracy, Recall, Precision, F1-Score, ROC-AUC)
+- Classification Report
+- Clinical Interpretation
+- Model Recommendation
+
+**To see results again**, you can run `python scripts/run_eval.py` (after activating venv). It will print:
 
 ```
 MODEL EVALUATION – 30-Day Readmission Prediction
