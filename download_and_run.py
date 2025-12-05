@@ -53,6 +53,13 @@ def download_repository():
     print()
     
     if not check_git():
+        print()
+        print("⚠️  Git not found. Alternative: Download ZIP manually")
+        print(f"   1. Go to: {REPO_URL}")
+        print("   2. Click 'Code' → 'Download ZIP'")
+        print("   3. Extract the ZIP file")
+        print(f"   4. Rename folder to: {REPO_NAME}")
+        print("   5. Run this script again from that folder")
         return False
     
     print("⏳ Cloning repository... (This may take a minute)")
@@ -61,7 +68,19 @@ def download_repository():
     if not success:
         print(f"❌ ERROR: Failed to clone repository!")
         print(f"   Error: {output}")
-        print("   Please check your internet connection and try again.")
+        print()
+        print("⚠️  Alternative: Download ZIP manually")
+        print(f"   1. Go to: {REPO_URL}")
+        print("   2. Click 'Code' → 'Download ZIP'")
+        print("   3. Extract the ZIP file")
+        print(f"   4. Rename folder to: {REPO_NAME}")
+        print("   5. Run this script again from that folder")
+        return False
+    
+    # Verify the repository was cloned successfully
+    if not repo_path.exists():
+        print(f"❌ ERROR: Repository folder not found after cloning!")
+        print(f"   Expected: {repo_path.absolute()}")
         return False
     
     print("✅ Repository downloaded successfully!")
@@ -190,8 +209,32 @@ def main():
     
     # Step 2: Change to repository directory
     repo_path = Path(REPO_NAME)
+    
+    # Verify repository exists before changing directory
+    if not repo_path.exists():
+        print(f"❌ ERROR: Repository folder not found: {REPO_NAME}")
+        print(f"   Expected location: {repo_path.absolute()}")
+        print()
+        print("💡 Solutions:")
+        print(f"   1. Make sure you're in the correct directory")
+        print(f"   2. If you downloaded ZIP, extract it and rename to: {REPO_NAME}")
+        print(f"   3. Or run: git clone {REPO_URL} {REPO_NAME}")
+        sys.exit(1)
+    
     original_dir = Path.cwd()
-    os.chdir(repo_path)
+    
+    try:
+        os.chdir(repo_path)
+    except OSError as e:
+        print(f"❌ ERROR: Cannot access repository folder!")
+        print(f"   Path: {repo_path.absolute()}")
+        print(f"   Error: {e}")
+        print()
+        print("💡 Solutions:")
+        print(f"   1. Check if the folder exists: {repo_path.absolute()}")
+        print("   2. Check folder permissions")
+        print("   3. Try running as administrator (Windows)")
+        sys.exit(1)
     
     try:
         print(f"📁 Working directory: {Path.cwd()}")
@@ -232,9 +275,28 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print("\n\n⚠️  Process interrupted by user")
         sys.exit(1)
+    except FileNotFoundError as e:
+        print(f"\n\n❌ File not found error: {e}")
+        print()
+        print("💡 This usually means:")
+        print("   1. The repository folder doesn't exist")
+        print("   2. Git is not installed or not in PATH")
+        print("   3. The script is trying to access a file that doesn't exist")
+        print()
+        print("💡 Solutions:")
+        print(f"   1. Download ZIP from: {REPO_URL}")
+        print("   2. Extract and rename folder to match repository name")
+        print("   3. Run the script from inside that folder")
+        print("   4. Or install Git and try again")
+        sys.exit(1)
     except Exception as e:
         print(f"\n\n❌ Unexpected error: {e}")
         import traceback
         traceback.print_exc()
+        print()
+        print("💡 If this is a Windows error, try:")
+        print("   1. Download ZIP from GitHub instead of using git clone")
+        print("   2. Extract ZIP and run run_all.py directly")
+        print(f"   3. Or manually clone: git clone {REPO_URL}")
         sys.exit(1)
 
