@@ -17,6 +17,12 @@ if exist "%REPO_NAME%" (
     echo [Repository folder already exists: %REPO_NAME%]
     echo    Using existing folder...
     cd "%REPO_NAME%"
+    if errorlevel 1 (
+        echo [ERROR] Cannot access repository folder!
+        echo    Please check folder permissions or try running as administrator.
+        pause
+        exit /b 1
+    )
 ) else (
     echo [Downloading repository from GitHub...]
     echo    URL: %REPO_URL%
@@ -26,8 +32,15 @@ if exist "%REPO_NAME%" (
     git --version >nul 2>&1
     if errorlevel 1 (
         echo [ERROR] Git is not installed!
-        echo    Please install Git first from: https://git-scm.com/download/win
-        echo    Or download ZIP from: %REPO_URL%
+        echo.
+        echo Alternative: Download ZIP manually
+        echo   1. Go to: %REPO_URL%
+        echo   2. Click 'Code' -^> 'Download ZIP'
+        echo   3. Extract the ZIP file
+        echo   4. Rename folder to: %REPO_NAME%
+        echo   5. Run this script again from that folder
+        echo.
+        echo Or install Git from: https://git-scm.com/download/win
         pause
         exit /b 1
     )
@@ -37,13 +50,35 @@ if exist "%REPO_NAME%" (
     
     if errorlevel 1 (
         echo [ERROR] Failed to clone repository!
-        echo    Please check your internet connection and try again.
+        echo.
+        echo Alternative: Download ZIP manually
+        echo   1. Go to: %REPO_URL%
+        echo   2. Click 'Code' -^> 'Download ZIP'
+        echo   3. Extract the ZIP file
+        echo   4. Rename folder to: %REPO_NAME%
+        echo   5. Run this script again from that folder
+        pause
+        exit /b 1
+    )
+    
+    if not exist "%REPO_NAME%" (
+        echo [ERROR] Repository folder not found after cloning!
+        echo    Expected: %CD%\%REPO_NAME%
+        echo.
+        echo Please try downloading ZIP manually instead.
         pause
         exit /b 1
     )
     
     echo [OK] Repository downloaded successfully!
     cd "%REPO_NAME%"
+    if errorlevel 1 (
+        echo [ERROR] Cannot access repository folder!
+        echo    Path: %CD%\%REPO_NAME%
+        echo    Please check folder permissions.
+        pause
+        exit /b 1
+    )
 )
 
 echo.
