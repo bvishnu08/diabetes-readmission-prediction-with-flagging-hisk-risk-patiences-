@@ -26,6 +26,8 @@ This directory contains all project documentation, guides, and reference materia
 
 ## 🔧 **Troubleshooting & Verification**
 
+- **[WINDOWS_PATH_LENGTH_FIX.md](WINDOWS_PATH_LENGTH_FIX.md)** - Fix for Windows "Filename too long" error ⭐
+- **[WINDOWS_FIX.md](WINDOWS_FIX.md)** - General Windows setup troubleshooting
 - **[GITHUB_ACCESS_FIX.md](GITHUB_ACCESS_FIX.md)** - GitHub repository access troubleshooting
 - **[GITHUB_VERIFICATION_CHECKLIST.md](GITHUB_VERIFICATION_CHECKLIST.md)** - GitHub repository verification checklist
 - **[FINAL_CHECK_REPORT.md](FINAL_CHECK_REPORT.md)** - Final project verification report
@@ -58,6 +60,8 @@ docs/
 │   └── archive/
 │
 └── Troubleshooting
+    ├── WINDOWS_PATH_LENGTH_FIX.md
+    ├── WINDOWS_FIX.md
     ├── GITHUB_ACCESS_FIX.md
     ├── GITHUB_VERIFICATION_CHECKLIST.md
     ├── FINAL_CHECK_REPORT.md

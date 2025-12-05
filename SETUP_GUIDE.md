@@ -21,14 +21,17 @@ Here is my MSBA-265 project repository:
 1. **Download the repository:**
    - Go to the GitHub link above
    - Click green "Code" button → "Download ZIP"
-   - Extract the ZIP file
+   - **Extract ZIP to a SHORT path** (e.g., `C:\Projects\`)
+   - **Rename folder to something SHORT** (e.g., `diabetes-project`)
+   - ⚠️ **Windows users:** Avoid deep nested paths to prevent "Filename too long" errors
 
 2. **Open terminal/command prompt in the extracted folder**
 
 3. **Run this ONE command:**
    ```bash
-   python download_and_run.py
+   python run_all.py
    ```
+   (Or `python download_and_run.py` if you prefer)
 
 **That's it!** The script will automatically:
 - ✅ Create virtual environment

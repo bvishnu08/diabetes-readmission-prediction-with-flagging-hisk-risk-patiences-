@@ -50,8 +50,16 @@ python download_and_run.py
 ## **Prerequisites:**
 
 - **Python 3.8+** installed
-- **Git** installed (for downloading from GitHub)
+- **Git** installed (optional - ZIP download works without Git)
 - **Internet connection** (for first-time download)
+
+## **⚠️ Windows Users - Important:**
+
+If you get a "Filename too long" error:
+- **Use ZIP download** instead of Git clone
+- **Extract to a SHORT path** (e.g., `C:\Projects\`)
+- **Rename folder to something SHORT** (e.g., `diabetes-project`)
+- See `docs/WINDOWS_PATH_LENGTH_FIX.md` for detailed instructions
 
 ---
 
