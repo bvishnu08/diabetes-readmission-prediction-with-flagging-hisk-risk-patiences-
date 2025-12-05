@@ -10,8 +10,7 @@ This directory contains all project documentation, guides, and reference materia
 
 ## 🚀 **How to Run Guides**
 
-- **[../COMPLETE_RUN_GUIDE.md](../COMPLETE_RUN_GUIDE.md)** - Complete guide with all methods ⭐
-- **[../HOW_TO_CLONE_AND_RUN.md](../HOW_TO_CLONE_AND_RUN.md)** - Simple clone and run instructions
+- **[../README.md](../README.md)** - **Complete guide with everything!** ⭐ (Start here!)
 
 ## 📋 **Submission & Checklists**
 
@@ -75,4 +74,4 @@ docs/
 
 ---
 
-**For setup instructions, see the main [SETUP_GUIDE.md](../SETUP_GUIDE.md) in the project root.**
+**For complete setup and run instructions, see the main [README.md](../README.md) in the project root - it has everything you need!**
