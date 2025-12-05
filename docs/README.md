@@ -8,6 +8,11 @@ This directory contains all project documentation, guides, and reference materia
 - **[RUN_BOOK.md](RUN_BOOK.md)** - Step-by-step execution guide with explanations
 - **[PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)** - Complete repository structure map
 
+## 🚀 **How to Run Guides**
+
+- **[../COMPLETE_RUN_GUIDE.md](../COMPLETE_RUN_GUIDE.md)** - Complete guide with all methods ⭐
+- **[../HOW_TO_CLONE_AND_RUN.md](../HOW_TO_CLONE_AND_RUN.md)** - Simple clone and run instructions
+
 ## 📋 **Submission & Checklists**
 
 - **[P3_SUBMISSION_CHECKLIST.md](P3_SUBMISSION_CHECKLIST.md)** - Detailed P3 submission checklist
