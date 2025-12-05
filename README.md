@@ -693,6 +693,8 @@ A: Don't panic! Read the error message - it usually tells you what's wrong. Comm
 
 ## 📊 How to Check Results
 
+> **📖 For detailed step-by-step instructions (Windows & Mac), see: [docs/HOW_TO_VIEW_RESULTS.md](docs/HOW_TO_VIEW_RESULTS.md)**
+
 After running the project, here are three ways to see your results:
 
 ### **Method 1: Terminal Output (Automatic)**
