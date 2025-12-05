@@ -57,9 +57,9 @@ def download_repository():
         print("⚠️  Git not found. Alternative: Download ZIP manually")
         print(f"   1. Go to: {REPO_URL}")
         print("   2. Click 'Code' → 'Download ZIP'")
-        print("   3. Extract the ZIP file")
-        print(f"   4. Rename folder to: {REPO_NAME}")
-        print("   5. Run this script again from that folder")
+        print("   3. Extract the ZIP file to a SHORT path (e.g., C:\\Projects\\)")
+        print("   4. Rename folder to something SHORT like: diabetes-project")
+        print("   5. Navigate to that folder and run: python run_all.py")
         return False
     
     print("⏳ Cloning repository... (This may take a minute)")
@@ -69,12 +69,33 @@ def download_repository():
         print(f"❌ ERROR: Failed to clone repository!")
         print(f"   Error: {output}")
         print()
-        print("⚠️  Alternative: Download ZIP manually")
-        print(f"   1. Go to: {REPO_URL}")
-        print("   2. Click 'Code' → 'Download ZIP'")
-        print("   3. Extract the ZIP file")
-        print(f"   4. Rename folder to: {REPO_NAME}")
-        print("   5. Run this script again from that folder")
+        
+        # Check for Windows path length error
+        if "Filename too long" in output or "path too long" in output.lower():
+            print("⚠️  WINDOWS PATH LENGTH ERROR DETECTED!")
+            print("   Windows has a 260 character path limit.")
+            print()
+            print("💡 SOLUTION: Use ZIP download instead")
+            print(f"   1. Go to: {REPO_URL}")
+            print("   2. Click 'Code' → 'Download ZIP'")
+            print("   3. Extract ZIP to a SHORT path:")
+            print("      - Good: C:\\Projects\\diabetes-project")
+            print("      - Bad: C:\\Users\\...\\very-long-path\\...")
+            print("   4. Rename extracted folder to something SHORT: diabetes-project")
+            print("   5. Navigate to that folder")
+            print("   6. Run: python run_all.py")
+            print()
+            print("   OR enable long paths in Windows:")
+            print("   - Run PowerShell as Administrator")
+            print("   - Run: New-ItemProperty -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\FileSystem' -Name 'LongPathsEnabled' -Value 1 -PropertyType DWORD -Force")
+            print("   - Restart computer")
+        else:
+            print("⚠️  Alternative: Download ZIP manually")
+            print(f"   1. Go to: {REPO_URL}")
+            print("   2. Click 'Code' → 'Download ZIP'")
+            print("   3. Extract the ZIP file to a SHORT path")
+            print("   4. Rename folder to something SHORT")
+            print("   5. Navigate to that folder and run: python run_all.py")
         return False
     
     # Verify the repository was cloned successfully
