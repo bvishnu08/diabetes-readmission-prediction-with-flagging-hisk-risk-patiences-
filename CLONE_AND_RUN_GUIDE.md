@@ -368,6 +368,41 @@ STEP 6/6: Evaluating models...
 1. Install Git from https://git-scm.com/downloads
 2. **OR** use Method 2 (ZIP download) - no Git needed!
 
+### **Issue 11: "Fatal error in launcher" when using pip (Windows)**
+
+**Problem:** You see this error:
+```
+Fatal error in launcher: Unable to create process using "...\.venv\Scripts\python.exe" "...\.venv\scripts\pip.exe" install jupyter': The system cannot find the file specified.
+```
+
+**Why this happens:**
+- Windows has a 260-character path limit
+- Your project path is too long
+- Virtual environment was created in a different location
+
+**Solution 1: Use `python -m pip` instead of `pip` (Easiest!):**
+```powershell
+# Instead of: pip install jupyter
+# Use this:
+python -m pip install jupyter
+
+# For ALL pip commands, always use:
+python -m pip install package
+python -m pip list
+python -m pip install -r requirements.txt
+```
+
+**Solution 2: Move to short path and recreate venv:**
+1. Move project to `C:\Projects\diabetes-project`
+2. Delete old venv: `Remove-Item -Recurse -Force .venv`
+3. Create new venv: `python -m venv .venv`
+4. Activate: `.venv\Scripts\activate`
+5. Install: `python -m pip install -r requirements.txt`
+
+**Solution 3: Enable long paths (see Issue 2 above)**
+
+👉 **See [`WINDOWS_PIP_FIX.md`](WINDOWS_PIP_FIX.md) for complete solutions!**
+
 ---
 
 ## 📝 **VERIFICATION: Make Sure Everything Worked**
@@ -444,10 +479,12 @@ Your browser will open automatically at `http://localhost:8501`
 If you're still having problems:
 
 1. **Check the README.md** - It has more detailed instructions
-2. **Check docs/WINDOWS_FIX.md** - Windows-specific troubleshooting
-3. **Check docs/WINDOWS_PATH_LENGTH_FIX.md** - For path length issues
-4. **Make sure you're using Python 3.8+** - Check with `python --version`
-5. **Try the ZIP download method** - It's simpler and avoids Git issues
+2. **Check WINDOWS_PIP_FIX.md** - For "Fatal error in launcher" when using pip ⭐
+3. **Check docs/WINDOWS_FIX.md** - Windows-specific troubleshooting
+4. **Check docs/WINDOWS_PATH_LENGTH_FIX.md** - For path length issues
+5. **Make sure you're using Python 3.8+** - Check with `python --version`
+6. **Try the ZIP download method** - It's simpler and avoids Git issues
+7. **Always use `python -m pip` on Windows** - Instead of just `pip` (avoids path issues)
 
 ---
 

@@ -598,8 +598,18 @@ def main():
     print("   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
     print("   This opens an interactive notebook to see how the code works.")
     print("   First activate the virtual environment (see Step 3, Command 1), then:")
-    print("   → pip install jupyter")
+    if os.name == "nt":
+        # Windows - use python -m pip to avoid path issues
+        print("   → python -m pip install jupyter")
+    else:
+        # Mac/Linux
+        print("   → pip install jupyter")
     print("   → jupyter lab notebooks/03_implementation_details.ipynb")
+    if os.name == "nt":
+        print()
+        print("   ⚠️  WINDOWS USERS: If you get 'Fatal error in launcher', use:")
+        print("   → python -m pip install jupyter  (instead of just 'pip install')")
+        print("   See WINDOWS_PIP_FIX.md for more solutions!")
     print()
     print("=" * 70)
     print("💡 TIP: For detailed beginner-friendly instructions, see README.md")

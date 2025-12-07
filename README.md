@@ -1362,6 +1362,43 @@ diabetes-readmission-prediction/
 
 ---
 
+### **Problem: "Fatal error in launcher" when using pip (Windows)**
+
+**Error message:**
+```
+Fatal error in launcher: Unable to create process using "...\.venv\Scripts\python.exe" "...\.venv\scripts\pip.exe" install jupyter': The system cannot find the file specified.
+```
+
+**Why this happens:**
+- Windows path length limit (260 characters)
+- Virtual environment created in a path that's too long
+- Path mismatch between where venv was created and where you're running commands
+
+**Solution 1: Use `python -m pip` instead of `pip` (Easiest!):**
+```powershell
+# Instead of: pip install jupyter
+# Use this:
+python -m pip install jupyter
+
+# For all pip commands, use this format:
+python -m pip install package
+python -m pip list
+python -m pip install -r requirements.txt
+```
+
+**Solution 2: Move project to short path and recreate venv:**
+1. Move project to `C:\Projects\diabetes-project` (short path)
+2. Delete old `.venv` folder: `Remove-Item -Recurse -Force .venv`
+3. Create new venv: `python -m venv .venv`
+4. Activate and install: `.venv\Scripts\activate` then `python -m pip install -r requirements.txt`
+
+**Solution 3: Enable long paths in Windows:**
+1. Open PowerShell as Administrator
+2. Run: `New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "LongPathsEnabled" -Value 1 -PropertyType DWORD -Force`
+3. Restart computer
+
+👉 **See [`WINDOWS_PIP_FIX.md`](WINDOWS_PIP_FIX.md) for detailed solutions!**
+
 ### **Problem: Virtual environment activation doesn't work**
 
 **Solution:**
