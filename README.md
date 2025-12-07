@@ -7,14 +7,43 @@
 
 ## 📋 Table of Contents
 
-1. [What This Project Does](#what-this-project-does)
-2. [Quick Start - Run Everything in One Command](#quick-start)
-3. [Getting the Repository](#getting-the-repository)
-4. [How to Run Everything](#how-to-run-everything)
-5. [How to Check Results](#how-to-check-results)
-6. [Understanding the Terminal Files](#understanding-the-terminal-files)
-7. [Project Structure](#project-structure)
-8. [Troubleshooting](#troubleshooting)
+### **🚀 Getting Started**
+- [What This Project Does](#-what-this-project-does)
+- [Quick Start - Run Everything in One Command](#-quick-start)
+- [Getting the Repository](#-getting-the-repository)
+- [How to Run Everything](#-how-to-run-everything)
+
+### **📊 Viewing Results**
+- [How to Check Results](#-how-to-check-results)
+- [View Full Results and Metrics](#step-3-view-full-results-and-metrics-in-terminal--important)
+
+### **📚 Documentation & Guides**
+- [Understanding the Terminal Files](#-understanding-the-terminal-files)
+- [Project Structure](#-project-structure)
+- [Complete Clone Guide](CLONE_AND_RUN_GUIDE.md) - Step-by-step for fresh clones
+- [Project Explanation Guide](PROJECT_EXPLANATION_GUIDE.md) - What, why, and where for every component
+- [How to View Results](docs/HOW_TO_VIEW_RESULTS.md) - Detailed guide for viewing results
+
+### **🔧 Troubleshooting & Fixes**
+- [Troubleshooting Section](#-troubleshooting)
+- [Windows "Fatal error in launcher" Fix](WINDOWS_PIP_FIX.md) - For pip errors on Windows
+- [Windows Path Length Fix](docs/WINDOWS_PATH_LENGTH_FIX.md) - For "Filename too long" errors
+- [Windows General Fixes](docs/WINDOWS_FIX.md) - Windows-specific troubleshooting
+
+### **📖 Quick Links by Topic**
+- **New User?** → [Start Here](#-new-user-start-here) | [Clone Guide](CLONE_AND_RUN_GUIDE.md)
+- **Windows Issues?** → [Pip Launcher Error](WINDOWS_PIP_FIX.md) | [Path Length Error](docs/WINDOWS_PATH_LENGTH_FIX.md) | [General Windows Fixes](docs/WINDOWS_FIX.md)
+- **Want to See Results?** → [View Results Section](#-how-to-check-results) | [Detailed Guide](docs/HOW_TO_VIEW_RESULTS.md)
+- **Need to Understand the Code?** → [Project Explanation](PROJECT_EXPLANATION_GUIDE.md) | [Project Structure](#-project-structure)
+- **Having Setup Issues?** → [Troubleshooting](#-troubleshooting) | [Clone Guide](CLONE_AND_RUN_GUIDE.md)
+- **For Professors/Instructors** → [Grading Section](#-for-professorsinstructors)
+
+### **🎯 Common Tasks - Click to Jump**
+- [Run the Project](#-quick-start) - One command setup
+- [View Model Results](#step-3-view-full-results-and-metrics-in-terminal--important) - See all metrics
+- [Launch Dashboard](#step-4-launch-the-interactive-dashboard-recommended---this-is-the-fun-part) - Interactive web interface
+- [Verify Everything Worked](#step-2-verify-everything-was-created-lets-make-sure-nothing-broke) - Check files
+- [Install Jupyter Notebooks](#step-5-explore-the-code-optional---only-if-you-want-to-learn) - For code exploration
 
 ---
 
@@ -35,7 +64,7 @@
 
 ---
 
-## 🎯 What This Project Does
+## 🎯 What This Project Does {#what-this-project-does}
 
 This project builds machine learning models to predict if a diabetic patient will be readmitted to the hospital within 30 days of discharge. This helps hospitals:
 
@@ -54,7 +83,7 @@ This project builds machine learning models to predict if a diabetic patient wil
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Quick Start {#quick-start}
 
 ### **EASIEST WAY: One Command Does Everything!**
 
@@ -76,7 +105,7 @@ python run_all.py
 
 ---
 
-## 📥 Getting the Repository
+## 📥 Getting the Repository {#getting-the-repository}
 
 > **📖 For detailed step-by-step instructions, see [`CLONE_AND_RUN_GUIDE.md`](CLONE_AND_RUN_GUIDE.md)**
 
@@ -169,7 +198,7 @@ You have two options to get the code:
 
 ---
 
-## 🎯 How to Run Everything
+## 🎯 How to Run Everything {#how-to-run-everything}
 
 ### **Method 1: Automated Script (Recommended - One Command)**
 
@@ -483,7 +512,7 @@ Recommended deployment model: XGBoost (top 25 features)
 1. **Look at your terminal window** (the black/white window where you ran `python run_all.py`)
 
 2. **Type this command** (exactly as shown, then press Enter):
-   ```bash
+```bash
    python test_models.py
    ```
    
@@ -542,7 +571,7 @@ MODEL FILES VERIFICATION
 1. **Open your terminal** (Command Prompt or PowerShell)
 
 2. **Navigate to your project folder:**
-   ```bash
+```bash
    cd C:\Users\YourName\Downloads\diabetes-project
    ```
    *(Replace with your actual folder path - the folder where you ran `python run_all.py`)*
@@ -843,7 +872,7 @@ A: Don't panic! Read the error message - it usually tells you what's wrong. Comm
 
 ---
 
-## 📊 How to Check Results
+## 📊 How to Check Results {#how-to-check-results}
 
 > **📖 For detailed step-by-step instructions (Windows & Mac), see: [docs/HOW_TO_VIEW_RESULTS.md](docs/HOW_TO_VIEW_RESULTS.md)**
 
@@ -1203,7 +1232,7 @@ python download_and_run.py
 
 ---
 
-## 📁 Project Structure
+## 📁 Project Structure {#project-structure}
 
 Here's what each folder and file does:
 
@@ -1262,7 +1291,9 @@ diabetes-readmission-prediction/
 
 ---
 
-## 🔧 Troubleshooting
+## 🔧 Troubleshooting {#troubleshooting}
+
+> **📖 Quick Navigation:** [Windows Pip Error](#problem-fatal-error-in-launcher-when-using-pip-windows) | [Path Length Error](#problem-filename-too-long-windows) | [All Issues](#troubleshooting) | [Complete Guide](CLONE_AND_RUN_GUIDE.md)
 
 ### **Problem: "Python not found" or "python: command not found"**
 
@@ -1294,6 +1325,8 @@ diabetes-readmission-prediction/
 ---
 
 ### **Problem: "Filename too long" (Windows)**
+
+👉 **See detailed solutions:** [`docs/WINDOWS_PATH_LENGTH_FIX.md`](docs/WINDOWS_PATH_LENGTH_FIX.md)
 
 **Solution:**
 - This happens because Windows has a 260-character path limit
@@ -1413,7 +1446,11 @@ python -m pip install -r requirements.txt
 
 ### **Still Having Issues?**
 
-👉 **First, check [`CLONE_AND_RUN_GUIDE.md`](CLONE_AND_RUN_GUIDE.md)** - It has detailed troubleshooting for 10+ common issues!
+👉 **Quick Links to Help:**
+- **Complete Troubleshooting Guide:** [`CLONE_AND_RUN_GUIDE.md`](CLONE_AND_RUN_GUIDE.md) - 10+ common issues with solutions
+- **Windows Pip Error:** [`WINDOWS_PIP_FIX.md`](WINDOWS_PIP_FIX.md) - "Fatal error in launcher" fix
+- **Windows Path Issues:** [`docs/WINDOWS_PATH_LENGTH_FIX.md`](docs/WINDOWS_PATH_LENGTH_FIX.md) - "Filename too long" solutions
+- **General Windows Help:** [`docs/WINDOWS_FIX.md`](docs/WINDOWS_FIX.md) - Windows-specific troubleshooting
 
 **Quick fixes:**
 
