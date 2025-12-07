@@ -802,9 +802,17 @@ streamlit run dashboard.py
 
 2. **Install Jupyter** (if not already installed):
    ```bash
+   # Windows users: Use python -m pip to avoid path errors
+   python -m pip install jupyter
+   
+   # Mac/Linux users: Can use either
    pip install jupyter
+   # OR
+   python -m pip install jupyter
    ```
    *This downloads Jupyter - it might take a minute*
+   
+   ⚠️ **Windows Users:** If you get "Fatal error in launcher", always use `python -m pip install jupyter` instead of `pip install jupyter`. See [Windows Pip Fix](WINDOWS_PIP_FIX.md) for details.
 
 3. **Launch Jupyter:**
    ```bash
@@ -1009,13 +1017,22 @@ source .venv/bin/activate  # Mac/Linux
 .venv\Scripts\activate      # Windows
 
 # Install Jupyter if not already installed
-pip install jupyter
+# Windows users: Use python -m pip to avoid path errors
+python -m pip install jupyter
+
+# Mac/Linux users: Can use either
+# pip install jupyter
+# OR
+# python -m pip install jupyter
 
 # Launch Jupyter
 jupyter lab notebooks/03_implementation_details.ipynb
 ```
 
-**Windows long-path note:** If `pip install jupyter` fails with a long-path error, move the project to a short path (e.g., `C:\proj\diabetes`) or enable long paths (Admin PowerShell, reboot). You don’t need Jupyter to view the terminal results—`python run_all.py` already shows all metrics and the confusion matrix.
+⚠️ **Windows Users - Important:** 
+- **Always use `python -m pip install jupyter`** instead of `pip install jupyter` to avoid "Fatal error in launcher"
+- If you still get errors, see [Windows Pip Fix](WINDOWS_PIP_FIX.md) for complete solutions
+- **You don't need Jupyter to view results** - `python run_all.py` already shows all metrics and confusion matrices in the terminal!
 
 **What you'll see:**
 - Interactive code cells you can run
@@ -1395,26 +1412,29 @@ diabetes-readmission-prediction/
 
 ---
 
-### **Problem: "Fatal error in launcher" when using pip (Windows)**
+### **Problem: "Fatal error in launcher" when using pip (Windows) - INCLUDES JUPYTER INSTALLATION**
 
 **Error message:**
 ```
 Fatal error in launcher: Unable to create process using "...\.venv\Scripts\python.exe" "...\.venv\scripts\pip.exe" install jupyter': The system cannot find the file specified.
 ```
 
+**This commonly happens when installing Jupyter or other packages on Windows!**
+
 **Why this happens:**
 - Windows path length limit (260 characters)
 - Virtual environment created in a path that's too long
 - Path mismatch between where venv was created and where you're running commands
 
-**Solution 1: Use `python -m pip` instead of `pip` (Easiest!):**
+**Solution 1: Use `python -m pip` instead of `pip` (Easiest! Works for Jupyter!):**
 ```powershell
-# Instead of: pip install jupyter
-# Use this:
+# Instead of: pip install jupyter  ❌ (doesn't work)
+# Use this:                        ✅ (works!)
 python -m pip install jupyter
 
-# For all pip commands, use this format:
-python -m pip install package
+# For ALL pip commands, always use this format on Windows:
+python -m pip install jupyter
+python -m pip install pandas
 python -m pip list
 python -m pip install -r requirements.txt
 ```
@@ -1424,6 +1444,7 @@ python -m pip install -r requirements.txt
 2. Delete old `.venv` folder: `Remove-Item -Recurse -Force .venv`
 3. Create new venv: `python -m venv .venv`
 4. Activate and install: `.venv\Scripts\activate` then `python -m pip install -r requirements.txt`
+5. Install Jupyter: `python -m pip install jupyter`
 
 **Solution 3: Enable long paths in Windows:**
 1. Open PowerShell as Administrator
@@ -1431,6 +1452,12 @@ python -m pip install -r requirements.txt
 3. Restart computer
 
 👉 **See [`WINDOWS_PIP_FIX.md`](WINDOWS_PIP_FIX.md) for detailed solutions!**
+
+**Quick Fix for Jupyter:**
+```powershell
+# Just use this command instead of "pip install jupyter":
+python -m pip install jupyter
+```
 
 ### **Problem: Virtual environment activation doesn't work**
 
