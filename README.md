@@ -5,7 +5,29 @@
 
 ---
 
+## 📎 **Project Links & Data Sources**
+
+### **🔗 Repository Links**
+- **GitHub Repository:** [https://github.com/bvishnu08/diabetes-readmission-prediction-with-flagging-hisk-risk-patiences-](https://github.com/bvishnu08/diabetes-readmission-prediction-with-flagging-hisk-risk-patiences-)
+- **GitLab Repository:** [To be added - Code will be posted on GitLab]
+
+### **📊 Data Source**
+- **Original Dataset:** UCI Machine Learning Repository
+- **Dataset Name:** Diabetes 130-US hospitals for years 1999-2008
+- **Direct Link:** [https://archive.ics.uci.edu/ml/datasets/Diabetes+130-US+hospitals+for+years+1999-2008](https://archive.ics.uci.edu/ml/datasets/Diabetes+130-US+hospitals+for+years+1999-2008)
+- **Data Collection:** The dataset contains de-identified data from 130 US hospitals collected between 1999-2008, containing 101,766 patient encounters with 50+ features including demographics, diagnoses, medications, lab results, and readmission status.
+- **Data in Repository:** The processed data file (`data/raw/diabetic_data.csv`) is included in this repository for reproducibility.
+
+### **📦 Data Availability**
+- **Included in Repository:** ✅ `data/raw/diabetic_data.csv` (18 MB, 101,766 records)
+- **Cloud Storage:** [To be added - Data will be posted on Kaggle/Cloud storage]
+
+---
+
 ## 📋 Table of Contents
+
+### **📎 Project Links**
+- [Repository Links & Data Sources](#-project-links--data-sources)
 
 ### **🚀 Getting Started**
 - [What This Project Does](#-what-this-project-does)
