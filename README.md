@@ -23,9 +23,7 @@
 - **Cloud Storage:** [To be added - Data will be posted on Kaggle/Cloud storage]
 
 ### **📊 Presentation Files**
-- **PDF Presentation:** [`docs/PRESENTATION_SLIDES_SHORT.pdf`](docs/PRESENTATION_SLIDES_SHORT.pdf) - Complete presentation slides in PDF format
 - **PowerPoint Presentation:** [`docs/PRESENTATION_SLIDES_SHORT.pptx`](docs/PRESENTATION_SLIDES_SHORT.pptx) - PowerPoint version of the presentation
-- **R Markdown Source:** [`docs/PRESENTATION_SLIDES_SHORT.Rmd`](docs/PRESENTATION_SLIDES_SHORT.Rmd) - Source file for generating the presentation
 
 ---
 

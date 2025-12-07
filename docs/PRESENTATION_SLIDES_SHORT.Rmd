@@ -12,6 +12,7 @@ output:
     theme: "metropolis"
     colortheme: "default"
     fonttheme: "default"
+    latex_engine: xelatex
 ---
 
 ```{r setup, include=FALSE}
@@ -32,7 +33,6 @@ knitr::opts_chunk$set(python.reticulate = FALSE)
 # Load libraries for tables and visualizations
 library(ggplot2)
 library(knitr)
-library(DT)
 library(readr)
 library(dplyr)
 ```
@@ -118,10 +118,10 @@ print(f"Patients: {df.shape[0]:,}")      # Number of patient records
 ```{r raw-data-view, echo=FALSE}
 raw <- readr::read_csv("../data/raw/diabetic_data.csv", show_col_types = FALSE)
 
-# Show first 10 rows as an interactive table (this is your "before" picture)
-DT::datatable(head(raw, 10),
-             options = list(pageLength = 5, scrollX = TRUE),
-             caption = "Raw data sample (before cleaning)")
+# Show first 10 rows as a table (PDF-compatible)
+knitr::kable(head(raw, 10), 
+             caption = "Raw data sample (before cleaning)",
+             format = if (knitr::is_latex_output()) "latex" else "html")
 ```
 
 ---
@@ -132,329 +132,70 @@ DT::datatable(head(raw, 10),
 
 ```{r cleaned-data-view, echo=FALSE}
 # Read processed train and test data created by the Python pipeline
-train <- readr::read_csv("../data/processed/train_processed.csv", show_col_types = FALSE)
-test  <- readr::read_csv("../data/processed/test_processed.csv",  show_col_types = FALSE)
-
-# Show a small sample from the cleaned training data
-DT::datatable(head(train, 10),
-             options = list(pageLength = 5, scrollX = TRUE),
-             caption = "Cleaned training data sample (after preprocessing)")
-
-# If the target column exists, show class balance in train vs test
-if ("readmitted_binary" %in% names(train)) {
-  train_counts <- train %>%
-    dplyr::count(readmitted_binary, name = "n") %>%
-    dplyr::mutate(set = "Train")
-  test_counts <- test %>%
-    dplyr::count(readmitted_binary, name = "n") %>%
-    dplyr::mutate(set = "Test")
+# Note: If files don't exist, create sample data for demonstration
+if (file.exists("../data/processed/train_processed.csv")) {
+  train <- readr::read_csv("../data/processed/train_processed.csv", show_col_types = FALSE)
+  test  <- readr::read_csv("../data/processed/test_processed.csv",  show_col_types = FALSE)
   
-  counts <- dplyr::bind_rows(train_counts, test_counts)
+  # Show a small sample from the cleaned training data (PDF-compatible)
+  knitr::kable(head(train, 10),
+               caption = "Cleaned training data sample (after preprocessing)",
+               format = if (knitr::is_latex_output()) "latex" else "html")
   
-  ggplot2::ggplot(counts, ggplot2::aes(x = factor(readmitted_binary), y = n, fill = set)) +
-    ggplot2::geom_col(position = "dodge") +
-    ggplot2::labs(x = "Readmitted within 30 days (0 = No, 1 = Yes)",
-                  y = "Number of patients",
-                  title = "Train vs Test class balance",
-                  fill = "Dataset") +
-    ggplot2::theme_minimal(base_size = 14)
+  # If the target column exists, show class balance in train vs test
+  if ("readmitted_binary" %in% names(train)) {
+    train_counts <- train %>%
+      dplyr::count(readmitted_binary, name = "n") %>%
+      dplyr::mutate(set = "Train")
+    test_counts <- test %>%
+      dplyr::count(readmitted_binary, name = "n") %>%
+      dplyr::mutate(set = "Test")
+    
+    counts <- dplyr::bind_rows(train_counts, test_counts)
+    
+    print(ggplot2::ggplot(counts, ggplot2::aes(x = factor(readmitted_binary), y = n, fill = set)) +
+      ggplot2::geom_col(position = "dodge") +
+      ggplot2::labs(x = "Readmitted within 30 days (0 = No, 1 = Yes)",
+                    y = "Number of patients",
+                    title = "Train vs Test class balance",
+                    fill = "Dataset") +
+      ggplot2::theme_minimal(base_size = 14))
+  }
+} else {
+  # Fallback if processed data doesn't exist
+  cat("Note: Processed data files not found. Run the training pipeline first.\n")
 }
 ```
 
 ---
 
-## Challenge 1: Class Imbalance {.smaller}
+## Key Challenges & Solutions {.smaller}
 
-**The Problem:** Most patients DON'T get readmitted (imbalanced data)
+**Four Major Problems We Solved:**
 
-<div class="highlight-box">
-**📁 File Location:** `src/train.py`  
-**🎯 Purpose:** Find the best threshold to catch 80% of high-risk patients  
-**📍 Where Used:** Called during model training to optimize for recall
-</div>
+### 1. **Class Imbalance** 
+- **Problem:** Most patients DON'T get readmitted → model misses high-risk patients
+- **Solution:** Threshold tuning to achieve **80% recall** (catch 80% of high-risk patients)
+- **Code:** `src/train.py` - `tune_threshold_for_recall()` function
+- **Result:** ✅ We catch 80% of high-risk patients instead of just 60%!
 
-```{python threshold-tuning, eval=FALSE, echo=TRUE}
-# ============================================================
-# ⭐ CRITICAL CODE: THRESHOLD TUNING FOR 80% RECALL
-# ============================================================
-# WHAT: This function finds the best threshold (cutoff point) for predictions
-# WHY: Default threshold (0.5) might miss high-risk patients - we need 80% recall!
-# WHERE: Used in src/train.py during model training
+### 2. **Too Many Features**
+- **Problem:** 50+ features = risk of overfitting and hard to interpret
+- **Solution:** Feature selection using Mutual Information → **Top 10 features**
+- **Code:** `src/feature_selection.py` - `SelectKBest` with `mutual_info_classif`
+- **Result:** ✅ Simpler, faster, more interpretable models
 
-def tune_threshold_for_recall(y_true, y_proba, target_recall=0.80):
-    """
-    Find the threshold that gives us at least 80% recall.
-    
-    Think of it like this:
-    - Model gives us a probability (0 to 1) for each patient
-    - We need to decide: "Is this patient high-risk?" (Yes/No)
-    - Threshold = the cutoff point (e.g., 0.35 means "if prob > 0.35, flag as high-risk")
-    - Lower threshold = flag more patients = higher recall (catch more high-risk)
-    """
-    from sklearn.metrics import recall_score
-    import numpy as np
-    
-    # Try different thresholds from 0.1 to 0.6 (step by 0.01)
-    # We're searching for the "sweet spot"
-    thresholds = np.arange(0.1, 0.6, 0.01)  # [0.1, 0.11, 0.12, ..., 0.59]
-    
-    best_threshold = 0.5  # Start with default
-    best_recall = 0       # Track best recall we've found
-    
-    # Try each threshold and see which one gives us 80% recall
-    for threshold in thresholds:
-        # Convert probabilities to predictions using this threshold
-        y_pred = (y_proba >= threshold).astype(int)  # ← KEY: Lower threshold = more flags
-        
-        # Calculate recall: "Of all high-risk patients, how many did we catch?"
-        recall = recall_score(y_true, y_pred)
-        
-        # If this threshold gives us at least 80% recall AND it's better than previous...
-        if recall >= target_recall and recall > best_recall:
-            best_recall = recall
-            best_threshold = threshold  # ← Save this as our best threshold!
-    
-    return best_threshold, best_recall  # Return the winning threshold
+### 3. **Missing Data**
+- **Problem:** Lots of `?` and `NULL` values → models can't work with incomplete data
+- **Solution:** Data cleaning pipeline (remove duplicates, impute missing values, drop bad columns)
+- **Code:** `src/preprocess.py` - `basic_clean()` function
+- **Result:** ✅ Clean, complete data ready for machine learning
 
-# ============================================================
-# WHY THIS MATTERS:
-# ============================================================
-# In healthcare, missing a high-risk patient (false negative) is WORSE than
-# flagging a low-risk patient (false positive). We'd rather be cautious!
-# 
-# Example:
-# - Threshold 0.5: Might catch 60% of high-risk patients (too low!)
-# - Threshold 0.35: Catches 80% of high-risk patients (perfect!)
-# - Threshold 0.2: Catches 95% but too many false alarms
-```
-
-**What This Code Does:**
-- **WHAT:** Finds the optimal threshold to achieve 80% recall
-- **WHY:** We MUST catch 80% of high-risk patients - missing them is dangerous
-- **WHERE:** Called in `src/train.py` after training each model
-
-**Real Impact:** This is why we catch 80% of high-risk patients instead of just 60%!
-
-
-## Challenge 2: Too Many Features {.smaller}
-
-**The Problem:** 50+ features = risk of overfitting
-
-<div class="highlight-box">
-**📁 File Location:** `src/feature_selection.py`  
-**🎯 Purpose:** Pick the top 10 most important features  
-**📍 Where Used:** Called before training Logistic Regression model
-</div>
-
-```{python feature-selection, eval=FALSE, echo=TRUE}
-# ============================================================
-# ⭐ CRITICAL CODE: FEATURE SELECTION USING MUTUAL INFORMATION
-# ============================================================
-# WHAT: We're picking the 10 best features from 50+ available features
-# WHY: Too many features = model might memorize data instead of learning patterns
-# WHERE: Used in src/feature_selection.py, called by src/train.py
-
-from sklearn.feature_selection import SelectKBest, mutual_info_classif
-
-def select_features(X_train, y_train, k=10):
-    """
-    Select the top K features using Mutual Information.
-    
-    Think of Mutual Information like this:
-    - "How much does this feature tell me about readmission?"
-    - High MI score = "This feature is really useful for prediction"
-    - Low MI score = "This feature doesn't help much"
-    
-    We pick the top 10 features with highest MI scores.
-    """
-    # Create a feature selector that picks top K features
-    # mutual_info_classif = the scoring method (how we rank features)
-    selector = SelectKBest(
-        score_func=mutual_info_classif,  # ← KEY: This scores each feature
-        k=k                              # ← KEY: We want top 10 features
-    )
-    
-    # Fit the selector to our training data
-    # This calculates MI scores for all features and picks the best ones
-    X_selected = selector.fit_transform(X_train, y_train)  # ← Does the selection!
-    
-    # Get the names of selected features (so we know which ones were picked)
-    selected_features = X_train.columns[selector.get_support()]  # ← Top 10 features!
-    
-    return X_selected, selected_features
-
-# ============================================================
-# WHY THIS MATTERS:
-# ============================================================
-# 1. Simpler models = easier to understand and explain to doctors
-# 2. Fewer features = faster training and prediction
-# 3. Less overfitting = model generalizes better to new patients
-# 
-# Example of what gets selected:
-# - ✅ Number of medications (high MI score - very predictive!)
-# - ✅ Time in hospital (high MI score - important!)
-# - ❌ Patient ID (low MI score - not useful for prediction)
-```
-
-**What This Code Does:**
-- **WHAT:** Selects top 10 features from 50+ using Mutual Information
-- **WHY:** Simpler models are easier to understand and less likely to overfit
-- **WHERE:** Called in `src/train.py` before training Logistic Regression
-
-**Result:** Instead of using all 50 features, we use the 10 most important ones!
-
-
-## Challenge 3: Missing Data {.smaller}
-
-**The Problem:** Lots of `?` and `NULL` values
-
-<div class="highlight-box">
-**📁 File Location:** `src/preprocess.py`  
-**🎯 Purpose:** Clean messy data with missing values  
-**📍 Where Used:** First step in pipeline, called by train_test_split_clean()
-</div>
-
-```{python preprocessing, eval=FALSE, echo=TRUE}
-# ============================================================
-# ⭐ CRITICAL CODE: DATA PREPROCESSING - HANDLING MISSING VALUES
-# ============================================================
-# WHAT: We're cleaning up messy data with missing values, duplicates, etc.
-# WHY: Models can't work with missing data - we need clean, complete data
-# WHERE: Used in src/preprocess.py, function: basic_clean()
-
-def basic_clean(df, cfg):
-    """
-    Clean the raw data to make it ready for modeling.
-    
-    Think of this like cleaning a messy room:
-    1. Remove duplicates (same patient, multiple records)
-    2. Handle missing values (fill in or remove)
-    3. Convert text to numbers (models need numbers, not text)
-    """
-    import numpy as np
-    from sklearn.impute import SimpleImputer
-    
-    # STEP 1: Remove duplicate patient encounters
-    # WHY: Same patient might appear multiple times - we want unique encounters
-    df = df.drop_duplicates()  # ← Removes duplicate rows
-    
-    # STEP 2: Replace '?' with NaN (Python's way of saying "missing")
-    # WHY: The dataset uses '?' to mark missing values, but Python uses NaN
-    df = df.replace('?', np.nan)  # ← Converts '?' to NaN
-    
-    # STEP 3: Drop columns with more than 50% missing values
-    # WHY: If more than half the data is missing, the column isn't useful
-    threshold = len(df) * 0.5  # 50% of rows
-    df = df.dropna(thresh=threshold, axis=1)  # ← Drops bad columns
-    
-    # STEP 4: Fill in remaining missing values
-    # WHY: Models need complete data - we fill missing values with most common value
-    imputer = SimpleImputer(strategy='most_frequent')  # ← Use most common value
-    df_imputed = imputer.fit_transform(df)  # ← Fills in missing values!
-    
-    return df_imputed  # ← Return clean data ready for modeling
-
-# ============================================================
-# WHY THIS MATTERS:
-# ============================================================
-# Raw data is messy! We found:
-# - Some patients appear multiple times (duplicates)
-# - Many features have '?' instead of actual values
-# - Some columns are mostly empty (not useful)
-# 
-# After cleaning:
-# - ✅ No duplicates
-# - ✅ All missing values filled in
-# - ✅ Only useful columns kept
-# - ✅ Ready for machine learning!
-```
-
-**What This Code Does:**
-- **WHAT:** Cleans data by removing duplicates, handling missing values
-- **WHY:** Models need clean, complete data to work properly
-- **WHERE:** Called at the start of `train_test_split_clean()` in `src/preprocess.py`
-
-**Impact:** Without this cleaning, our models would crash or give bad predictions!
-
-
-## Challenge 4: Black Box Problem {.smaller}
-
-**The Problem:** Complex models are hard to explain to doctors
-
-<div class="highlight-box">
-**📁 File Location:** `src/model.py`  
-**🎯 Purpose:** Build two different models - one simple, one powerful  
-**📍 Where Used:** Called by src/train.py to create both models
-</div>
-
-```{python two-models, eval=FALSE, echo=TRUE}
-# ============================================================
-# ⭐ CRITICAL CODE: BUILDING TWO MODELS - SIMPLE + POWERFUL
-# ============================================================
-# WHAT: We're creating two different models for different purposes
-# WHY: Balance between "easy to explain" (LR) and "highly accurate" (XGBoost)
-# WHERE: Used in src/model.py, called by src/train.py
-
-from sklearn.linear_model import LogisticRegression
-from xgboost import XGBClassifier
-
-# ============================================================
-# MODEL 1: LOGISTIC REGRESSION (The Simple, Explainable One)
-# ============================================================
-# WHY: Doctors need to understand WHY a patient is flagged
-# WHAT: Simple linear model that's easy to interpret
-# WHERE: Used when interpretability is critical
-
-lr_model = LogisticRegression(
-    max_iter=1000,        # ← Allow up to 1000 iterations to converge
-    random_state=42,      # ← Set random seed for reproducibility
-    solver='lbfgs'        # ← Algorithm to use for optimization
-)
-
-# This model:
-# - Uses top 10 selected features (simple, interpretable)
-# - Can explain: "Patient is high-risk because of X, Y, Z features"
-# - Fast to train (seconds)
-# - Easy for doctors to understand
-
-# ============================================================
-# MODEL 2: XGBOOST (The Powerful, Accurate One)
-# ============================================================
-# WHY: Sometimes we need maximum accuracy, even if it's harder to explain
-# WHAT: Complex ensemble model that finds non-linear patterns
-# WHERE: Used when accuracy is the priority
-
-xgb_model = XGBClassifier(
-    n_estimators=100,     # ← Number of trees (more = more complex)
-    max_depth=5,          # ← How deep each tree can go
-    random_state=42,      # ← Set random seed for reproducibility
-    learning_rate=0.1    # ← How fast the model learns
-)
-
-# This model:
-# - Uses all available features (can handle complexity)
-# - Finds complex patterns humans might miss
-# - More accurate but harder to explain
-# - Takes longer to train (minutes)
-
-# ============================================================
-# WHY TWO MODELS?
-# ============================================================
-# Scenario 1: Doctor asks "Why is this patient high-risk?"
-#   → Use Logistic Regression (can explain feature importance)
-#
-# Scenario 2: Need best possible prediction accuracy
-#   → Use XGBoost (more accurate, even if harder to explain)
-#
-# We built both so we can use the right tool for the right situation!
-```
-
-**What This Code Does:**
-- **WHAT:** Creates two models - one simple (LR) and one powerful (XGBoost)
-- **WHY:** Balance interpretability (doctors need to understand) vs accuracy
-- **WHERE:** Defined in `src/model.py`, trained in `src/train.py`
-
-**Real Impact:** Doctors can trust the tool because they understand how it works!
+### 4. **Black Box Problem**
+- **Problem:** Complex models are hard to explain to doctors → lack of trust
+- **Solution:** **Two models** - Logistic Regression (explainable) + XGBoost (accurate)
+- **Code:** `src/model.py` - Both models trained in `src/train.py`
+- **Result:** ✅ Doctors can understand predictions AND get high accuracy
 
 
 ## Our Pipeline {.smaller}
@@ -616,7 +357,8 @@ results <- data.frame(
   )
 )
 
-kable(results, caption = "Model Performance on Test Set (20,000 patients)")
+knitr::kable(results, caption = "Model Performance on Test Set (20,000 patients)",
+             format = if (knitr::is_latex_output()) "latex" else "html")
 ```
 
 **Key Findings:**
@@ -729,7 +471,8 @@ challenges <- data.frame(
   )
 )
 
-kable(challenges, caption = "Challenges, Solutions, and Code Locations")
+knitr::kable(challenges, caption = "Challenges, Solutions, and Code Locations",
+             format = if (knitr::is_latex_output()) "latex" else "html")
 ```
 
 **Takeaway:** Every problem had a solution, and we focused on what matters most - catching high-risk patients.
