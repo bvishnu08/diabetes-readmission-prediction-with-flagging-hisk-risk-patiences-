@@ -529,17 +529,13 @@ MODEL FILES VERIFICATION
 
 ---
 
-### **Step 3: View Results Again (If You Want to See Them Again)**
+### **Step 3: View Full Results and Metrics in Terminal ⭐ IMPORTANT!**
 
-**When to do this:** Only if you want to see the evaluation results again, or if you accidentally closed the terminal and lost the output.
+**When to do this:** To see the complete evaluation results with all metrics, confusion matrices, and clinical interpretation.
 
-**What is "activating virtual environment"?**
-- Remember that `.venv` folder that was created? That's the "virtual environment"
-- It's like a special toolbox with all the tools your project needs
-- "Activating" it means "use the tools from this toolbox"
-- You need to do this before running some commands
+**Why this is important:** While `run_all.py` shows results, running the evaluation script separately gives you the full detailed output with all metrics clearly displayed.
 
-**How to do it (choose your operating system):**
+**Follow these steps to see all results:**
 
 #### **For Windows Users:**
 
@@ -563,7 +559,7 @@ MODEL FILES VERIFICATION
    
    **This means it worked!** ✅
 
-4. **Run the evaluation:**
+4. **Run the evaluation to see full results:**
    ```bash
    python scripts/run_eval.py
    ```
@@ -590,12 +586,77 @@ MODEL FILES VERIFICATION
    
    **This means it worked!** ✅
 
-4. **Run the evaluation:**
+4. **Run the evaluation to see full results:**
    ```bash
    python scripts/run_eval.py
    ```
 
-**What you'll see:** The same evaluation results printed in your terminal.
+**What you'll see in the terminal:**
+
+The complete evaluation output with:
+
+1. **Logistic Regression Results:**
+   - Threshold, ROC-AUC, Accuracy, Recall, Precision, F1-Score
+   - Confusion Matrix (showing True Positives, False Positives, True Negatives, False Negatives)
+   - Classification Report (detailed breakdown by class)
+   - Clinical Interpretation (how many patients flagged as HIGH RISK vs LOW RISK)
+
+2. **XGBoost Results:**
+   - All the same metrics as above
+   - Side-by-side comparison
+
+3. **Model Recommendation:**
+   - Which model to use and why
+   - Performance comparison
+
+**Example output you'll see:**
+```
+======================================================================
+MODEL EVALUATION – 30-Day Readmission Prediction
+======================================================================
+
+======================================================================
+LOGISTIC REGRESSION (TOP 20 FEATURES) (features: 20)
+======================================================================
+Threshold      : 0.450
+ROC-AUC        : 0.633
+Accuracy       : 0.526
+Recall (class1): 0.672
+Precision      : 0.146
+F1-score       : 0.240
+
+Confusion matrix [ [TN FP] ; [FN TP] ]:
+[[9178 8905]
+ [ 746 1525]]
+
+Classification report:
+              precision    recall  f1-score   support
+           0      0.925     0.508     0.655     18083
+           1      0.146     0.672     0.240      2271
+    accuracy                          0.526     20354
+   macro avg      0.536     0.590     0.448     20354
+weighted avg      0.838     0.526     0.609     20354
+
+CLINICAL INTERPRETATION – SAFE DISCHARGE VIEW
+----------------------------------------------------------------------
+Patients flagged HIGH RISK : 10430 (51.2% of test set)
+Patients flagged LOW RISK  : 9924 (48.8% of test set)
+...
+
+======================================================================
+XGBOOST (TOP 25 FEATURES) (features: 25)
+======================================================================
+[Similar detailed output for XGBoost]
+
+======================================================================
+RECOMMENDATION
+======================================================================
+Recommended deployment model: XGBoost (top 25 features)
+- Higher F1-score (0.267 vs 0.240)
+- ROC-AUC: 0.678
+```
+
+**This gives you the complete picture of model performance!** 📊
 
 ---
 
@@ -788,16 +849,32 @@ A: Don't panic! Read the error message - it usually tells you what's wrong. Comm
 
 After running the project, here are three ways to see your results:
 
-### **Method 1: Terminal Output (Automatic - Already Shown!)**
+### **Method 1: View Full Results and Metrics in Terminal ⭐ RECOMMENDED**
 
-✅ **This is already done!** When you ran `python run_all.py`, it automatically showed all results in your terminal, including:
-- Confusion Matrix for both models
-- All scores (Accuracy, Recall, Precision, F1-Score, ROC-AUC)
-- Classification Report
-- Clinical Interpretation
-- Model Recommendation
+**To see the complete evaluation results with all metrics, follow these steps:**
 
-**To see results again**, you can run `python scripts/run_eval.py` (after activating venv). It will print:
+1. **Activate the virtual environment:**
+   ```bash
+   # Windows
+   .venv\Scripts\activate
+   
+   # Mac/Linux
+   source .venv/bin/activate
+   ```
+
+2. **Run the evaluation script:**
+   ```bash
+   python scripts/run_eval.py
+   ```
+
+**This will display the complete results including:**
+- ✅ **All Metrics:** Threshold, ROC-AUC, Accuracy, Recall, Precision, F1-Score for both models
+- ✅ **Confusion Matrices:** Detailed breakdown showing True Positives, False Positives, True Negatives, False Negatives
+- ✅ **Classification Reports:** Per-class precision, recall, and F1-scores
+- ✅ **Clinical Interpretation:** How many patients flagged as HIGH RISK vs LOW RISK
+- ✅ **Model Recommendation:** Which model to use and why
+
+**Example output:**
 
 ```
 MODEL EVALUATION – 30-Day Readmission Prediction

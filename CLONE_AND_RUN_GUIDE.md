@@ -390,19 +390,30 @@ python test_models.py
 ✅ ALL CHECKS PASSED!
 ```
 
-### **Step 2: View Results Again (Optional)**
+### **Step 2: View Full Results and Metrics ⭐ IMPORTANT!**
+
+**To see the complete evaluation results with all metrics, confusion matrices, and clinical interpretation:**
 
 ```bash
-# Activate virtual environment first
+# 1. Activate virtual environment first
 # Windows
 .venv\Scripts\activate
 
 # Mac/Linux
 source .venv/bin/activate
 
-# Then run evaluation
+# 2. Run evaluation to see full results
 python scripts/run_eval.py
 ```
+
+**What you'll see:**
+- Complete metrics for both models (Threshold, ROC-AUC, Accuracy, Recall, Precision, F1-Score)
+- Confusion matrices showing True Positives, False Positives, True Negatives, False Negatives
+- Classification reports with detailed breakdown
+- Clinical interpretation (HIGH RISK vs LOW RISK patients)
+- Model recommendation
+
+**This gives you the full picture of model performance!** 📊
 
 ---
 
@@ -458,7 +469,16 @@ python run_all.py
 # 4. Verify everything worked
 python test_models.py
 
-# 5. (Optional) Launch dashboard
+# 5. View full results and metrics (IMPORTANT!)
+# Windows:
+.venv\Scripts\activate
+python scripts/run_eval.py
+
+# Mac/Linux:
+source .venv/bin/activate
+python scripts/run_eval.py
+
+# 6. (Optional) Launch dashboard
 # Windows:
 .venv\Scripts\activate
 streamlit run dashboard.py
