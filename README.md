@@ -5,39 +5,33 @@
 
 ---
 
-## 📎 **Project Links & Data Sources**
+## 🆘 **NEW USER? START HERE!**
 
-### **🔗 Repository Links**
-- **GitHub Repository:** [https://github.com/bvishnu08/diabetes-readmission-prediction-with-flagging-hisk-risk-patiences-](https://github.com/bvishnu08/diabetes-readmission-prediction-with-flagging-hisk-risk-patiences-)
-- **GitLab Repository:** [To be added - Code will be posted on GitLab]
+**If you just cloned this repository and want to run it:**
 
-### **📊 Data Source**
-- **Original Dataset:** UCI Machine Learning Repository
-- **Dataset Name:** Diabetes 130-US hospitals for years 1999-2008
-- **Direct Link:** [https://archive.ics.uci.edu/ml/datasets/Diabetes+130-US+hospitals+for+years+1999-2008](https://archive.ics.uci.edu/ml/datasets/Diabetes+130-US+hospitals+for+years+1999-2008)
-- **Data Collection:** The dataset contains de-identified data from 130 US hospitals collected between 1999-2008, containing 101,766 patient encounters with 50+ features including demographics, diagnoses, medications, lab results, and readmission status.
-- **Data in Repository:** The processed data file (`data/raw/diabetic_data.csv`) is included in this repository for reproducibility.
+👉 **Read this first:** [`CLONE_AND_RUN_GUIDE.md`](CLONE_AND_RUN_GUIDE.md) - Complete step-by-step guide for fresh clones
 
-### **📦 Data Availability**
-- **Included in Repository:** ✅ `data/raw/diabetic_data.csv` (18 MB, 101,766 records)
-- **Cloud Storage:** [To be added - Data will be posted on Kaggle/Cloud storage]
+**Quick version (3 steps):**
+1. **Get the repository** - Download ZIP or clone from GitHub
+2. **Open terminal** in the project folder
+3. **Run:** `python run_all.py`
+4. **Wait 5-10 minutes** - Everything runs automatically!
+5. **Done!** ✅
 
-### **📊 Presentation Files**
-- **PowerPoint Presentation:** [`docs/PRESENTATION_SLIDES_SHORT.pptx`](docs/PRESENTATION_SLIDES_SHORT.pptx) - PowerPoint version of the presentation
+**Having issues?** Jump to [Troubleshooting](#-troubleshooting) or see [`CLONE_AND_RUN_GUIDE.md`](CLONE_AND_RUN_GUIDE.md) for detailed solutions.
 
 ---
 
 ## 📋 Table of Contents
-
-### **📎 Project Links**
-- [Repository Links & Data Sources](#-project-links--data-sources)
-- [Presentation Files](#-presentation-files)
 
 ### **🚀 Getting Started**
 - [What This Project Does](#-what-this-project-does)
 - [Quick Start - Run Everything in One Command](#-quick-start)
 - [Getting the Repository](#-getting-the-repository)
 - [How to Run Everything](#-how-to-run-everything)
+
+### **📎 Project Links**
+- [Repository Links & Data Sources](#-project-links--data-sources)
 
 ### **📊 Viewing Results**
 - [How to Check Results](#-how-to-check-results)
@@ -70,23 +64,6 @@
 - [Launch Dashboard](#step-4-launch-the-interactive-dashboard-recommended---this-is-the-fun-part) - Interactive web interface
 - [Verify Everything Worked](#step-2-verify-everything-was-created-lets-make-sure-nothing-broke) - Check files
 - [Install Jupyter Notebooks](#step-5-explore-the-code-optional---only-if-you-want-to-learn) - For code exploration
-
----
-
-## 🆘 **NEW USER? START HERE!**
-
-**If you just cloned this repository and want to run it:**
-
-👉 **Read this first:** [`CLONE_AND_RUN_GUIDE.md`](CLONE_AND_RUN_GUIDE.md) - Complete step-by-step guide for fresh clones
-
-**Quick version:**
-1. Clone or download the repository
-2. Open terminal in the project folder
-3. Run: `python run_all.py`
-4. Wait 5-10 minutes
-5. Done! ✅
-
-**Having issues?** Check the troubleshooting section below or see `CLONE_AND_RUN_GUIDE.md` for detailed solutions.
 
 ---
 
@@ -1663,6 +1640,28 @@ python -m pip install jupyter
 - "Filename too long" (Windows) → See [`CLONE_AND_RUN_GUIDE.md`](CLONE_AND_RUN_GUIDE.md)
 - "python: command not found" → Install Python, add to PATH
 - Missing data file → Check that `data/raw/diabetic_data.csv` exists in repository
+
+---
+
+## 📎 **Project Links & Data Sources**
+
+### **🔗 Repository Links**
+- **GitHub Repository:** [https://github.com/bvishnu08/diabetes-readmission-prediction-with-flagging-hisk-risk-patiences-](https://github.com/bvishnu08/diabetes-readmission-prediction-with-flagging-hisk-risk-patiences-)
+- **GitLab Repository:** [To be added - Code will be posted on GitLab]
+
+### **📊 Data Source**
+- **Original Dataset:** UCI Machine Learning Repository
+- **Dataset Name:** Diabetes 130-US hospitals for years 1999-2008
+- **Direct Link:** [https://archive.ics.uci.edu/ml/datasets/Diabetes+130-US+hospitals+for+years+1999-2008](https://archive.ics.uci.edu/ml/datasets/Diabetes+130-US+hospitals+for+years+1999-2008)
+- **Data Collection:** The dataset contains de-identified data from 130 US hospitals collected between 1999-2008, containing 101,766 patient encounters with 50+ features including demographics, diagnoses, medications, lab results, and readmission status.
+- **Data in Repository:** The processed data file (`data/raw/diabetic_data.csv`) is included in this repository for reproducibility.
+
+### **📦 Data Availability**
+- **Included in Repository:** ✅ `data/raw/diabetic_data.csv` (18 MB, 101,766 records)
+- **Cloud Storage:** [To be added - Data will be posted on Kaggle/Cloud storage]
+
+### **📊 Presentation Files**
+- **PowerPoint Presentation:** [`docs/PRESENTATION_SLIDES_SHORT.pptx`](docs/PRESENTATION_SLIDES_SHORT.pptx) - PowerPoint version of the presentation
 
 ---
 
