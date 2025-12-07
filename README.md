@@ -5,7 +5,7 @@
 
 ---
 
-## 🆘 **NEW USER? START HERE!**
+## 🆘 **NEW USER? START HERE!** {#new-user-start-here}
 
 **If you just cloned this repository and want to run it:**
 
@@ -14,10 +14,7 @@
 **Quick version (3 steps):**
 1. **Get the repository** - Download ZIP or clone from GitHub
 2. **Open terminal** in the project folder
-3. **Run:** `python run_all.py`
-4. **Wait 5-10 minutes** - Everything runs automatically!
-5. **Done!** ✅
-
+3. **Run:** `python run_all.py` (wait 5-10 minutes - everything runs automatically! ✅)
 **Having issues?** Jump to [Troubleshooting](#-troubleshooting) or see [`CLONE_AND_RUN_GUIDE.md`](CLONE_AND_RUN_GUIDE.md) for detailed solutions.
 
 ---
