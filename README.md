@@ -18,6 +18,23 @@
 
 ---
 
+## 🆘 **NEW USER? START HERE!**
+
+**If you just cloned this repository and want to run it:**
+
+👉 **Read this first:** [`CLONE_AND_RUN_GUIDE.md`](CLONE_AND_RUN_GUIDE.md) - Complete step-by-step guide for fresh clones
+
+**Quick version:**
+1. Clone or download the repository
+2. Open terminal in the project folder
+3. Run: `python run_all.py`
+4. Wait 5-10 minutes
+5. Done! ✅
+
+**Having issues?** Check the troubleshooting section below or see `CLONE_AND_RUN_GUIDE.md` for detailed solutions.
+
+---
+
 ## 🎯 What This Project Does
 
 This project builds machine learning models to predict if a diabetic patient will be readmitted to the hospital within 30 days of discharge. This helps hospitals:
@@ -61,13 +78,15 @@ python run_all.py
 
 ## 📥 Getting the Repository
 
+> **📖 For detailed step-by-step instructions, see [`CLONE_AND_RUN_GUIDE.md`](CLONE_AND_RUN_GUIDE.md)**
+
 You have two options to get the code:
 
-### **Option 1: Download ZIP (Easiest - No Git Needed)**
+### **Option 1: Download ZIP (Easiest - No Git Needed) ⭐ RECOMMENDED FOR BEGINNERS**
 
 **Best for:** Windows users, beginners, or if you don't have Git installed
 
-**Steps:**
+**Quick Steps:**
 
 1. **Go to GitHub:**
    - Open: https://github.com/bvishnu08/diabetes-readmission-prediction-with-flagging-hisk-risk-patiences-
@@ -77,26 +96,34 @@ You have two options to get the code:
 2. **Extract the ZIP file:**
    - **Windows:** Right-click → "Extract All"
    - **Mac:** Double-click the ZIP file
-   - **Extract to a SHORT path** (important for Windows!):
-     - ✅ Good: `C:\Projects\diabetes-project`
+   - **Linux:** `unzip diabetes-readmission-prediction-with-flagging-hisk-risk-patiences--main.zip`
+   - **IMPORTANT:** Extract to a **SHORT path** (critical for Windows!):
+     - ✅ Good: `C:\Projects\` or `~/Projects/`
      - ❌ Bad: `C:\Users\YourName\Documents\Very\Long\Path\Name\...`
 
-3. **Rename the folder** to something short (e.g., `diabetes-project`)
+3. **Rename the folder** to something short:
+   - **Windows:** Right-click folder → Rename → `diabetes-project`
+   - **Mac/Linux:** `mv diabetes-readmission-prediction-with-flagging-hisk-risk-patiences--main diabetes-project`
 
 4. **Open Terminal/Command Prompt** in that folder:
-   - **Windows:** Right-click folder → "Open in Terminal" or "Open PowerShell here"
-   - **Mac/Linux:** Right-click folder → "New Terminal at Folder"
+   - **Windows:** Navigate to folder → Right-click empty space → "Open in Terminal" or "Open PowerShell here"
+   - **Mac:** Right-click folder → "New Terminal at Folder"
+   - **Linux:** `cd ~/Downloads/diabetes-project` (or wherever you extracted it)
 
 5. **Run the project:**
    ```bash
    python run_all.py
    ```
+   
+   **That's it!** Wait 5-10 minutes and everything will be set up automatically.
+
+**For detailed instructions with screenshots and troubleshooting, see [`CLONE_AND_RUN_GUIDE.md`](CLONE_AND_RUN_GUIDE.md)**
 
 ### **Option 2: Git Clone (For Advanced Users)**
 
 **Best for:** Users familiar with Git, or if you want to update the code easily
 
-**Steps:**
+**Quick Steps:**
 
 1. **Open Terminal/Command Prompt**
 
@@ -118,11 +145,27 @@ You have two options to get the code:
    ```bash
    cd diabetes-readmission-prediction-with-flagging-hisk-risk-patiences-
    ```
+   
+   **Optional:** Rename to something shorter:
+   ```bash
+   # Windows
+   rename diabetes-readmission-prediction-with-flagging-hisk-risk-patiences- diabetes-project
+   cd diabetes-project
+   
+   # Mac/Linux
+   mv diabetes-readmission-prediction-with-flagging-hisk-risk-patiences- diabetes-project
+   cd diabetes-project
+   ```
 
 5. **Run the project:**
    ```bash
    python run_all.py
    ```
+
+**Troubleshooting:**
+- **"git: command not found"** → Install Git or use Option 1 (ZIP download)
+- **"Filename too long" (Windows)** → Use Option 1 (ZIP download) or see [`CLONE_AND_RUN_GUIDE.md`](CLONE_AND_RUN_GUIDE.md) for solutions
+- **Other issues?** → See [`CLONE_AND_RUN_GUIDE.md`](CLONE_AND_RUN_GUIDE.md) troubleshooting section
 
 ---
 
@@ -1256,10 +1299,16 @@ diabetes-readmission-prediction/
 
 ### **Still Having Issues?**
 
+👉 **First, check [`CLONE_AND_RUN_GUIDE.md`](CLONE_AND_RUN_GUIDE.md)** - It has detailed troubleshooting for 10+ common issues!
+
+**Quick fixes:**
+
 1. **Check Python version:** Should be 3.8 or higher
    ```bash
    python --version
    ```
+   - If not installed: https://www.python.org/downloads/
+   - **Windows:** During installation, check "Add Python to PATH"
 
 2. **Verify you're in the right directory:**
    ```bash
@@ -1268,14 +1317,25 @@ diabetes-readmission-prediction/
    dir  # Windows
    ```
 
-3. **Try running step-by-step manually** (see Method 2 in "How to Run Everything")
-
-4. **Check that data file exists:**
+3. **Check that data file exists:**
    ```bash
    # Should show the file
    ls data/raw/diabetic_data.csv  # Mac/Linux
    dir data\raw\diabetic_data.csv  # Windows
    ```
+
+4. **"Filename too long" error (Windows):**
+   - Use ZIP download instead of git clone
+   - Extract to a SHORT path like `C:\Projects\`
+   - See [`CLONE_AND_RUN_GUIDE.md`](CLONE_AND_RUN_GUIDE.md) for detailed solutions
+
+5. **"python: command not found":**
+   - Install Python and add to PATH
+   - **Windows:** Try `py` instead of `python`: `py run_all.py`
+
+6. **Try running step-by-step manually** (see Method 2 in "How to Run Everything" section above)
+
+**For more detailed troubleshooting, see [`CLONE_AND_RUN_GUIDE.md`](CLONE_AND_RUN_GUIDE.md)**
 
 ---
 
@@ -1318,25 +1378,41 @@ diabetes-readmission-prediction/
 
 ### **Quick Setup for Grading**
 
+> **📖 For students who have trouble running it, direct them to [`CLONE_AND_RUN_GUIDE.md`](CLONE_AND_RUN_GUIDE.md)**
+
 1. **Download the repository:**
    ```bash
    git clone https://github.com/bvishnu08/diabetes-readmission-prediction-with-flagging-hisk-risk-patiences-.git
    cd diabetes-readmission-prediction-with-flagging-hisk-risk-patiences-
    ```
+   
+   **Or download ZIP from GitHub** (easier, no Git needed):
+   - Go to: https://github.com/bvishnu08/diabetes-readmission-prediction-with-flagging-hisk-risk-patiences-
+   - Click "Code" → "Download ZIP"
+   - Extract to a short path (e.g., `C:\Projects\`)
 
 2. **Run everything:**
    ```bash
    python run_all.py
    ```
+   
+   **That's it!** This single command does everything automatically.
 
 3. **Verify results:**
    ```bash
    python test_models.py
    ```
+   
+   Should show: `✅ ALL CHECKS PASSED!`
 
 4. **View dashboard (optional):**
    ```bash
-   source .venv/bin/activate  # Mac/Linux
+   # Windows
+   .venv\Scripts\activate
+   streamlit run dashboard.py
+   
+   # Mac/Linux
+   source .venv/bin/activate
    streamlit run dashboard.py
    ```
 
@@ -1348,6 +1424,11 @@ diabetes-readmission-prediction/
 - `models/thresholds.json` - Thresholds and feature lists
 - `data/processed/train_processed.csv` - Processed training data
 - `data/processed/test_processed.csv` - Processed test data
+
+**Common student issues:**
+- "Filename too long" (Windows) → See [`CLONE_AND_RUN_GUIDE.md`](CLONE_AND_RUN_GUIDE.md)
+- "python: command not found" → Install Python, add to PATH
+- Missing data file → Check that `data/raw/diabetic_data.csv` exists in repository
 
 ---
 
