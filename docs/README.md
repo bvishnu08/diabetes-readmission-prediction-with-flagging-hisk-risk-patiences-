@@ -1,41 +1,30 @@
 # Documentation Directory
 
-This directory contains all project documentation, guides, and reference materials.
+This directory contains project documentation, guides, and reference materials.
 
-## 📚 **Quick Reference Guides**
+## 📚 **Main Documentation (Start Here!)**
 
-- **[QUICK_START.md](QUICK_START.md)** - One-command download and run guide
-- **[RUN_BOOK.md](RUN_BOOK.md)** - Step-by-step execution guide with explanations
-- **[PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)** - Complete repository structure map
+- **[../README.md](../README.md)** - **Complete project guide with everything!** ⭐ (Start here!)
+- **[../CLONE_AND_RUN_GUIDE.md](../CLONE_AND_RUN_GUIDE.md)** - Step-by-step guide for fresh clones
+- **[../PROJECT_EXPLANATION_GUIDE.md](../PROJECT_EXPLANATION_GUIDE.md)** - What, why, and where for every component
+- **[../WINDOWS_PIP_FIX.md](../WINDOWS_PIP_FIX.md)** - Fix for Windows "Fatal error in launcher" when using pip
 
-## 🚀 **How to Run Guides**
+## 🔧 **Troubleshooting Guides**
 
-- **[../README.md](../README.md)** - **Complete guide with everything!** ⭐ (Start here!)
+- **[WINDOWS_PATH_LENGTH_FIX.md](WINDOWS_PATH_LENGTH_FIX.md)** - Fix for Windows "Filename too long" error ⭐
+- **[WINDOWS_FIX.md](WINDOWS_FIX.md)** - General Windows setup troubleshooting
+- **[HOW_TO_VIEW_RESULTS.md](HOW_TO_VIEW_RESULTS.md)** - Detailed guide for viewing results
 
-## 📋 **Submission & Checklists**
+## 📋 **Submission & Reference**
 
 - **[P3_SUBMISSION_CHECKLIST.md](P3_SUBMISSION_CHECKLIST.md)** - Detailed P3 submission checklist
 - **[P3_SUBMISSION_SUMMARY.md](P3_SUBMISSION_SUMMARY.md)** - Quick P3 submission reference
-
-## 📖 **Code Documentation**
-
-- **[CODE_EXPLANATION.md](CODE_EXPLANATION.md)** - Deep dive into codebase architecture
-- **[COMPLETE_PROJECT_CODE.md](COMPLETE_PROJECT_CODE.md)** - All project code in one file
-- **[PIPELINE_DIFFERENCES.md](PIPELINE_DIFFERENCES.md)** - Notebook vs. production pipeline notes
+- **[PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)** - Complete repository structure map
 
 ## 🎯 **Presentations**
 
 - **[PRESENTATION_SLIDES_SHORT.Rmd](PRESENTATION_SLIDES_SHORT.Rmd)** - R Markdown presentation with code chunks
 - **[archive/](archive/)** - Older presentation versions (archived)
-
-## 🔧 **Troubleshooting & Verification**
-
-- **[WINDOWS_PATH_LENGTH_FIX.md](WINDOWS_PATH_LENGTH_FIX.md)** - Fix for Windows "Filename too long" error ⭐
-- **[WINDOWS_FIX.md](WINDOWS_FIX.md)** - General Windows setup troubleshooting
-- **[GITHUB_ACCESS_FIX.md](GITHUB_ACCESS_FIX.md)** - GitHub repository access troubleshooting
-- **[GITHUB_VERIFICATION_CHECKLIST.md](GITHUB_VERIFICATION_CHECKLIST.md)** - GitHub repository verification checklist
-- **[FINAL_CHECK_REPORT.md](FINAL_CHECK_REPORT.md)** - Final project verification report
-- **[TEST_SCRIPTS.md](TEST_SCRIPTS.md)** - Test scripts verification report
 
 ---
 
@@ -45,33 +34,37 @@ This directory contains all project documentation, guides, and reference materia
 docs/
 ├── README.md (this file)
 │
-├── Quick Reference
-│   ├── QUICK_START.md
-│   ├── RUN_BOOK.md
-│   └── PROJECT_STRUCTURE.md
+├── Troubleshooting
+│   ├── WINDOWS_PATH_LENGTH_FIX.md
+│   ├── WINDOWS_FIX.md
+│   └── HOW_TO_VIEW_RESULTS.md
 │
 ├── Submission
 │   ├── P3_SUBMISSION_CHECKLIST.md
-│   └── P3_SUBMISSION_SUMMARY.md
-│
-├── Code Documentation
-│   ├── CODE_EXPLANATION.md
-│   ├── COMPLETE_PROJECT_CODE.md
-│   └── PIPELINE_DIFFERENCES.md
+│   ├── P3_SUBMISSION_SUMMARY.md
+│   └── PROJECT_STRUCTURE.md
 │
 ├── Presentations
 │   ├── PRESENTATION_SLIDES_SHORT.Rmd
 │   └── archive/
+│       ├── PRESENTATION_FILES_README.md
+│       ├── PRESENTATION_SLIDES_SHORT.md
+│       └── PRESENTATION_SLIDES.md
 │
-└── Troubleshooting
-    ├── WINDOWS_PATH_LENGTH_FIX.md
-    ├── WINDOWS_FIX.md
-    ├── GITHUB_ACCESS_FIX.md
-    ├── GITHUB_VERIFICATION_CHECKLIST.md
-    ├── FINAL_CHECK_REPORT.md
-    └── TEST_SCRIPTS.md
+└── Reports
+    └── ../reports/P3_FINAL_REPORT.md
 ```
 
 ---
 
-**For complete setup and run instructions, see the main [README.md](../README.md) in the project root - it has everything you need!**
+## 🚀 **Quick Links**
+
+- **New User?** → Start with [../README.md](../README.md)
+- **Windows Issues?** → [WINDOWS_PATH_LENGTH_FIX.md](WINDOWS_PATH_LENGTH_FIX.md) | [../WINDOWS_PIP_FIX.md](../WINDOWS_PIP_FIX.md)
+- **Want to View Results?** → [HOW_TO_VIEW_RESULTS.md](HOW_TO_VIEW_RESULTS.md)
+- **Need to Understand Code?** → [../PROJECT_EXPLANATION_GUIDE.md](../PROJECT_EXPLANATION_GUIDE.md)
+- **Submission Checklist?** → [P3_SUBMISSION_CHECKLIST.md](P3_SUBMISSION_CHECKLIST.md)
+
+---
+
+**For the complete guide to everything, see [../README.md](../README.md)** ⭐
