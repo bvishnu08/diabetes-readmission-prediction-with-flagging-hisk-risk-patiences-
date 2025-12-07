@@ -609,7 +609,7 @@ def main():
         print()
         print("   ⚠️  WINDOWS USERS: If you get 'Fatal error in launcher', use:")
         print("   → python -m pip install jupyter  (instead of just 'pip install')")
-        print("   See WINDOWS_PIP_FIX.md for more solutions!")
+        print("   See docs/WINDOWS_PIP_FIX.md for more solutions!")
     print()
     print("=" * 70)
     print("💡 TIP: For detailed beginner-friendly instructions, see README.md")

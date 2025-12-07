@@ -3,11 +3,24 @@
 ## 📁 Complete Repository Organization
 
 ```
-265_final/
+diabetes-readmission-prediction/
 │
-├── 📄 README.md                    # Main project README
-├── 📄 requirements.txt              # Python dependencies
+├── 📄 README.md                    # Main project README (START HERE!)
+├── 📄 requirements.txt             # Python dependencies
 ├── 📄 dashboard.py                 # Streamlit dashboard application
+│
+├── 📄 run_all.py                   # Master script: runs everything automatically
+├── 📄 run_all.bat                  # Windows batch version
+├── 📄 run_all.sh                   # Mac/Linux shell version
+│
+├── 📄 download_and_run.py          # Downloads repo and runs everything
+├── 📄 download_and_run.bat         # Windows batch version
+├── 📄 download_and_run.sh          # Mac/Linux shell version
+│
+├── 📄 test_models.py               # Verifies models were created correctly
+│
+├── 📄 CLONE_AND_RUN_GUIDE.md       # Complete guide for fresh clones
+├── 📄 PROJECT_EXPLANATION_GUIDE.md # Technical explanation (what, why, where)
 │
 ├── 📂 src/                         # Core source code
 │   ├── __init__.py
@@ -25,17 +38,17 @@
 │   └── run_dashboard.py            # Launch dashboard
 │
 ├── 📂 data/                        # Data files
-│   ├── raw/                        # Raw data (keep in git)
-│   │   ├── diabetic_data.csv
-│   │   └── IDS_mapping.csv
-│   └── processed/                  # Processed data (gitignored)
-│       ├── train_processed.csv
-│       └── test_processed.csv
+│   ├── raw/                        # Raw data (committed to git)
+│   │   ├── diabetic_data.csv       # Main dataset (18 MB, 101,766 records)
+│   │   └── IDS_mapping.csv         # ID mappings (2.5 KB)
+│   └── processed/                  # Processed data (gitignored, auto-generated)
+│       ├── train_processed.csv     # Cleaned training data (80%)
+│       └── test_processed.csv      # Cleaned test data (20%)
 │
-├── 📂 models/                      # Trained models
+├── 📂 models/                      # Trained models (gitignored temp files)
 │   ├── logreg_selected.joblib      # Logistic Regression model
 │   ├── xgb_selected.joblib         # XGBoost model
-│   └── thresholds.json             # Optimized thresholds
+│   └── thresholds.json             # Optimized thresholds and features
 │
 ├── 📂 notebooks/                   # Jupyter notebooks
 │   ├── 01_eda.ipynb                # Exploratory Data Analysis
@@ -43,15 +56,17 @@
 │   └── 03_implementation_details.ipynb  # Implementation narrative
 │
 ├── 📂 docs/                        # Documentation
-│   ├── README.md                   # Documentation guide
-│   ├── RUN_BOOK.md                 # Step-by-step execution guide
-│   ├── COMPLETE_PROJECT_CODE.md    # All code in one document
-│   ├── CODE_EXPLANATION.md         # Detailed code explanations
-│   ├── PIPELINE_DIFFERENCES.md     # Notebook vs production
+│   ├── README.md                   # Documentation index
+│   ├── HOW_TO_VIEW_RESULTS.md      # Detailed results viewing guide
+│   ├── WINDOWS_FIX.md              # General Windows troubleshooting
+│   ├── WINDOWS_PATH_LENGTH_FIX.md # Windows path length error fix
+│   ├── WINDOWS_PIP_FIX.md          # Windows pip launcher error fix
+│   ├── PROJECT_STRUCTURE.md       # This file - repository structure
 │   ├── P3_SUBMISSION_CHECKLIST.md  # P3 submission checklist
 │   ├── P3_SUBMISSION_SUMMARY.md    # Quick submission reference
 │   ├── PRESENTATION_SLIDES_SHORT.Rmd  # Main presentation file
-│   └── archive/                    # Old/redundant files
+│   ├── CLEANUP_SUMMARY.md          # Repository cleanup summary
+│   └── archive/                    # Archived presentations
 │       ├── PRESENTATION_SLIDES.md
 │       ├── PRESENTATION_SLIDES_SHORT.md
 │       └── PRESENTATION_FILES_README.md
@@ -61,7 +76,7 @@
 │   ├── P2 Final_submission report.docx
 │   └── P3_FINAL_REPORT.md          # P3 final report
 │
-└── 📂 tests/                       # Test files (empty, for future use)
+└── 📂 tests/                       # Test files (empty, ready for tests)
 ```
 
 ## 🎯 File Organization Guide

@@ -26,13 +26,13 @@
 
 ### **🔧 Troubleshooting & Fixes**
 - [Troubleshooting Section](#-troubleshooting)
-- [Windows "Fatal error in launcher" Fix](WINDOWS_PIP_FIX.md) - For pip errors on Windows
+- [Windows "Fatal error in launcher" Fix](docs/WINDOWS_PIP_FIX.md) - For pip errors on Windows
 - [Windows Path Length Fix](docs/WINDOWS_PATH_LENGTH_FIX.md) - For "Filename too long" errors
 - [Windows General Fixes](docs/WINDOWS_FIX.md) - Windows-specific troubleshooting
 
 ### **📖 Quick Links by Topic**
 - **New User?** → [Start Here](#-new-user-start-here) | [Clone Guide](CLONE_AND_RUN_GUIDE.md)
-- **Windows Issues?** → [Pip Launcher Error](WINDOWS_PIP_FIX.md) | [Path Length Error](docs/WINDOWS_PATH_LENGTH_FIX.md) | [General Windows Fixes](docs/WINDOWS_FIX.md)
+- **Windows Issues?** → [Pip Launcher Error](docs/WINDOWS_PIP_FIX.md) | [Path Length Error](docs/WINDOWS_PATH_LENGTH_FIX.md) | [General Windows Fixes](docs/WINDOWS_FIX.md)
 - **Want to See Results?** → [View Results Section](#-how-to-check-results) | [Detailed Guide](docs/HOW_TO_VIEW_RESULTS.md)
 - **Need to Understand the Code?** → [Project Explanation](PROJECT_EXPLANATION_GUIDE.md) | [Project Structure](#-project-structure)
 - **Having Setup Issues?** → [Troubleshooting](#-troubleshooting) | [Clone Guide](CLONE_AND_RUN_GUIDE.md)
@@ -812,7 +812,7 @@ streamlit run dashboard.py
    ```
    *This downloads Jupyter - it might take a minute*
    
-   ⚠️ **Windows Users:** If you get "Fatal error in launcher", always use `python -m pip install jupyter` instead of `pip install jupyter`. See [Windows Pip Fix](WINDOWS_PIP_FIX.md) for details.
+   ⚠️ **Windows Users:** If you get "Fatal error in launcher", always use `python -m pip install jupyter` instead of `pip install jupyter`. See [Windows Pip Fix](docs/WINDOWS_PIP_FIX.md) for details.
 
 3. **Launch Jupyter:**
    ```bash
@@ -1031,7 +1031,7 @@ jupyter lab notebooks/03_implementation_details.ipynb
 
 ⚠️ **Windows Users - Important:** 
 - **Always use `python -m pip install jupyter`** instead of `pip install jupyter` to avoid "Fatal error in launcher"
-- If you still get errors, see [Windows Pip Fix](WINDOWS_PIP_FIX.md) for complete solutions
+- If you still get errors, see [Windows Pip Fix](docs/WINDOWS_PIP_FIX.md) for complete solutions
 - **You don't need Jupyter to view results** - `python run_all.py` already shows all metrics and confusion matrices in the terminal!
 
 **What you'll see:**
@@ -1256,44 +1256,74 @@ Here's what each folder and file does:
 ```
 diabetes-readmission-prediction/
 │
-├── README.md                    # This file! Complete guide to everything
-├── requirements.txt             # List of all Python packages needed
-├── run_all.py                   # Master script: runs everything automatically
-├── download_and_run.py          # Downloads repo from GitHub and runs everything
-├── test_models.py               # Verifies that models were created correctly
+├── 📄 README.md                    # This file! Complete guide to everything ⭐
+├── 📄 CLONE_AND_RUN_GUIDE.md       # Complete guide for fresh clones
+├── 📄 PROJECT_EXPLANATION_GUIDE.md # Technical explanation (what, why, where)
+├── 📄 requirements.txt             # List of all Python packages needed
 │
-├── dashboard.py                 # Streamlit web dashboard (interactive UI)
+├── 📄 run_all.py                   # Master script: runs everything automatically
+├── 📄 run_all.bat                  # Windows batch version
+├── 📄 run_all.sh                   # Mac/Linux shell version
 │
-├── data/
+├── 📄 download_and_run.py          # Downloads repo from GitHub and runs everything
+├── 📄 download_and_run.bat         # Windows batch version
+├── 📄 download_and_run.sh         # Mac/Linux shell version
+│
+├── 📄 test_models.py               # Verifies that models were created correctly
+├── 📄 dashboard.py                 # Streamlit web dashboard (interactive UI)
+│
+├── 📂 data/
 │   ├── raw/
-│   │   ├── diabetic_data.csv    # Original dataset (100k+ patient records)
-│   │   └── IDS_mapping.csv      # Mapping file for IDs
+│   │   ├── diabetic_data.csv      # Original dataset (18 MB, 101,766 records) ✅
+│   │   └── IDS_mapping.csv         # Mapping file for IDs (2.5 KB) ✅
 │   └── processed/
-│       ├── train_processed.csv  # Cleaned training data (80% of data)
-│       └── test_processed.csv   # Cleaned test data (20% of data)
+│       ├── train_processed.csv    # Cleaned training data (80% of data)
+│       └── test_processed.csv     # Cleaned test data (20% of data)
 │
-├── models/
-│   ├── logreg_selected.joblib   # Trained Logistic Regression model
-│   ├── xgb_selected.joblib      # Trained XGBoost model
-│   └── thresholds.json          # Best thresholds and feature lists
+├── 📂 models/
+│   ├── logreg_selected.joblib      # Trained Logistic Regression model
+│   ├── xgb_selected.joblib         # Trained XGBoost model
+│   └── thresholds.json             # Best thresholds and feature lists
 │
-├── scripts/
-│   ├── run_train.py             # Training script (trains both models)
-│   ├── run_eval.py              # Evaluation script (tests models)
-│   └── run_dashboard.py         # Dashboard launcher
+├── 📂 scripts/
+│   ├── run_train.py                # Training script (trains both models)
+│   ├── run_eval.py                 # Evaluation script (tests models)
+│   └── run_dashboard.py            # Dashboard launcher
 │
-├── src/
-│   ├── config.py                # Configuration (file paths, feature lists)
-│   ├── preprocess.py            # Data cleaning and splitting functions
-│   ├── feature_selection.py    # Feature selection logic
-│   ├── model.py                 # Model pipeline definitions
-│   ├── train.py                 # Training logic (trains models, finds thresholds)
-│   └── evaluate.py              # Evaluation logic (calculates metrics)
+├── 📂 src/
+│   ├── __init__.py
+│   ├── config.py                   # Configuration (file paths, feature lists)
+│   ├── preprocess.py               # Data cleaning and splitting functions
+│   ├── feature_selection.py        # Feature selection logic
+│   ├── model.py                    # Model pipeline definitions
+│   ├── train.py                    # Training logic (trains models, finds thresholds)
+│   ├── evaluate.py                 # Evaluation logic (calculates metrics)
+│   └── clinical_utils.py           # Clinical risk interpretation
 │
-└── notebooks/
-    ├── 01_eda.ipynb             # Exploratory data analysis
-    ├── 02_modeling.ipynb        # Modeling experiments
-    └── 03_implementation_details.ipynb  # Final implementation with explanations
+├── 📂 docs/
+│   ├── README.md                   # Documentation index
+│   ├── HOW_TO_VIEW_RESULTS.md      # Detailed results viewing guide
+│   ├── WINDOWS_FIX.md              # General Windows troubleshooting
+│   ├── WINDOWS_PATH_LENGTH_FIX.md  # Windows path length error fix
+│   ├── WINDOWS_PIP_FIX.md          # Windows pip launcher error fix
+│   ├── PROJECT_STRUCTURE.md         # Repository structure map
+│   ├── P3_SUBMISSION_CHECKLIST.md   # P3 submission checklist
+│   ├── P3_SUBMISSION_SUMMARY.md    # Quick submission reference
+│   ├── PRESENTATION_SLIDES_SHORT.Rmd  # Main presentation file
+│   ├── CLEANUP_SUMMARY.md          # Repository cleanup summary
+│   └── archive/                    # Archived presentations
+│
+├── 📂 notebooks/
+│   ├── 01_eda.ipynb                # Exploratory data analysis
+│   ├── 02_modeling.ipynb           # Modeling experiments
+│   └── 03_implementation_details.ipynb  # Final implementation with explanations
+│
+├── 📂 reports/
+│   ├── P2 Final_submission report.pdf
+│   ├── P2 Final_submission report.docx
+│   └── P3_FINAL_REPORT.md          # P3 final report
+│
+└── 📂 tests/                        # Test directory (empty, ready for tests)
 ```
 
 **Key Files Explained:**
@@ -1451,7 +1481,7 @@ python -m pip install -r requirements.txt
 2. Run: `New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "LongPathsEnabled" -Value 1 -PropertyType DWORD -Force`
 3. Restart computer
 
-👉 **See [`WINDOWS_PIP_FIX.md`](WINDOWS_PIP_FIX.md) for detailed solutions!**
+👉 **See [`docs/WINDOWS_PIP_FIX.md`](docs/WINDOWS_PIP_FIX.md) for detailed solutions!**
 
 **Quick Fix for Jupyter:**
 ```powershell
@@ -1475,7 +1505,7 @@ python -m pip install jupyter
 
 👉 **Quick Links to Help:**
 - **Complete Troubleshooting Guide:** [`CLONE_AND_RUN_GUIDE.md`](CLONE_AND_RUN_GUIDE.md) - 10+ common issues with solutions
-- **Windows Pip Error:** [`WINDOWS_PIP_FIX.md`](WINDOWS_PIP_FIX.md) - "Fatal error in launcher" fix
+- **Windows Pip Error:** [`docs/WINDOWS_PIP_FIX.md`](docs/WINDOWS_PIP_FIX.md) - "Fatal error in launcher" fix
 - **Windows Path Issues:** [`docs/WINDOWS_PATH_LENGTH_FIX.md`](docs/WINDOWS_PATH_LENGTH_FIX.md) - "Filename too long" solutions
 - **General Windows Help:** [`docs/WINDOWS_FIX.md`](docs/WINDOWS_FIX.md) - Windows-specific troubleshooting
 

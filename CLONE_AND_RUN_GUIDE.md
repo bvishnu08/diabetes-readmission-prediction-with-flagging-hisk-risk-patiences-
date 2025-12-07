@@ -401,7 +401,7 @@ python -m pip install -r requirements.txt
 
 **Solution 3: Enable long paths (see Issue 2 above)**
 
-👉 **See [`WINDOWS_PIP_FIX.md`](WINDOWS_PIP_FIX.md) for complete solutions!**
+👉 **See [`docs/WINDOWS_PIP_FIX.md`](docs/WINDOWS_PIP_FIX.md) for complete solutions!**
 
 ---
 
@@ -479,7 +479,7 @@ Your browser will open automatically at `http://localhost:8501`
 If you're still having problems:
 
 1. **Check the README.md** - It has more detailed instructions
-2. **Check WINDOWS_PIP_FIX.md** - For "Fatal error in launcher" when using pip ⭐
+2. **Check docs/WINDOWS_PIP_FIX.md** - For "Fatal error in launcher" when using pip ⭐
 3. **Check docs/WINDOWS_FIX.md** - Windows-specific troubleshooting
 4. **Check docs/WINDOWS_PATH_LENGTH_FIX.md** - For path length issues
 5. **Make sure you're using Python 3.8+** - Check with `python --version`
